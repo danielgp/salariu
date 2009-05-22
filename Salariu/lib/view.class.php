@@ -114,9 +114,8 @@ class BasicView extends CommonView
         if ($_SERVER['SERVER_NAME'] == 'lugoj2') {
         	include 'piwik_counter.php';
         }
-		$sReturn[] = '<!-- Footer | start -->';
 		$sReturn[] = $this->setClearBoth1px();
-		$sReturn[] = '<hr/>';
+		$sReturn[] = '<!-- Footer | start -->';
 		$sReturn[] = '<div style="text-align: right;">';
 		$sReturn[] = $this->setStringIntoTag('T', 'a', array('href' => '#'
 		    , 'title' => str_replace('%1',

@@ -25,9 +25,52 @@ require_once 'lib/algorithm.inc.php';
  * @since 1.0.0
  */
 class Salariu extends RomanianSalary {
+	private $exchangeRateDate;
+	private $exchangeRateEur;
+	private $exchangeRateUsd;
+	private function getExchangeRates() {
+		$this->exchangeRateDate = date();
+		$this->exchangeRateEur = 0;
+		$this->exchangeRateUsd = 0;
+		$xml = new XMLReader();
+		$x = 'test.xml';
+		if ($_SERVER['SERVER_NAME'] == 'localhost') {
+			$f = file_get_contents(EXCHANGE_RATES_SOURCE);
+			file_put_contents($x, $f);
+		}
+		if ($xml->open($x, 'UTF-8')) {
+			while ($xml->read()) {
+				if ($xml->nodeType == XMLReader::ELEMENT) {
+					switch($xml->localName) {
+						case 'Cube':
+							$v = $xml->getAttribute('date');
+							$this->exchangeRateDate = mktime(0, 0, 0
+								, substr($v, 5, 2)
+								, substr($v, -2)
+								, substr($v, 0, 4));
+							break;
+						case 'Rate':
+							switch ($xml->getAttribute('currency')) {
+								case 'EUR':
+									$this->exchangeRateEur = $xml->readInnerXml();
+									break;
+								case 'USD':
+									$this->exchangeRateUsd = $xml->readInnerXml();
+									break;
+							}
+							break;
+					}
+				}
+			}
+			$xml->close();
+		} else {
+			echo '<div style="background-color: red; color: white;">';
+			print_r(error_get_last());
+			echo '</div>';
+		}
+	}
     private function setFormInput() {
 		global $month_names;
-		$sReturn[] = $this->setStringIntoTag('Date initiale', 'h2');
 		for ($counter = date('Y'); $counter >= 2001 ; $counter--) {
 			for ($counter2 = 12; $counter2 >= 1; $counter2--) {
 				if (($counter == date('Y')) && ($counter2 > date('m'))) {
@@ -83,31 +126,32 @@ class Salariu extends RomanianSalary {
 			, $this->setStringIntoShortTag('input'
 				, array('name' => 'zfb', 'value' => @$_REQUEST['zfb']
 					, 'size' => 2)), 1);
-		$sReturn[] = $this->setFormRow('&nbsp;'
+		$sReturn[] = $this->setStringIntoTag(
+			$this->setStringIntoTag('Toate campurile trebuie '
+					. 'sa aiba o valoare in momentul transmiterii datelor!'
+					. $this->setStringIntoShortTag('input'
+						, array('type' => 'hidden', 'name' => 'action'
+							, 'value' => $_SERVER['SERVER_NAME']))
+				, 'td', array('colspan' => 2, 'class' => 'only_screen'))
+			, 'tr');
+		$sReturn[] = $this->setFormRow(
+			$this->setStringIntoShortTag('input'
+				, array('type' => 'reset', 'id' => 'reset'
+					, 'value' => 'Revino la valorile initiale'))
 			, $this->setStringIntoShortTag('input'
 				, array('type' => 'submit', 'id' => 'submit'
 					, 'value' => 'Da-mi rezultatele')), 1);
-		$sReturn[] = $this->setStringIntoTag('Toate campurile trebuie '
-				. 'sa aiba o valoare in momentul transmiterii datelor!'
-			, 'td', array('colspan' => 2, 'class' => 'only_screen'));
-		$sReturn[] = $this->setFormRow('&nbsp;'
-			, $this->setStringIntoShortTag('input'
-				, array('type' => 'reset', 'id' => 'reset'
-					, 'value' => 'Revino la valorile initiale')), 1);
-		$sReturn[] = $this->setStringIntoShortTag('input'
-			, array('type' => 'hidden', 'name' => 'action'
-				, 'value' => $_SERVER['SERVER_NAME']));
-		return $this->setStringIntoTag(
+		return $this->setStringIntoTag('Date initiale', 'h2')
+			. $this->setStringIntoTag(
 				$this->setStringIntoTag(
 					$this->setStringIntoTag(implode(PHP_EOL, $sReturn)
 						, 'table', array('border' => 0, 'cellpadding' => 0
 							, 'cellspacing' => 0))
 					, 'form', array('method' => 'get'
 						, 'action' => $_SERVER['SCRIPT_NAME']))
-			, 'div', array('style' => 'float: left; width: 50%;'));
+			, 'div');
     }
     private function setFormOutput() {
-		$sReturn[] = $this->setStringIntoTag('Rezultate', 'h2');
 		$overtime = $this->getOvertimes();
 		$brut = ($_REQUEST['sn'] * (1 + $_REQUEST['sc']/100)
     		+ $_REQUEST['pb'] + $_REQUEST['pn']
@@ -124,30 +168,47 @@ class Salariu extends RomanianSalary {
 		$sReturn[] = $this->setFormRow('Impozit', $amount['impozit']);
 		$net = ($brut - $amount['cas'] - $amount['somaj'] - $amount['sanatate']
 				- $amount['impozit'] - $_REQUEST['pn']);
-		$sReturn[] = '<br/>';
+		$sReturn[] = $this->setFormRow('&nbsp;', '&nbsp;', 1);
 		$sReturn[] = $this->setFormRow('Salariu net', $net);
 		$sReturn[] = $this->setFormRow('Zile lucratoare', $amount['zile']
 			, 'value');
 		$sReturn[] = $this->setFormRow('Bonuri alimente', $amount['ba']);
 		$sReturn[] = $this->setFormRow('TOTAL', ($net + $amount['ba']));
-		return $this->setStringIntoTag(
+		return $this->setStringIntoTag('Rezultate', 'h2')
+			. $this->setStringIntoTag(
 				$this->setStringIntoTag(implode(PHP_EOL, $sReturn)
 					, 'table', array('border' => 0, 'cellpadding' => 0
 						, 'cellspacing' => 0))
-			, 'div', array('style' => 'float: right; width: 50%;'));
+			, 'div');
     }
     private function setFormRow($text, $value, $type = 'amount') {
     	$a = '';
     	switch($type) {
     		case 'amount':
-    			$a = ' RON';
-    			$value = number_format($value / pow(10, 4), 2
-						, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR);
-    		case 'value':
-    			$value = $this->setStringIntoTag('&nbsp;'
-						, 'td', array('style' => 'width: 50px;'))
-    				.$this->setStringIntoTag($value . $a
+    			$value = $value / pow(10, 4);
+    			if ($this->exchangeRateEur == 0) {
+	    			$value = $this->setStringIntoTag(
+    					number_format($value, 2
+							, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR) . ' RON'
 						, 'td', array('class' => 'labelS'));
+    			} else {
+	    			$value = $this->setStringIntoTag(
+    					number_format($value, 2
+							, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR) . ' RON'
+						, 'td', array('class' => 'labelS'))
+					. $this->setStringIntoTag(
+    					number_format($value / $this->exchangeRateEur, 2
+							, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR) . ' EUR'
+						, 'td', array('class' => 'labelS'))
+					. $this->setStringIntoTag(
+    					number_format($value / $this->exchangeRateUsd, 2
+							, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR) . ' USD'
+						, 'td', array('class' => 'labelS'));
+    			}
+				break;
+    		case 'value':
+    			$value = $this->setStringIntoTag($value . $a
+					, 'td', array('class' => 'labelS'));
     			break;
     		default:
     			$value = $this->setStringIntoTag($value, 'td');
@@ -165,7 +226,16 @@ class Salariu extends RomanianSalary {
         $sReturn[] = $this->setStringIntoTag(APP_NAME, 'h1');
         $sReturn[] = $this->setFormInput();
         if (isset($_REQUEST['action'])) {
+        	$this->getExchangeRates();
         	$sReturn[] = $this->setFormOutput();
+    		if ($this->exchangeRateEur != 0) {
+	        	$sReturn[] = $this->setStringIntoTag(
+	        		'Sursa ratele de schimb valutar pentru EUR ('.
+	        		$this->exchangeRateEur
+	        		. ') si USD (' . $this->exchangeRateUsd . ') este BNR '
+	        		. ' din data ' . date('d.m.Y', $this->exchangeRateDate)
+	        			, 'div');
+    		}
         }
 		$sReturn[] = $this->setStringIntoTag(
 			$this->setStringIntoTag('Autorul nu isi asuma nici '
@@ -178,6 +248,22 @@ class Salariu extends RomanianSalary {
        	$sReturn[] = $this->setStringIntoTag(
            	'v. ' . APP_VERSION . ' (' . APP_BUILD . ')', 'div'
            	, array('style' => 'float: right; margin-top: 0px;'));
+        if ($_SERVER['SERVER_NAME'] == 'salariu.sourceforge.net') {
+        	$sReturn[] = <<<EOT
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/salariu/" : "http://apps.sourceforge.net/piwik/salariu/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+piwik_action_name = '';
+piwik_idsite = 1;
+piwik_url = pkBaseURL + "piwik.php";
+piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+</script>
+<object><noscript><p><img src="http://apps.sourceforge.net/piwik/salariu/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
+<!-- End Piwik Tag -->
+EOT;
+        }
         $sReturn[] = $this->setFooter();
         echo implode(PHP_EOL, $sReturn);
 	}
