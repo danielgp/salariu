@@ -1,0 +1,6 @@
+a:hover{ text-decoration: underline overline; }
+a:hover,input:hover,select:hover,textarea:hover,tr:hover,.pagination:hover { background-color:#FF0; color:red; }
+body { padding-left:5px; }
+td:hover { background-color:#FFCD00; }
+.menu_button:hover { padding-left:15px; padding-right:15px; background-image:url(../images/menu_hover.gif); background-repeat:repeat-x; }
+.menu_link:hover { background-color:#FF0; border:1px groove Red; }

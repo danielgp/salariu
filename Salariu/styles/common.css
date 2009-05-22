@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+* { margin:0; padding:0; }
+a { background-color:transparent; color:#0000FF; font-family:sans-serif; font-size:12px; text-decoration: none; }
+body,div,p,td,th { background-color:#FFFFFF; color:#000000; font-family:sans-serif; font-size:12px; }
+h1 { text-align: center; }
+label,.fake_label { position:absolute; margin-left:5px; width:205px; border-bottom:1px dotted #dcdcdc; }
+.labell { margin-left:210px; }
+.clear_both { float: none; clear: both; height: 1px; }

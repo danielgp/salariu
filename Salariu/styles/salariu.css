@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+label,.fake_label { float: none; clear: both; }
+td { border-bottom:1px dotted #dcdcdc; }
+.labelS { text-align: right; }
+.only_screen { color: red; }
