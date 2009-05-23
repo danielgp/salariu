@@ -33,7 +33,7 @@ class Salariu extends RomanianSalary {
 		$this->exchangeRateEur = 0;
 		$this->exchangeRateUsd = 0;
 		$xml = new XMLReader();
-		$x = 'test.xml';
+		$x = 'exchange_rates.xml';
 		if ($_SERVER['SERVER_NAME'] == 'localhost') {
 			$f = file_get_contents(EXCHANGE_RATES_SOURCE);
 			file_put_contents($x, $f);
@@ -230,7 +230,7 @@ class Salariu extends RomanianSalary {
         	$sReturn[] = $this->setFormOutput();
     		if ($this->exchangeRateEur != 0) {
 	        	$sReturn[] = $this->setStringIntoTag(
-	        		'Sursa ratele de schimb valutar pentru EUR ('.
+	        		'Sursa ratelor de schimb valutar pentru EUR ('.
 	        		$this->exchangeRateEur
 	        		. ') si USD (' . $this->exchangeRateUsd . ') este BNR '
 	        		. ' din data ' . date('d.m.Y', $this->exchangeRateDate)

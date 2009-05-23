@@ -117,6 +117,7 @@ class BasicView extends CommonView
 		$sReturn[] = $this->setClearBoth1px();
 		$sReturn[] = '<!-- Footer | start -->';
 		$sReturn[] = '<div style="text-align: right;">';
+		$sReturn[] = '<hr/>';
 		$sReturn[] = $this->setStringIntoTag('T', 'a', array('href' => '#'
 		    , 'title' => str_replace('%1',
 				round((microtime(true) - $time_start), 5)
