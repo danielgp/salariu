@@ -27,6 +27,7 @@ require_once 'lib/algorithm.inc.php';
 class Salariu extends RomanianSalary {
 	private $exchangeRateDate;
 	private $exchangeRateEur;
+	private $exchangeRateHuf;
 	private $exchangeRateUsd;
 	private function getExchangeRates() {
 		$this->exchangeRateDate = date();
@@ -52,10 +53,16 @@ class Salariu extends RomanianSalary {
 						case 'Rate':
 							switch ($xml->getAttribute('currency')) {
 								case 'EUR':
-									$this->exchangeRateEur = $xml->readInnerXml();
+									$this->exchangeRateEur = 
+                                        $xml->readInnerXml();
+									break;
+								case 'HUF':
+									$this->exchangeRateHuf = 
+                                        $xml->readInnerXml() / 100;
 									break;
 								case 'USD':
-									$this->exchangeRateUsd = $xml->readInnerXml();
+									$this->exchangeRateUsd = 
+                                        $xml->readInnerXml();
 									break;
 							}
 							break;
@@ -201,6 +208,10 @@ class Salariu extends RomanianSalary {
 							, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR) . ' EUR'
 						, 'td', array('class' => 'labelS'))
 					. $this->setStringIntoTag(
+    					number_format($value / $this->exchangeRateHuf, 2
+							, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR) . ' HUF'
+						, 'td', array('class' => 'labelS'))
+					. $this->setStringIntoTag(
     					number_format($value / $this->exchangeRateUsd, 2
 							, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR) . ' USD'
 						, 'td', array('class' => 'labelS'));
@@ -232,7 +243,8 @@ class Salariu extends RomanianSalary {
 	        	$sReturn[] = $this->setStringIntoTag(
 	        		'Sursa ratelor de schimb valutar pentru EUR ('.
 	        		$this->exchangeRateEur
-	        		. ') si USD (' . $this->exchangeRateUsd . ') este BNR '
+	        		. '), HUF (' . $this->exchangeRateHuf
+                    . ') si USD (' . $this->exchangeRateUsd . ') este BNR '
 	        		. ' din data ' . date('d.m.Y', $this->exchangeRateDate)
 	        			, 'div');
     		}
