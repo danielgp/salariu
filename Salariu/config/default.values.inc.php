@@ -1,6 +1,6 @@
 <?php
 if (!isset($_REQUEST['sn'])) {
-	$_REQUEST['sn'] = 600;
+	$_REQUEST['sn'] = 740;
 }
 if (!isset($_REQUEST['sc'])) {
 	$_REQUEST['sc'] = 0;

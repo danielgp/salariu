@@ -74,20 +74,19 @@ class RomanianSalary extends BasicView {
 		switch(gmdate('Y', $lngDate)) {
 			case 2002:
 			case 2003:
+			case 2007:
+			case 2008:
                 $nReturn = 170;
                 break;
 			case 2004:
                 $nReturn = 172;
                 break;
 			case 2005:
+			case 2010:
                 $nReturn = 171.33;
                 break;
 			case 2006:
                 $nReturn = 168.66;
-                break;
-			case 2007:
-			case 2008:
-                $nReturn = 170;
                 break;
 			case 2009:
                 $nReturn = 169.33;
@@ -296,7 +295,29 @@ class RomanianSalary extends BasicView {
 					case 10:
 					case 11:
 					case 12:
-                        $nReturn = 84800;
+                        $nReturn = 87200;
+                        break;
+				}
+				break;
+			case 2010:
+				switch (date('n', $lngDate)) {
+					case 1:
+					case 2:
+                        $nReturn = 87200;
+                        break;
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+                        $nReturn = 87200;
+                        break;
+					case 9:
+					case 10:
+					case 11:
+					case 12:
+                        $nReturn = 87200;
                         break;
 				}
 				break;
@@ -330,6 +351,7 @@ class RomanianSalary extends BasicView {
                 }
                 break;
             case 2009:
+            case 2010:
                 $nReturn = 5.5;
             	break;
         }
@@ -404,6 +426,9 @@ class RomanianSalary extends BasicView {
                     default:
                         $nReturn = 10.5;
                 }
+                break;
+            case 2010:
+                $nReturn = 10.5;
                 break;
             default:
                 $nReturn = 0;
@@ -617,6 +642,11 @@ class RomanianSalary extends BasicView {
 				// Rusalii
 				break;
 		}
+		if (date('Y', $lngDate) >= 2009) {
+			// St. Marry
+			$counter++;
+			$daying[$counter] = mktime(0, 0, 0, 8, 15, date('Y', $lngDate));
+		}
 		return $daying;
 	}
     /**
@@ -692,6 +722,7 @@ class RomanianSalary extends BasicView {
                 break;
             case 2008:
             case 2009:
+            case 2010:
                 $nReturn = 0.5;
                 break;
         }

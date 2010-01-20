@@ -10,6 +10,7 @@
  * @copyright Popiniuc Daniel-Gheorghe
  * @license GNU General Public License (GPL)
  */
+require_once 'action/actions.inc.php';
 /**
  * Functions used to handle interface
  *
@@ -20,8 +21,7 @@
  * @copyright Popiniuc Daniel-Gheorghe
  * @since 0.1.7
  */
-class CommonView
-{
+class CommonView extends AvailableActions {
 	/**
 	 * Builds a block with links
 	 *
@@ -68,10 +68,8 @@ class CommonView
 	 * @return array
 	 */
 	public function setActionBlockMulti($links, $float = true) {
-		require_once 'action/actions.inc.php';
-		$aa = new AvailableActions();
 		foreach($links as $value) {
-			$elem = $aa->getAcOpArray($value);
+			$elem = $this->getAcOpArray($value);
 			foreach($elem as $key2 => $value2) {
 				if (isset($value2['action_prefix'])) {
 					$aReturn[$key2] = array(
