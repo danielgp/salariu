@@ -10,7 +10,6 @@
  * @copyright Popiniuc Daniel-Gheorghe
  * @license GNU General Public License (GPL)
  */
-require_once 'action/actions.inc.php';
 /**
  * Functions used to handle interface
  *
@@ -21,7 +20,7 @@ require_once 'action/actions.inc.php';
  * @copyright Popiniuc Daniel-Gheorghe
  * @since 0.1.7
  */
-class CommonView extends AvailableActions {
+class CommonView  {
 	/**
 	 * Builds a block with links
 	 *
