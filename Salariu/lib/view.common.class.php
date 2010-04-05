@@ -20,7 +20,7 @@
  * @copyright Popiniuc Daniel-Gheorghe
  * @since 0.1.7
  */
-class CommonView  {
+class CommonView {
 	/**
 	 * Builds a block with links
 	 *
@@ -56,7 +56,7 @@ class CommonView  {
 			$f = 'none';
 		}
 		return $this->setStringIntoTag(
-			implode(PHP_EOL . '<br/>', $sReturn)
+			implode('<br/>', $sReturn)
 			, 'span', array('style' => 'float: ' . $f
 				. '; padding-left: 10px; '));
 	}
@@ -90,8 +90,7 @@ class CommonView  {
      * @param array $aElements
      * @return array
      */
-    public function setArray2ArrayKbr($aElements)
-    {
+    public function setArray2ArrayKbr($aElements){
         foreach ($aElements as $key => $value) {
             $aReturn[str_replace(' ', '<br/>', $key)] = $value;
         }
@@ -103,13 +102,80 @@ class CommonView  {
      * @param array $aElements
      * @return array
      */
-    public function setArray2ArrayVbr($aElements)
-    {
+    public function setArray2ArrayVbr($aElements){
         foreach ($aElements as $key => $value) {
             $aReturn[$key] = str_replace(' ', '<br/>', $value);
         }
         return $aReturn;
     }
+	private function LocalTime2Seconds($RSQL_Time__given) {
+		if ($RSQL_Time__given == "")	$RSQL_Time__given = "00:00:00";
+		if (substr($RSQL_Time__given, 0, 1) == "-") {
+				//extract negative sign and keep it separatly until ending
+			$RSQL_Time__given = substr($RSQL_Time__given, 1
+				, strlen($RSQL_Time__given) -1);
+			$sign = "-";
+		} else {
+		    $sign = "";
+		}
+		return $sign.(substr($RSQL_Time__given, -2)
+			+ substr($RSQL_Time__given, -5, 2)*60
+			+ substr($RSQL_Time__given, 0, strlen($RSQL_Time__given)
+			- 6)*60*60);
+	}
+	public function setArray2Excel($filename, $worksheetname, $entry_array) {
+		require_once 'Writer.php';
+		// Create an instance
+		$xls = new Spreadsheet_Excel_Writer();
+		// Send HTTP headers to tell the browser what's coming
+		$xls->send($filename);
+		// Add a worksheet to the file, returning an object to add data to
+		$sheet =& $xls->addWorksheet($worksheetname);
+		if (is_array($entry_array)) {
+				$counter = 0;
+				foreach($entry_array as $key => $value) {
+					$column_counter = 0;
+					if ($counter == 0) { // headers
+						foreach($value as $key2 => $value2) {
+							$sheet->write($counter, $column_counter, $key2);
+							$column_counter += 1;
+						}
+						$counter += 1;
+					}
+					$column_counter = 0;
+					foreach($value as $key2 => $value2) {
+						if (($value2 == "")
+							|| ($value2 == "00:00:00")
+							|| ($value2 == "0")) {
+								$value2 = "";
+						}
+						if ((strlen($value2) == 8)
+							&& (strpos($value2, ":") !== false)) {
+						    $format =& $xls->addFormat();
+						    $format->setNumFormat(iconv("utf-8", "iso-8859-1"
+						    	, "[h]:mm:ss;@"));
+						    if ($value2 == '') {
+						        $calculated_time_as_number = 0;
+						    } else {
+						        $calculated_time_as_number =
+						        	$this->LocalTime2Seconds($value2)
+						        	/ 60 / 60 / 24;
+						    }
+						    $sheet->writeNumber($counter, $column_counter
+						    	, $calculated_time_as_number, $format);
+						} else {
+						    $sheet->write($counter, $column_counter
+						    	, strip_tags($value2));
+						}
+						$column_counter += 1;
+					}
+					$counter += 1;
+				}
+				$xls->close();
+			} else {
+				$sheet->write(0, 0, 'no data!!!');
+		}
+	}
 	/**
 	 * Transforms an array into usable filters
 	 *
@@ -137,14 +203,17 @@ class CommonView  {
 					if ($filters != "") {
 						$filters .= " AND ";
 					}
-				    $filters .= " ".$reference_table."`".$key."` IN (".$filters2.")";
+				    $filters .= " " . $reference_table . "`" . $key
+				    	. "` IN (" . $filters2 . ")";
 				}
 			} else {
-				if (($filters != "") && (!in_array($value, array("", '', '%%')))) {
+				if (($filters != "")
+					&& (!in_array($value, array("", '', '%%')))) {
 					$filters .= " AND ";
 				}
 				if (!in_array($value, array('', '%%'))) {
-					if ((substr($value, 0, 1) == '%') && (substr($value, -1) == '%')) {
+					if ((substr($value, 0, 1) == '%')
+						&& (substr($value, -1) == '%')) {
 						$filters .= " ".$key." LIKE '".$value."'";
 					} else {
 						$filters .= " ".$key." = '".$value."'";
@@ -166,7 +235,8 @@ class CommonView  {
 	 * @param array $features_array
 	 * @return string
 	 */
-	public function setArray2Select($aElements, $sDefaultValue, $select_name, $features_array = null) {
+	public function setArray2Select($aElements, $sDefaultValue
+		, $select_name, $features_array = null) {
 		if (in_array($aElements, array(null, '', '??'))) {
 		    return "";
 		}
@@ -308,8 +378,7 @@ class CommonView  {
 	 * @param string $sPrefixSufix
 	 * @return string
 	 */
-	public function setArray2String2($sSeparator, $aElements, $sPrefixSufix = "")
-	{
+	public function setArray2String2($sSeparator, $aElements, $sPrefixSufix = ""){
 	    $sReturn = null;
 	    foreach($aElements as $value) {
 		    if (is_array($value)) {
@@ -355,7 +424,7 @@ class CommonView  {
 		    return false;
 		}
 		reset($aElements);
-		while (list($key, $val) = each($aElements)) {
+		foreach($aElements as $key => $val) {
 		    if (!in_array($key, $aExceptedElements)) {
 		        $sSeparator_adding = false;
 		        if (is_array($aElements[$key])) {
@@ -407,8 +476,7 @@ class CommonView  {
 	 * @param string $sName
 	 * @return array
 	 */
-    public function setArrayValues2Keys($aElements, $value)
-    {
+    public function setArrayValues2Keys($aElements, $value){
         foreach($aElements as $value) {
             $aReturn[$value] = $value;
         }
@@ -439,7 +507,7 @@ class CommonView  {
 
 	}
 	public function setClearBoth1px() {
-		return PHP_EOL . $this->setStringIntoTag('&nbsp;', 'div'
+		return $this->setStringIntoTag('&nbsp;', 'div'
 			, array('class' => 'clear_both'));
 	}
 	/**
@@ -452,8 +520,7 @@ class CommonView  {
 	 * @param mixed $mArguments
 	 * @return float
 	 */
-	public function setDividedResult($fAbove, $fBelow, $mArguments = 0)
-	{
+	public function setDividedResult($fAbove, $fBelow, $mArguments = 0){
 	    // prevent infinite result
 		if ($fAbove == 0) {
 			return 0;
@@ -478,6 +545,30 @@ class CommonView  {
 	        return round( ($fAbove / $fBelow), $mArguments);
 	    }
 	}
+	public function setDebugMessage($inputText) {
+		$sReturn[] = '<hr/>';
+		if (is_array($inputText)) {
+			$counter = 0;
+			foreach($inputText as $key => $value) {
+				$counter += 1;
+				$sReturn[] = $counter . '_' . $key;
+				if (is_array($value)) {
+					$counter2 = 0;
+					foreach($value as $key2 => $value2) {
+						$counter2 += 1;
+						$sReturn[] .= '___' . $counter2
+							. '__' . $key2 . '=>' . $value2 . '<br/>';
+					}
+				} else {
+					$sReturn[] .= '=>' . $value . '<br/>';
+				}
+			}
+		} else {
+			$sReturn[] = $inputText;
+		}
+		$sReturn[] = '<hr/>';
+		return implode('', $sReturn);
+	}
 	/**
 	 * Builds a structured message
 	 *
@@ -485,9 +576,9 @@ class CommonView  {
 	 * @param int $iIndendation
 	 * @param string $sType
 	 * @param string $sMessage
+	 * @param string $tType
 	 */
-	public function setFeedback($iIndendation, $sType, $sMessage)
-	{
+	public function setFeedback($iIndendation, $sType, $sMessage, $tType = 'div'){
         if (!is_numeric($iIndendation)) {
             $iIndendation = 0;
         }
@@ -496,12 +587,12 @@ class CommonView  {
         } else {
             $format = '';
         }
-		return "<div style='padding-left: "
-			. (20*$iIndendation) . "px;"
-            . $format . "'>"
+        return '<' . $tType . ' style="padding-left: '
+			. (20*$iIndendation) . 'px;'
+            . $format . '">'
 			. $this->setIcons($sType)
-			. "&nbsp;" . $sMessage
-			. "</div>";
+			. '&nbsp;' . $sMessage
+			. '</' . $tType . '>';
 	}
 	/**
 	 * Returns a fieldset with links inside
@@ -516,17 +607,35 @@ class CommonView  {
 			if (is_array($value)) {
 				$link[] = $e . $this->setStringIntoTag($key
 					, 'a', array(
-						'href' => str_replace(' ', '%20', $value['href'])
+						'href' => str_replace(array(' ', '"onclick=')
+							, array('%20', '" onclick='), $value['href'])
 						, 'title' => $value['title']));
 			} else {
-				$link[] = $e . $this->setStringIntoTag($key
-					, 'a', array('href' => str_replace(' ', '%20', $value)));
+				switch($key) {
+					case 'text':
+						$link[] = $value;
+						break;
+					default:
+						$link[] = $e . $this->setStringIntoTag($key, 'a'
+							, array('href' => str_replace(
+								array(' ', '"onclick=')
+								, array('%20', '" onclick=')
+								, $value)));
+				}
 			}
 		}
-		return $this->setStringIntoTag(
-			$this->setStringIntoTag($title, 'legend'
-				, array('class' => 'box_legend'))
-			. PHP_EOL . implode('<br/>' . PHP_EOL, $link)
+		$xtraspace = '';
+		if (strpos($title, '<br/>') == false) {
+			$t = $this->setStringIntoTag($title, 'legend');
+		} else {
+			if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false) {
+				$xtraspace = '<br/>';
+			}
+			$t = $this->setStringIntoTag($title, 'legend'
+				, array('class' => 'box_legend'));
+		}
+		return $xtraspace . $this->setStringIntoTag($t
+			. implode('<br/>', $link)
 			, 'fieldset', array('class' => 'box_color'));
 	}
     /**
@@ -536,8 +645,7 @@ class CommonView  {
      * @param string $sType
      * @return string
      */
-    public function setFormButton($sType)
-    {
+    public function setFormButton($sType){
         switch(strtolower($sType)) {
             case 'reset':
                 $sReturn = '<input type="reset" value="Reset" />'
@@ -565,8 +673,7 @@ class CommonView  {
 	 * @param array $features
 	 * @return string
 	 */
-	public function setFormLine($label, $field, $value, $type = 'text', $features = null)
-    {
+	public function setFormLine($label, $field, $value, $type = 'text', $features = null){
         switch($type) {
             case 'text':
     			$string2return = '<tr><td>' . $label . '</td>'
@@ -619,8 +726,7 @@ class CommonView  {
 	 * @param array $aFeatures
 	 * @return string
 	 */
-	public function setHighlightedLink($sAction, $sName, $aFeatures = null)
-    {
+	public function setHighlightedLink($sAction, $sName, $aFeatures = null){
         if (isset($_GET)) {
             $sTemplate = $this->setArray2String4Url('&amp;', $_GET);
         } else {
@@ -645,9 +751,18 @@ class CommonView  {
 	 * @param string $sType
 	 * @return string
 	 */
-	public function setIcons($sType)
-	{
-		return '<img src="images/' . $sType . '.gif" alt="' . $sType . '" />';
+	public function setIcons($sType){
+		return '<img src="/new/images/' . $sType . '.gif" '
+			. 'alt="' . $sType . '" width="16" height="16" />';
+	}
+	/**
+	 * Returns javascript codes
+	 * @param $content
+	 * @return string
+	 */
+	public function setJavascriptContent($content) {
+		return PHP_EOL . '<script type="text/javascript"><!--'
+            . PHP_EOL . $content . PHP_EOL . '//--></script>' . PHP_EOL;
 	}
 	/**
 	 * Returns a single cell preformated
@@ -658,9 +773,9 @@ class CommonView  {
 	 * @param string $sStyle
 	 * @return string
 	 */
-	public function setSingleCell($sRowClass, $sValue, $sStyle = null)
-	{
-        if (is_numeric(str_replace(array(',', '.', '%'), array('', '', ''), $sValue))) {
+	public function setSingleCell($sRowClass, $sValue, $sStyle = null){
+        if (is_numeric(str_replace(array(',', '.', '%')
+        	, array('', '', ''), $sValue))) {
             $sStyle .= 'text-align: right;';
         }
 	    if ($sStyle != null) {
@@ -679,8 +794,7 @@ class CommonView  {
 	 * @param array $features
 	 * @return string
 	 */
-	public function setStringIntoShortTag($sTag, $features = null)
-	{
+	public function setStringIntoShortTag($sTag, $features = null){
 	    $attributes = '';
 	    if ($features != null) {
 	        foreach($features as $key => $value) {
@@ -690,7 +804,7 @@ class CommonView  {
 	                    $attributes .= $key2 . ':' . $value2 . ';';
 	                }
 	            } else {
-	                $attributes .= $value;
+	                $attributes .= str_replace('"', '\'', $value);
 	            }
 	            $attributes .= '"';
 	        }
@@ -705,7 +819,7 @@ class CommonView  {
 	 * @param array $features
 	 * @return string
 	 */
-	public function setStringIntoTag($sString, $sTag, $features = null) {
+	public function setStringIntoTag($sString, $sTag, $features = null){
 	    $attributes = '';
 	    if ($features != null) {
 	        foreach($features as $key => $value) {

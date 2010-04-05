@@ -303,8 +303,6 @@ class RomanianSalary extends BasicView {
 				switch (date('n', $lngDate)) {
 					case 1:
 					case 2:
-                        $nReturn = 87200;
-                        break;
 					case 3:
 					case 4:
 					case 5:
