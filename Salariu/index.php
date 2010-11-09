@@ -189,8 +189,8 @@ class Salariu extends RomanianSalary {
 		global $msg_initial_label;
 		$overtime = $this->getOvertimes();
 		$brut = ($_REQUEST['sn'] * (1 + $_REQUEST['sc']/100)
-    		+ $_REQUEST['pb'] + $_REQUEST['pn']
-    		+ $overtime['os175'] + $overtime['os200']) * pow(10, 4);
+    		+ $_REQUEST['pb'] + $overtime['os175'] + $overtime['os200']) 
+    		* pow(10, 4);
 		$sReturn[] = $this->setFormRow(
 			str_replace('%1', date('d.m.Y', $this->exchangeRateDate)
 				, $msg_final_label['exchange_rate']), 10000);
@@ -199,6 +199,8 @@ class Salariu extends RomanianSalary {
 		$sReturn[] = $this->setFormRow(
 			$msg_initial_label['cumulated_added_value']
 				, $_REQUEST['sn']*$_REQUEST['sc']*100);
+		$sReturn[] = $this->setFormRow($msg_initial_label['bonus_brutto']
+			, $_REQUEST['pb']*10000);
 		$sReturn[] = $this->setFormRow(
 			str_replace(array('%1', '%2')
 				, array($msg_choice['overtime_hours']['choice_1'], '175%')
@@ -220,9 +222,10 @@ class Salariu extends RomanianSalary {
 			, $amount['somaj']);
 		$sReturn[] = $this->setFormRow($msg_final_label['tax_payable']
 			, $amount['impozit']);
-		$net = ($brut - $amount['cas'] - $amount['somaj'] - $amount['sanatate']
-				- $amount['impozit'] - $_REQUEST['pn']);
-		//$sReturn[] = $this->setFormRow('&nbsp;', '&nbsp;', 1);
+		$net = $brut - $amount['cas'] - $amount['somaj'] - $amount['sanatate']
+				- $amount['impozit'] + $_REQUEST['pn']*10000;
+		$sReturn[] = $this->setFormRow($msg_initial_label['bonus_netto']
+			, $_REQUEST['pn']*10000);
 		$sReturn[] = $this->setFormRow($msg_final_label['salary_netto'], $net);
 		$sReturn[] = $this->setFormRow(
 			str_replace(array('%1', '%2')
@@ -335,10 +338,7 @@ class Salariu extends RomanianSalary {
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/salariu/" : "http://apps.sourceforge.net/piwik/salariu/");
 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 </script><script type="text/javascript">
-piwik_action_name = '';
-piwik_idsite = 1;
-piwik_url = pkBaseURL + "piwik.php";
-piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+piwik_action_name = '';piwik_idsite = 1;piwik_url = pkBaseURL + "piwik.php";piwik_log(piwik_action_name, piwik_idsite, piwik_url);
 </script>
 <object><noscript><p><img src="http://apps.sourceforge.net/piwik/salariu/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
 <!-- End Piwik Tag -->
