@@ -16,7 +16,7 @@ require_once 'view.class.php';
  *
  * @package PGD
  * @author Popiniuc Daniel-Gheorghe <danielpopiniuc@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @abstract
  * @copyright Popiniuc Daniel-Gheorghe
  * @since 1.0.0
@@ -34,14 +34,17 @@ class RomanianSalary extends BasicView {
 			$aReturn['somaj'] = $this->setUnemploymentTax($_REQUEST['ym']
 				, $longBase);
         }
+        $aReturn['ba'] = $this->setFoodTicketsValue($_REQUEST['ym'])
+        	* ($this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc'])
+        		- $_REQUEST['zfb']);
         $rest = $longBase - $aReturn['cas']
         	- $aReturn['sanatate'] - $aReturn['somaj']
         	- $this->setPersonalDeduction($_REQUEST['ym']
         		, $longBase, $_REQUEST['pi']);
-        $aReturn['impozit'] = $this->setIncomeTax($_REQUEST['ym'], $rest);
-        $aReturn['ba'] = $this->setFoodTicketsValue($_REQUEST['ym'])
-        	* ($this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc'])
-        		- $_REQUEST['zfb']);
+        if ($_REQUEST['ym'] >= mktime(0, 0, 0, 7, 1, 2010)) {
+			$rest += round($aReturn['ba'], -4);
+		}
+	    $aReturn['impozit'] = $this->setIncomeTax($_REQUEST['ym'], $rest);
         $aReturn['zile'] = $this->setWorkingDaysInMonth($_REQUEST['ym']
         	, $_REQUEST['pc']);
 		return $aReturn;
