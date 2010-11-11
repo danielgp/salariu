@@ -147,6 +147,11 @@ class Salariu extends RomanianSalary {
 				, array('size' => 1)), 1);
 		unset($choices);
 		$sReturn[] = $this->setFormRow(
+			$msg_initial_label['seizures_amount']
+			, $this->setStringIntoShortTag('input'
+				, array('name' => 'szamnt', 'value' => @$_REQUEST['szamnt']
+					, 'size' => 10)), 1);
+		$sReturn[] = $this->setFormRow(
 			$msg_initial_label['working_days_wo_food_bonuses']
 			, $this->setStringIntoShortTag('input'
 				, array('name' => 'zfb', 'value' => @$_REQUEST['zfb']
@@ -227,6 +232,10 @@ class Salariu extends RomanianSalary {
 		$sReturn[] = $this->setFormRow($msg_initial_label['bonus_netto']
 			, $_REQUEST['pn']*10000);
 		$sReturn[] = $this->setFormRow($msg_final_label['salary_netto'], $net);
+		$sReturn[] = $this->setFormRow($msg_initial_label['seizures_amount']
+			, $_REQUEST['szamnt']*10000);
+		$sReturn[] = $this->setFormRow($msg_final_label['salary_netto_cash']
+			, ($net - $_REQUEST['szamnt']*10000));
 		$sReturn[] = $this->setFormRow(
 			str_replace(array('%1', '%2')
 				, array($month_names[date('m', $_GET['ym'])]
@@ -234,15 +243,14 @@ class Salariu extends RomanianSalary {
 				, $msg_final_label['working_days'])
 			, $amount['zile'], 'value');
 		$sReturn[] = $this->setFormRow(
-			str_replace('%1', $msg_choice['food_bonuses']['choice_qty']
-				, $msg_final_label['food_bonuses'])
-			, $amount['zile'] - $_REQUEST['zfb'], 'value');
-		$sReturn[] = $this->setFormRow(
-			str_replace('%1', $msg_choice['food_bonuses']['choice_amt']
+			str_replace(array('%1', '%2', '%3')
+				, array($msg_choice['food_bonuses']['choice_amt'] 
+					, $msg_choice['food_bonuses']['choice_qty'] 
+					, ($amount['zile'] - $_REQUEST['zfb']))
 				, $msg_final_label['food_bonuses'])
 			, $amount['ba']);
 		$sReturn[] = $this->setFormRow($msg_final_label['total']
-			, ($net + $amount['ba']));
+			, ($net + $amount['ba'] - $_REQUEST['szamnt']*10000));
 		return $this->setStringIntoTag(
 				$this->setStringIntoTag($msg_category_final, 'legend')
 				. $this->setStringIntoTag(implode(PHP_EOL, $sReturn)
@@ -258,10 +266,11 @@ class Salariu extends RomanianSalary {
     	switch($text) {
 			case $msg_initial_label['negociated_salary']:
     		case $msg_final_label['salary_brutto']:
-    		case $msg_final_label['salary_netto']:
+    		case $msg_final_label['salary_netto_cash']:
 	    		$defaultCellStyle = array_merge($defaultCellStyle
 	    			, array('style' => 'color: #000000; font-weight: bold;'));
     			break;
+    		case $msg_initial_label['seizures_amount']:
     		case $msg_final_label['pension']:
     		case $msg_final_label['state_health_insurance']:
     		case $msg_final_label['unemployment']:

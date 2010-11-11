@@ -1,4 +1,9 @@
 <?php
+foreach($_REQUEST as $key => $value) {
+	if ($value == '') {
+		unset($_REQUEST[$key]);
+	}
+}
 if (!isset($_REQUEST['sn'])) {
 	$_REQUEST['sn'] = 740;
 }
@@ -19,5 +24,8 @@ if (!isset($_REQUEST['os200'])) {
 }
 if (!isset($_REQUEST['zfb'])) {
 	$_REQUEST['zfb'] = 0;
+}
+if (!isset($_REQUEST['szamnt'])) {
+	$_REQUEST['szamnt'] = 0;
 }
 ?>
