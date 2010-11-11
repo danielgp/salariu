@@ -38,12 +38,15 @@ class Salariu extends RomanianSalary {
 			$this->exchangeRatesValue[$key] = 1;
 		}
 		$xml = new XMLReader();
-		$x = 'nbrfxrates.xml';
-		/*if (($_SERVER['SERVER_NAME'] == 'localhost')
-			|| ($_SERVER['SERVER_NAME'] == '127.0.0.1')) {
+		$x = EXCHANGE_RATES_LOCAL;
+		if ((filemtime(EXCHANGE_RATES_LOCAL) + 24 * 60 * 60) < time()) {
+			$x = EXCHANGE_RATES_SOURCE;
 			$f = file_get_contents(EXCHANGE_RATES_SOURCE);
-			file_put_contents($x, $f);
-		}*/
+			if ($f !== false) {
+				chmod(EXCHANGE_RATES_LOCAL, 0666); 
+				file_put_contents(EXCHANGE_RATES_LOCAL, $f);
+			}
+		}
 		if ($xml->open($x, 'UTF-8')) {
 			while ($xml->read()) {
 				if ($xml->nodeType == XMLReader::ELEMENT) {
@@ -198,7 +201,7 @@ class Salariu extends RomanianSalary {
     		* pow(10, 4);
 		$sReturn[] = $this->setFormRow(
 			str_replace('%1', date('d.m.Y', $this->exchangeRateDate)
-				, $msg_final_label['exchange_rate']), 10000);
+				, $msg_final_label['exchange_rate']), 1000000);
 		$sReturn[] = $this->setFormRow($msg_initial_label['negociated_salary']
 				, $_REQUEST['sn']*10000);
 		$sReturn[] = $this->setFormRow(
@@ -252,7 +255,10 @@ class Salariu extends RomanianSalary {
 		$sReturn[] = $this->setFormRow($msg_final_label['total']
 			, ($net + $amount['ba'] - $_REQUEST['szamnt']*10000));
 		return $this->setStringIntoTag(
-				$this->setStringIntoTag($msg_category_final, 'legend')
+				$this->setStringIntoTag(str_replace(array('%1', '%2')
+						, array($month_names[date('m', $_GET['ym'])]
+						, date('Y', $_GET['ym'])), $msg_category_final)
+					, 'legend')
 				. $this->setStringIntoTag(implode(PHP_EOL, $sReturn)
 					, 'table', array('border' => 0, 'cellpadding' => 0
 						, 'cellspacing' => 0))

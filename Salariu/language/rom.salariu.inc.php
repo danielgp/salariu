@@ -1,5 +1,5 @@
 <?php
-$msg_category_final = 'Rezultate';
+$msg_category_final = 'Rezultate pt. luna %1, %2';
 $msg_category_initial = 'Date initiale';
 $msg_choice['overtime_hours']['choice_1'] = 'normale';
 $msg_choice['overtime_hours']['choice_2'] = 'speciale';
