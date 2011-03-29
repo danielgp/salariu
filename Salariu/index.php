@@ -39,14 +39,14 @@ class Salariu extends RomanianSalary {
 		}
 		$xml = new XMLReader();
 		$x = EXCHANGE_RATES_LOCAL;
-		if ((filemtime(EXCHANGE_RATES_LOCAL) + 24 * 60 * 60) < time()) {
+		/*if ((filemtime(EXCHANGE_RATES_LOCAL) + 24 * 60 * 60) < time()) {
 			$x = EXCHANGE_RATES_SOURCE;
 			$f = file_get_contents(EXCHANGE_RATES_SOURCE);
 			if ($f !== false) {
 				chmod(EXCHANGE_RATES_LOCAL, 0666); 
 				file_put_contents(EXCHANGE_RATES_LOCAL, $f);
 			}
-		}
+		}*/
 		if ($xml->open($x, 'UTF-8')) {
 			while ($xml->read()) {
 				if ($xml->nodeType == XMLReader::ELEMENT) {
@@ -159,6 +159,11 @@ class Salariu extends RomanianSalary {
 			, $this->setStringIntoShortTag('input'
 				, array('name' => 'zfb', 'value' => @$_REQUEST['zfb']
 					, 'size' => 2)), 1);
+		$sReturn[] = $this->setFormRow(
+			$msg_initial_label['gift_bonuses']
+			, $this->setStringIntoShortTag('input'
+				, array('name' => 'gbns', 'value' => @$_REQUEST['gbns']
+					, 'size' => 2)), 1);
 		$sReturn[] = $this->setStringIntoTag(
 			$this->setStringIntoTag($msg_initial_requirement
 					. $this->setStringIntoShortTag('input'
@@ -252,8 +257,11 @@ class Salariu extends RomanianSalary {
 					, ($amount['zile'] - $_REQUEST['zfb']))
 				, $msg_final_label['food_bonuses'])
 			, $amount['ba']);
+		$sReturn[] = $this->setFormRow($msg_initial_label['gift_bonuses']
+			, $amount['gbns']);
 		$sReturn[] = $this->setFormRow($msg_final_label['total']
-			, ($net + $amount['ba'] - $_REQUEST['szamnt']*10000));
+			, ($net + $amount['ba'] + + $amount['gbns'] 
+				- $_REQUEST['szamnt']*10000));
 		return $this->setStringIntoTag(
 				$this->setStringIntoTag(str_replace(array('%1', '%2')
 						, array($month_names[date('m', $_GET['ym'])]

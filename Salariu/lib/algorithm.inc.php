@@ -44,6 +44,10 @@ class RomanianSalary extends BasicView {
         if ($_REQUEST['ym'] >= mktime(0, 0, 0, 7, 1, 2010)) {
 			$rest += round($aReturn['ba'], -4);
 		}
+        $aReturn['gbns'] = $_REQUEST['gbns'] * pow(10, 4);
+        if ($_REQUEST['ym'] >= mktime(0, 0, 0, 10, 1, 2010)) {
+			$rest += round($aReturn['gbns'], -4);
+		}
 	    $aReturn['impozit'] = $this->setIncomeTax($_REQUEST['ym'], $rest);
         $aReturn['zile'] = $this->setWorkingDaysInMonth($_REQUEST['ym']
         	, $_REQUEST['pc']);
@@ -77,22 +81,29 @@ class RomanianSalary extends BasicView {
 		switch(gmdate('Y', $lngDate)) {
 			case 2002:
 			case 2003:
-			case 2007:
-			case 2008:
                 $nReturn = 170;
                 break;
 			case 2004:
                 $nReturn = 172;
                 break;
 			case 2005:
-			case 2010:
                 $nReturn = 171.33;
-                break;
+				break;
 			case 2006:
                 $nReturn = 168.66;
                 break;
+			case 2007:
+			case 2008:
+                $nReturn = 170;
+                break;
 			case 2009:
                 $nReturn = 169.33;
+                break;
+			case 2010:
+                $nReturn = 171.33;
+                break;
+			case 2011:
+                $nReturn = 171.66;
                 break;
 			default:
                 $nReturn = 0;
@@ -303,24 +314,18 @@ class RomanianSalary extends BasicView {
 				}
 				break;
 			case 2010:
+                $nReturn = 87200;
+				break;
+			case 2011:
 				switch (date('n', $lngDate)) {
 					case 1:
 					case 2:
-					case 3:
-					case 4:
-					case 5:
-					case 6:
-					case 7:
-					case 8:
                         $nReturn = 87200;
                         break;
-					case 9:
-					case 10:
-					case 11:
-					case 12:
-                        $nReturn = 87200;
+                    default:
+                        $nReturn = 90000;
                         break;
-				}
+                }
 				break;
 			default:
                 $nReturn = 0;
@@ -351,8 +356,7 @@ class RomanianSalary extends BasicView {
                     $nReturn = 5.5;
                 }
                 break;
-            case 2009:
-            case 2010:
+            default:
                 $nReturn = 5.5;
             	break;
         }
@@ -392,6 +396,14 @@ class RomanianSalary extends BasicView {
             case 2007:
                 $base = min($lngBrutto, 5 *  12700000);
                 break;
+            case 2008:
+            case 2009:
+            case 2010: //1836
+                $base = $lngBrutto;
+                break;
+            case 2011:
+                $base = min($lngBrutto, 5 *  20220000);
+                break;
             default:
                 $base = $lngBrutto;
                 break;
@@ -429,6 +441,7 @@ class RomanianSalary extends BasicView {
                 }
                 break;
             case 2010:
+            case 2011:
                 $nReturn = 10.5;
                 break;
             default:
@@ -642,6 +655,26 @@ class RomanianSalary extends BasicView {
 				$daying[$counter] = mktime(0, 0, 0, 6, 8, date('Y', $lngDate));
 				// Rusalii
 				break;
+			case '2010':
+				$daying[$counter] = mktime(0, 0, 0, 4, 5, date('Y', $lngDate));
+				/**
+				 * Easter 2nd day according to Romanian calendar
+				 * (1st Day it is a Legal Holiday anyway)
+				 */
+				$counter++;
+				$daying[$counter] = mktime(0, 0, 0, 5, 24, date('Y', $lngDate));
+				// Rusalii
+				break;
+			case '2011':
+				$daying[$counter] = mktime(0, 0, 0, 4, 25, date('Y', $lngDate));
+				/**
+				 * Easter 2nd day according to Romanian calendar
+				 * (1st Day it is a Legal Holiday anyway)
+				 */
+				$counter++;
+				$daying[$counter] = mktime(0, 0, 0, 6, 13, date('Y', $lngDate));
+				// Rusalii
+				break;
 		}
 		if (date('Y', $lngDate) >= 2009) {
 			// St. Marry
@@ -721,9 +754,7 @@ class RomanianSalary extends BasicView {
             case 2007:
                 $nReturn = 1;
                 break;
-            case 2008:
-            case 2009:
-            case 2010:
+            default:
                 $nReturn = 0.5;
                 break;
         }

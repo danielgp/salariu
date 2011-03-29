@@ -28,4 +28,7 @@ if (!isset($_REQUEST['zfb'])) {
 if (!isset($_REQUEST['szamnt'])) {
 	$_REQUEST['szamnt'] = 0;
 }
+if (!isset($_REQUEST['gbns'])) {
+	$_REQUEST['gbns'] = 0;
+}
 ?>

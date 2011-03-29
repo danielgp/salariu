@@ -21,6 +21,7 @@ $msg_initial_label['overtime_hours'] = 'Ore suplimentare %1 (%2)';
 $msg_initial_label['persons_supported'] = 'Persoane aflate in intretinere';
 $msg_initial_label['seizures_amount'] = 'Suma popriri';
 $msg_initial_label['working_days_wo_food_bonuses'] = 'Zile lucrate fara bonuri de alimente';
+$msg_initial_label['gift_bonuses'] = 'Valoare bonuri cadou (impozabile din Oct. 2010)';
 $msg_initial_requirement = 'Toate campurile trebuiesc completate!';
 $msg_final_label['amount_overtime'] = 'Suma aferenta orelor suplimentare %1 (%2)';
 $msg_final_label['exchange_rate'] = 'Rata de schimb valutar la data %1';
