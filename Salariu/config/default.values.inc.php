@@ -32,4 +32,3 @@ if (!isset($_REQUEST['szamnt'])) {
 if (!isset($_REQUEST['gbns'])) {
     $_REQUEST['gbns'] = 0;
 }
-?>
