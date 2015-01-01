@@ -1,0 +1,125 @@
+# English translations for Salariu package.
+# Copyright (C) 2015 Daniel Popiniuc
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Salariu\n"
+"POT-Creation-Date: 2015-01-01 17:09-0800\n"
+"PO-Revision-Date: 2015-01-01 17:09+0100\n"
+"Last-Translator: Daniel Popiniuc <danielpopiniuc@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "i18n_ApplicationName"
+msgstr "Salary according to Romanian legislation"
+
+msgid "i18n_Disclaimer"
+msgstr "The author cannot be liable by any input data or results, included but not limited to any implication of these (anywhere and whomever there might be these)!"
+
+msgid "i18n_Form_Disclaimer"
+msgstr "All the fields required to be filled!"
+
+msgid "i18n_Form_Label_AdditionalBruttoAmount"
+msgstr "Additional brutto amount"
+
+msgid "i18n_Form_Label_AdditionalNettoAmount"
+msgstr "Additional netto amount"
+
+msgid "i18n_Form_Label_BruttoSalary"
+msgstr "Brutto salary"
+
+msgid "i18n_Form_Label_CalculationMonth"
+msgstr "Calculation month"
+
+msgid "i18n_Form_Label_CatholicEasterFree"
+msgstr "Catholic Ester considered free?"
+
+msgid "i18n_Form_Label_CatholicEasterFree_ChoiceNo"
+msgstr "No"
+
+msgid "i18n_Form_Label_CatholicEasterFree_ChoiceYes"
+msgstr "Yes"
+
+msgid "i18n_Form_Label_CumulatedAddedValue"
+msgstr "Cummulated increase percentage"
+
+msgid "i18n_Form_Label_ExchangeRateAtDate"
+msgstr "Exchange rate at %1"
+
+msgid "i18n_Form_Label_ExciseTax"
+msgstr "Excise tax"
+
+msgid "i18n_Form_Label_FoodBonuses"
+msgstr "Food bonuses %s (%s = %d)"
+
+msgid "i18n_Form_Label_FoodBonusesChoiceNo"
+msgstr "no."
+
+msgid "i18n_Form_Label_FoodBonusesChoiceValue"
+msgstr "Value"
+
+msgid "i18n_Form_Label_FoodBonusesValue"
+msgstr "Food bonuses value (taxed since Oct. 2010)"
+
+msgid "i18n_Form_Label_HealthTax"
+msgstr "Health tax"
+
+msgid "i18n_Form_Label_NegotiatedSalary"
+msgstr "Negotiated salary"
+
+msgid "i18n_Form_Label_NettoSalary"
+msgstr "Netto salary"
+
+msgid "i18n_Form_Label_NettoSalaryCash"
+msgstr "Netto cash salary"
+
+msgid "i18n_Form_Label_OvertimeAmount"
+msgstr "Amount for %s overtime (%2)"
+
+msgid "i18n_Form_Label_OvertimeChoice1"
+msgstr "normal"
+
+msgid "i18n_Form_Label_OvertimeChoice2"
+msgstr "special"
+
+msgid "i18n_Form_Label_OvertimeHours"
+msgstr "Overtime hours %s (%s)"
+
+msgid "i18n_Form_Label_PensionFund"
+msgstr "Pension fund"
+
+msgid "i18n_Form_Label_PersonsSupported"
+msgstr "Persons under-care"
+
+msgid "i18n_Form_Label_SeisureAmout"
+msgstr "Seisure amount"
+
+msgid "i18n_Form_Label_Total"
+msgstr "Total"
+
+msgid "i18n_Form_Label_WorkedDaysWithoutFoodBonuses"
+msgstr "Worked days w/o food bonuses (holiday, sick leave)"
+
+msgid "i18n_Form_Label_WorkingDays"
+msgstr "Working days"
+
+msgid "i18n_Form_Button_Calculate"
+msgstr "Calculate"
+
+msgid "i18n_Form_Button_Recalculate"
+msgstr "Recalculate"
+
+msgid "i18n_Form_Button_Reset"
+msgstr "Reset everything to default values"
+
+msgid "i18n_FieldsetLabel_Inputs"
+msgstr "Calculation parameters"
+
+msgid "i18n_FieldsetLabel_Results"
+msgstr "Results for the month %s year %d"
