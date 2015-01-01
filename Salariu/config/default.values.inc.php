@@ -6,7 +6,7 @@ foreach ($_REQUEST as $key => $value) {
     }
 }
 if (!isset($_REQUEST['sn'])) {
-    $_REQUEST['sn'] = 850;
+    $_REQUEST['sn'] = 975;
 }
 if (!isset($_REQUEST['sc'])) {
     $_REQUEST['sc'] = 0;

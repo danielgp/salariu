@@ -110,6 +110,9 @@ class RomanianSalary extends BasicView
             case 2014:
                 $nReturn = 168;
                 break;
+            case 2015:
+                $nReturn = 168.66;
+                break;
             default:
                 $nReturn = 0;
                 break;
@@ -345,6 +348,7 @@ class RomanianSalary extends BasicView
                 }
                 break;
             case 2014:
+            case 2015:
                 $nReturn = 93500;
                 break;
             default:
@@ -394,6 +398,7 @@ class RomanianSalary extends BasicView
      * */
     private function setHealthFundTax($lngDate, $lngBrutto)
     {
+        // http://www.lapensie.com/forum/salariul-mediu-brut.php
         switch (date('Y', $lngDate)) {
             case 2001 :
                 $base = min($lngBrutto, 3 * 4148653);
@@ -436,6 +441,9 @@ class RomanianSalary extends BasicView
             case 2014:
                 $base = min($lngBrutto, 5 * 22980000);
                 break;
+            case 2015:
+                $base = min($lngBrutto, 5 * 23820000);
+                break;
             default:
                 $base = $lngBrutto;
                 break;
@@ -477,6 +485,7 @@ class RomanianSalary extends BasicView
             case 2012:
             case 2013:
             case 2014:
+            case 2015:
                 $nReturn = 10.5;
                 break;
             default :
@@ -621,14 +630,14 @@ class RomanianSalary extends BasicView
 // Easter 2nd day
             } else {
                 $daying[$counter] = mktime(0, 0, 0, date('m'
-                                , easter_date(date('Y', $lngDate))), date('j'
-                                , easter_date(date('Y', $lngDate))), date('Y'
-                                , easter_date(date('Y', $lngDate))));  // Easter 1st day
+                        , easter_date(date('Y', $lngDate))), date('j'
+                        , easter_date(date('Y', $lngDate))), date('Y'
+                        , easter_date(date('Y', $lngDate))));  // Easter 1st day
                 $counter++;
                 $daying[$counter] = mktime(0, 0, 0, date('m'
-                                , easter_date(date('Y', $lngDate))), date('j'
-                                , easter_date(date('Y', $lngDate))) + 1, date('Y'
-                                , easter_date(date('Y', $lngDate)))); // Easter 2nd day
+                        , easter_date(date('Y', $lngDate))), date('j'
+                        , easter_date(date('Y', $lngDate))) + 1, date('Y'
+                        , easter_date(date('Y', $lngDate)))); // Easter 2nd day
             }
         }
         $counter++;
@@ -792,7 +801,7 @@ class RomanianSalary extends BasicView
                     }
                     if ($lngBrutto > 10000000) {
                         $nReturn = $nReturn *
-                                (1 - ($lngBrutto - 10000000) / 20000000);
+                            (1 - ($lngBrutto - 10000000) / 20000000);
                     }
                 }
                 break;
@@ -845,5 +854,3 @@ class RomanianSalary extends BasicView
         return $tmp_value;
     }
 }
-
-?>
