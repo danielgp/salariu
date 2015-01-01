@@ -1,0 +1,22 @@
+{
+    "name": "danielgp/salariu",
+    "description": "Salariu conform legilor din Romania (Salary according to Romanian laws)",
+    "time": "2015-01-01 17:00:00",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name":     "Daniel Popiniuc",
+            "email":    "danielpopiniuc@gmail.com",
+            "role":     "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable":    true,
+    "archive": {
+        "exclude": ["/nbproject", "*.po", "/scss", "/js/tabber.js", "/vendor", "/tests"]
+    }
+}
