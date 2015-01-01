@@ -1,8 +1,10 @@
 <?php
 
-foreach ($_REQUEST as $key => $value) {
-    if ($value == '') {
-        unset($_REQUEST[$key]);
+if (isset($_REQUEST)) {
+    foreach ($_REQUEST as $key => $value) {
+        if ($value == '') {
+            unset($_REQUEST[$key]);
+        }
     }
 }
 if (!isset($_REQUEST['sn'])) {
