@@ -142,7 +142,7 @@ class BasicView extends MultiLanguage
         // Loop through the array of user agents and matching operating systems
         foreach ($OSList as $CurrOS => $Match) {
             // Find a match
-            if (eregi($Match, $_SERVER['HTTP_USER_AGENT'])) {
+            if (preg_match($Match, $_SERVER['HTTP_USER_AGENT'])) {
                 // We found the correct match
                 $sReturn = $CurrOS;
                 break;
