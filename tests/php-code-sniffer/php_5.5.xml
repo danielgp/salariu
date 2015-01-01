@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpcs version="2.1.1">
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\lib\view.class.php" errors="0" warnings="1" fixable="0">
+ <warning line="145" column="17" source="PHPCompatibility.PHP.DeprecatedFunctions" severity="5" fixable="0">The use of function eregi is discouraged from PHP version 5.3; use preg_match instead</warning>
+</file>
+</phpcs>
+

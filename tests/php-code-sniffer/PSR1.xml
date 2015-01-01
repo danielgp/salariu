@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpcs version="2.1.1">
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\index.php" errors="1" warnings="1" fixable="0">
+ <warning line="1" column="1" source="PSR1.Files.SideEffects.FoundWithSymbols" severity="5" fixable="0">A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 6 and the first side effect is on line 3.</warning>
+ <error line="31" column="1" source="PSR1.Classes.ClassDeclaration.MissingNamespace" severity="5" fixable="0">Each class must be in a namespace of at least one level (a top-level vendor name)</error>
+</file>
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\language\enu.inc.php" errors="0" warnings="1" fixable="0">
+ <warning line="1" column="1" source="PSR1.Files.SideEffects.FoundWithSymbols" severity="5" fixable="0">A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 2 and the first side effect is on line 4.</warning>
+</file>
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\language\rom.inc.php" errors="0" warnings="1" fixable="0">
+ <warning line="1" column="1" source="PSR1.Files.SideEffects.FoundWithSymbols" severity="5" fixable="0">A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 2 and the first side effect is on line 4.</warning>
+</file>
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\lib\algorithm.inc.php" errors="1" warnings="1" fixable="0">
+ <warning line="1" column="1" source="PSR1.Files.SideEffects.FoundWithSymbols" severity="5" fixable="0">A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 26 and the first side effect is on line 3.</warning>
+ <error line="26" column="1" source="PSR1.Classes.ClassDeclaration.MissingNamespace" severity="5" fixable="0">Each class must be in a namespace of at least one level (a top-level vendor name)</error>
+</file>
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\lib\mui.class.php" errors="1" warnings="1" fixable="0">
+ <warning line="1" column="1" source="PSR1.Files.SideEffects.FoundWithSymbols" severity="5" fixable="0">A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 26 and the first side effect is on line 14.</warning>
+ <error line="26" column="1" source="PSR1.Classes.ClassDeclaration.MissingNamespace" severity="5" fixable="0">Each class must be in a namespace of at least one level (a top-level vendor name)</error>
+</file>
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\lib\view.class.php" errors="1" warnings="1" fixable="0">
+ <warning line="1" column="1" source="PSR1.Files.SideEffects.FoundWithSymbols" severity="5" fixable="0">A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 26 and the first side effect is on line 14.</warning>
+ <error line="26" column="1" source="PSR1.Classes.ClassDeclaration.MissingNamespace" severity="5" fixable="0">Each class must be in a namespace of at least one level (a top-level vendor name)</error>
+</file>
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\lib\view.common.class.php" errors="2" warnings="0" fixable="0">
+ <error line="25" column="1" source="PSR1.Classes.ClassDeclaration.MissingNamespace" severity="5" fixable="0">Each class must be in a namespace of at least one level (a top-level vendor name)</error>
+ <error line="123" column="13" source="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" severity="5" fixable="0">Method name &quot;CommonView::LocalTime2Seconds&quot; is not in camel caps format</error>
+</file>
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\new\scripts\js.php" errors="0" warnings="1" fixable="0">
+ <warning line="1" column="1" source="PSR1.Files.SideEffects.FoundWithSymbols" severity="5" fixable="0">A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 12 and the first side effect is on line 3.</warning>
+</file>
+<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\new\styles\styles.php" errors="0" warnings="1" fixable="0">
+ <warning line="1" column="1" source="PSR1.Files.SideEffects.FoundWithSymbols" severity="5" fixable="0">A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line 7 and the first side effect is on line 2.</warning>
+</file>
+</phpcs>
+
