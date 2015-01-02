@@ -47,6 +47,7 @@ class Salariu
             'error_dir'           => pathinfo(ini_get('error_log'))['dirname'],
             'error_file'          => 'php' . PHP_VERSION_ID . 'errors_salariu_' . date('Y-m-d') . '.log',
         ];
+
         // generate an error log file that is for this module only and current date
         ini_set('error_log', $this->applicationFlags['error_dir'] . '/' . $this->applicationFlags['error_file']);
         $this->handleLocalizationSalariu();
@@ -601,11 +602,11 @@ class Salariu
     private function setFooterHtml()
     {
         $sReturn   = [];
-        $sReturn[] = '<center>'
-            . '<div class="disclaimer">'
+        $sReturn[] = '<div class="resetOnly author">&copy; 2015 Daniel Popiniuc</div>';
+        $sReturn[] = '<hr/>';
+        $sReturn[] = '<div class="disclaimer">'
             . _('i18n_Disclaimer')
-            . '</div>'
-            . '</center>';
+            . '</div>';
         $sReturn[] = '</body>';
         $sReturn[] = '</html>';
         return implode('', $sReturn);
@@ -620,7 +621,7 @@ class Salariu
                     # se limiteaza pana la luna curenta
                 } else {
                     $crtDate        = mktime(0, 0, 0, $counter2, 1, $counter);
-                    $temp[$crtDate] = strftime('%Y_%m (%B)', $crtDate);
+                    $temp[$crtDate] = strftime('%Y, %m (%B)', $crtDate);
                 }
             }
         }
@@ -710,7 +711,8 @@ class Salariu
             $reset_btn      = $this->setStringIntoShortTag('input', [
                 'type'  => 'reset',
                 'id'    => 'reset',
-                'value' => _('i18n_Form_Button_Reset')
+                'value' => _('i18n_Form_Button_Reset'),
+                'style' => 'color:#000;'
             ]);
             $submit_btn_txt = _('i18n_Form_Button_Calculate');
         }
@@ -723,11 +725,7 @@ class Salariu
         return $this->setStringIntoTag(
                 $this->setStringIntoTag(_('i18n_FieldsetLabel_Inputs'), 'legend')
                 . $this->setStringIntoTag(
-                    $this->setStringIntoTag(implode(PHP_EOL, $sReturn), 'table', [
-                        'border'      => 0,
-                        'cellpadding' => 0,
-                        'cellspacing' => 0
-                    ])
+                    $this->setStringIntoTag(implode('', $sReturn), 'table')
                     , 'form', [
                     'method' => 'get',
                     'action' => $_SERVER['SCRIPT_NAME']
@@ -785,9 +783,8 @@ class Salariu
                 $this->setStringIntoTag(
                     sprintf(_('i18n_FieldsetLabel_Results'), strftime('%B', $_GET['ym']), date('Y', $_GET['ym']))
                     , 'legend')
-                . $this->setStringIntoTag(implode(PHP_EOL, $sReturn)
-                    , 'table', ['border'      => 0, 'cellpadding' => 0
-                    , 'cellspacing' => 0])
+                . $this->setStringIntoTag(implode('', $sReturn)
+                    , 'table')
                 , 'fieldset', ['style' => 'float: left;']);
     }
 
@@ -850,7 +847,7 @@ class Salariu
                 $value2show = $this->setStringIntoTag($value, 'td');
                 break;
         }
-        if ($text != '&nbsp;') {
+        if (!in_array($text, ['', '&nbsp;']) && (strpos($text, '<input') === false)) {
             $text .= ':';
         }
         return $this->setStringIntoTag(
@@ -883,7 +880,7 @@ class Salariu
                 $sReturn[] = '<b>' . $value . '</b>';
             } else {
                 $sReturn[] = '<a href="?'
-                    . (isset($_REQUEST) ? $this->setArray2String4Url('&', $_REQUEST, ['lang']) . '&amp;' : '')
+                    . (isset($_REQUEST) ? $this->setArray2String4Url('&amp;', $_REQUEST, ['lang']) . '&amp;' : '')
                     . 'lang=' . $key
                     . '">' . $value . '</a>';
             }

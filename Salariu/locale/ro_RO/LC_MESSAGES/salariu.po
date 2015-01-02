@@ -20,10 +20,19 @@ msgid "i18n_ApplicationName"
 msgstr "Salariu conform legilor din Romania"
 
 msgid "i18n_Disclaimer"
-msgstr "Autorul nu își asumă nici un fel de răspundere privitoare atât la datele introduse cat nici la rezultatele calculate, inclusiv implicațiile acestora (oriunde și oricare ar putea fi acestea)!"
+msgstr "Programatorul nu își asumă nici un fel de răspundere privitoare atât la datele introduse cat nici la rezultatele calculate, inclusiv implicațiile acestora (oriunde și oricare ar putea fi acestea)!"
+
+msgid "i18n_Form_Button_Calculate"
+msgstr "Calculează"
+
+msgid "i18n_Form_Button_Recalculate"
+msgstr "Recalculează"
+
+msgid "i18n_Form_Button_Reset"
+msgstr "Resetează totul la valorile inițiale"
 
 msgid "i18n_Form_Disclaimer"
-msgstr "Toate campurile trebuiesc completate!"
+msgstr "Toate câmpurile trebuiesc completate!"
 
 msgid "i18n_Form_Label_AdditionalBruttoAmount"
 msgstr "Primă brută"
@@ -111,15 +120,6 @@ msgstr "Zile lucrate fara bonuri de alimente (CO, BO)"
 
 msgid "i18n_Form_Label_WorkingDays"
 msgstr "Zile lucrătoare"
-
-msgid "i18n_Form_Button_Calculate"
-msgstr "Calculează"
-
-msgid "i18n_Form_Button_Recalculate"
-msgstr "Recalculează"
-
-msgid "i18n_Form_Button_Reset"
-msgstr "Resetez totul la valorile initiale"
 
 msgid "i18n_FieldsetLabel_Inputs"
 msgstr "Parametrii de calcul"

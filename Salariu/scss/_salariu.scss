@@ -9,12 +9,22 @@
     top: 5px;
 }
 .disclaimer {
-    background-color: yellow;
+    @extend .gradientGreyGloss2;
     border: solid;
     border-color: grey;
+    border-radius: 3px;
     clear: both;
     color: red; 
     float: none;
+    font-weight: bold;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 3px;
     text-align: center; 
-    width: 50%;
+    width: 30%;
+}
+.author {
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
 }

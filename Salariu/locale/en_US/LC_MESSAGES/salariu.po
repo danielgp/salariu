@@ -20,7 +20,16 @@ msgid "i18n_ApplicationName"
 msgstr "Salary according to Romanian legislation"
 
 msgid "i18n_Disclaimer"
-msgstr "The author cannot be liable by any input data or results, included but not limited to any implication of these (anywhere and whomever there might be these)!"
+msgstr "The developer cannot be liable of any data input or results, included but not limited to any implication of these (anywhere and whomever there might be these)!"
+
+msgid "i18n_Form_Button_Calculate"
+msgstr "Calculate"
+
+msgid "i18n_Form_Button_Recalculate"
+msgstr "Recalculate"
+
+msgid "i18n_Form_Button_Reset"
+msgstr "Reset everything to default values"
 
 msgid "i18n_Form_Disclaimer"
 msgstr "All the fields required to be filled!"
@@ -103,20 +112,14 @@ msgstr "Seisure amount"
 msgid "i18n_Form_Label_Total"
 msgstr "Total"
 
+msgid "i18n_Form_Label_UnemploymentTax"
+msgstr "Unemployment tax"
+
 msgid "i18n_Form_Label_WorkedDaysWithoutFoodBonuses"
 msgstr "Worked days w/o food bonuses (holiday, sick leave)"
 
 msgid "i18n_Form_Label_WorkingDays"
 msgstr "Working days"
-
-msgid "i18n_Form_Button_Calculate"
-msgstr "Calculate"
-
-msgid "i18n_Form_Button_Recalculate"
-msgstr "Recalculate"
-
-msgid "i18n_Form_Button_Reset"
-msgstr "Reset everything to default values"
 
 msgid "i18n_FieldsetLabel_Inputs"
 msgstr "Calculation parameters"

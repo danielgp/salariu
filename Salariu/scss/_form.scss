@@ -8,7 +8,7 @@ input:hover,label:hover,select:hover,textarea:hover {
     background-color:#{$highlightedElement};
     outline: none;
 }
-input[type="button"],input[type="submit"] {
+input[type="button"],input[type="reset"],input[type="submit"] {
     @extend .rounded;
     box-shadow:none;
     margin:0.5em;
