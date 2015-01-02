@@ -107,18 +107,15 @@ class Salariu
                     switch ($xml->localName) {
                         case 'Cube':
                             $v                      = $xml->getAttribute('date');
-                            $this->exchangeRateDate = mktime(0, 0, 0
-                                , substr($v, 5, 2)
-                                , substr($v, -2)
-                                , substr($v, 0, 4));
+                            $this->exchangeRateDate = strtotime($v);
                             break;
                         case 'Rate':
                             if (in_array($xml->getAttribute('currency'), array_keys($this->exchangeRatesDefined))) {
-                                $this->exchangeRatesValue[$xml->getAttribute('currency')] = $xml->readInnerXml();
+                                $c                            = $xml->getAttribute('currency');
+                                $this->exchangeRatesValue[$c] = $xml->readInnerXml();
                                 if (!is_null($xml->getAttribute('multiplier'))) {
-                                    $this->exchangeRatesValue[$xml->getAttribute('currency')] = $this->exchangeRatesValue[
-                                        $xml->getAttribute('currency')] /
-                                        $xml->getAttribute('multiplier');
+                                    $m                            = $xml->getAttribute('multiplier');
+                                    $this->exchangeRatesValue[$c] = $this->exchangeRatesValue[$c] / $m;
                                 }
                             }
                             break;
@@ -157,8 +154,10 @@ class Salariu
         } else {
             $aReturn['somaj'] = $this->setUnemploymentTax($_REQUEST['ym'], $longBase);
         }
-        $aReturn['ba'] = $this->setFoodTicketsValue($_REQUEST['ym']) * ($this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']) - $_REQUEST['zfb']);
-        $rest          = $longBase - $aReturn['cas'] - $aReturn['sanatate'] - $aReturn['somaj'] - $this->setPersonalDeduction($_REQUEST['ym'], $longBase, $_REQUEST['pi']);
+        $wd            = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
+        $aReturn['ba'] = $this->setFoodTicketsValue($_REQUEST['ym']) * ($wd - $_REQUEST['zfb']);
+        $pd            = $this->setPersonalDeduction($_REQUEST['ym'], $longBase, $_REQUEST['pi']);
+        $rest          = $longBase - $aReturn['cas'] - $aReturn['sanatate'] - $aReturn['somaj'] - $pd;
         if ($_REQUEST['ym'] >= mktime(0, 0, 0, 7, 1, 2010)) {
             $rest += round($aReturn['ba'], -4);
         }
@@ -285,7 +284,8 @@ class Salariu
                         $string2return .= '</optgroup>';
                     }
                     $current_group = $temporary_string;
-                    $string2return .= '<optgroup label="' . str_replace($features_array['grouping'], '', $current_group) . '">';
+                    $string2return .= '<optgroup label="'
+                        . str_replace($features_array['grouping'], '', $current_group) . '">';
                 }
             } else {
                 $current_group = '';
@@ -518,6 +518,7 @@ class Salariu
                         $nReturn = 75600;
                         break;
                 }
+                break;
             case 2008:
                 switch (date('n', $lngDate)) {
                     case 1:
@@ -539,6 +540,7 @@ class Salariu
                         $nReturn = 83100;
                         break;
                 }
+                break;
             case 2009:
                 switch (date('n', $lngDate)) {
                     case 1:
@@ -623,45 +625,41 @@ class Salariu
             }
         }
         unset($crtDate);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CalculationMonth')
-            , $this->setArray2Select($temp, @$_REQUEST['ym'], 'ym', ['size' => 1])
-            , 1);
+        $select    = $this->setArray2Select($temp, @$_REQUEST['ym'], 'ym', ['size' => 1]);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CalculationMonth'), $select, 1);
         unset($temp);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NegotiatedSalary')
-            , $this->setStringIntoShortTag('input', [
+        $label     = _('i18n_Form_Label_NegotiatedSalary');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'sn',
                 'value' => @$_REQUEST['sn'],
                 'size'  => 10
             ]) . ' RON', 1);
-        $sReturn[] = $this->setFormRow(
-            _('i18n_Form_Label_CumulatedAddedValue')
-            , $this->setStringIntoShortTag('input', [
+        $label     = _('i18n_Form_Label_CumulatedAddedValue');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'sc',
                 'value' => @$_REQUEST['sc'],
                 'size'  => 2
             ]) . ' %', 1);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_AdditionalBruttoAmount')
-            , $this->setStringIntoShortTag('input', [
+        $label     = _('i18n_Form_Label_AdditionalBruttoAmount');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'pb',
                 'value' => @$_REQUEST['pb'],
                 'size'  => 10
             ]) . ' RON', 1);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_AdditionalNettoAmount')
-            , $this->setStringIntoShortTag('input', [
+        $label     = _('i18n_Form_Label_AdditionalNettoAmount');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'pn',
                 'value' => @$_REQUEST['pn'],
                 'size'  => 10
             ]) . ' RON', 1);
-        $sReturn[] = $this->setFormRow(
-            sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice1'), '175%')
-            , $this->setStringIntoShortTag('input', [
+        $label     = sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice1'), '175%');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'os175',
                 'value' => @$_REQUEST['os175'],
                 'size'  => 2
             ]), 1);
-        $sReturn[] = $this->setFormRow(
-            sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice2'), '200%')
-            , $this->setStringIntoShortTag('input', [
+        $label     = sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice2'), '200%');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'os200',
                 'value' => @$_REQUEST['os200'],
                 'size'  => 2
@@ -677,28 +675,29 @@ class Salariu
             _('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
             _('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
         ];
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CatholicEasterFree')
-            , $this->setArray2Select($choices, @$_REQUEST['pc'], 'pc'
-                , ['size' => 1]), 1);
+        $label     = _('i18n_Form_Label_CatholicEasterFree');
+        $select    = $this->setArray2Select($choices, @$_REQUEST['pc'], 'pc', ['size' => 1]);
+        $sReturn[] = $this->setFormRow($label, $select, 1);
         unset($choices);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_SeisureAmout'), $this->setStringIntoShortTag('input', [
+        $label     = _('i18n_Form_Label_SeisureAmout');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'szamnt',
                 'value' => @$_REQUEST['szamnt'],
                 'size'  => 10
             ]), 1);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_WorkedDaysWithoutFoodBonuses')
-            , $this->setStringIntoShortTag('input', [
+        $label     = _('i18n_Form_Label_WorkedDaysWithoutFoodBonuses');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'zfb',
                 'value' => @$_REQUEST['zfb'],
                 'size'  => 2
             ]), 1);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_FoodBonusesValue')
-            , $this->setStringIntoShortTag('input', [
+        $label     = _('i18n_Form_Label_FoodBonusesValue');
+        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'gbns',
                 'value' => @$_REQUEST['gbns'],
                 'size'  => 2]), 1);
-        $sReturn[] = $this->setStringIntoTag($this->setStringIntoTag(_('i18n_Form_Disclaimer')
-                . $this->setStringIntoShortTag('input', [
+        $label     = _('i18n_Form_Disclaimer');
+        $sReturn[] = $this->setStringIntoTag($this->setStringIntoTag($label . $this->setStringIntoShortTag('input', [
                     'type'  => 'hidden',
                     'name'  => 'action',
                     'value' => $_SERVER['SERVER_NAME']
