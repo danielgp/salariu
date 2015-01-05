@@ -4,28 +4,32 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "20697c5832cf60e7332dd5a75c7bdb8b",
+    "hash": "a30c9c8c454530355c72a9e2e0c6589e",
     "packages": [
         {
             "name": "danielgp/common-lib",
-            "version": "1.0.1",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "627c25586da18b943716a641f4fb0b2b1cce8e80"
+                "reference": "1b2b82539f612db4a38f62099638ca61b4d50d9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/627c25586da18b943716a641f4fb0b2b1cce8e80",
-                "reference": "627c25586da18b943716a641f4fb0b2b1cce8e80",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/1b2b82539f612db4a38f62099638ca61b4d50d9b",
+                "reference": "1b2b82539f612db4a38f62099638ca61b4d50d9b",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
-                "ext-mysqli": "*",
                 "php": ">=5.4"
             },
             "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "source/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -37,8 +41,8 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Informations about environment served via web",
-            "time": "2015-01-04 23:00:00"
+            "description": "Common functions to be used where needed",
+            "time": "2015-01-05 19:50:37"
         },
         {
             "name": "inetsys/phpgettext",
@@ -94,6 +98,7 @@
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": true,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.4"
     },
