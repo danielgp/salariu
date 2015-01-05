@@ -96,14 +96,14 @@ class Salariu
         }
         $xml = new \XMLReader();
         $x   = EXCHANGE_RATES_LOCAL;
-        /* if ((filemtime(EXCHANGE_RATES_LOCAL) + 24 * 60 * 60) < time()) {
-          $x = EXCHANGE_RATES_SOURCE;
-          $f = file_get_contents(EXCHANGE_RATES_SOURCE);
-          if ($f !== false) {
-          chmod(EXCHANGE_RATES_LOCAL, 0666);
-          file_put_contents(EXCHANGE_RATES_LOCAL, $f);
-          }
-          } */
+        if ((filemtime(EXCHANGE_RATES_LOCAL) + 90 * 24 * 60 * 60) < time()) {
+            $x = EXCHANGE_RATES_SOURCE;
+            $f = file_get_contents(EXCHANGE_RATES_SOURCE);
+            if ($f !== false) {
+                chmod(EXCHANGE_RATES_LOCAL, 0666);
+                file_put_contents(EXCHANGE_RATES_LOCAL, $f);
+            }
+        }
         if ($xml->open($x, 'UTF-8')) {
             while ($xml->read()) {
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
@@ -127,9 +127,10 @@ class Salariu
             }
             $xml->close();
         } else {
-            echo '<div style="background-color: red; color: white;">';
-            print_r(error_get_last());
-            echo '</div>';
+            $er = error_get_last();
+            echo '<div style="background-color: red; color: white;">'
+            . utf8_encode(json_encode($er, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT))
+            . '</div>';
         }
     }
 
@@ -459,50 +460,50 @@ class Salariu
             }
         }
         unset($crtDate);
-        $select    = $this->setArray2Select($temp, @$_REQUEST['ym'], 'ym', ['size' => 1]);
+        $select    = $this->setArray2Select($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CalculationMonth'), $select, 1);
         unset($temp);
         $label     = _('i18n_Form_Label_NegotiatedSalary');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'sn',
-                'value' => @$_REQUEST['sn'],
+                'value' => $_REQUEST['sn'],
                 'size'  => 10
             ]) . ' RON', 1);
         $label     = _('i18n_Form_Label_CumulatedAddedValue');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'sc',
-                'value' => @$_REQUEST['sc'],
+                'value' => $_REQUEST['sc'],
                 'size'  => 2
             ]) . ' %', 1);
         $label     = _('i18n_Form_Label_AdditionalBruttoAmount');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'pb',
-                'value' => @$_REQUEST['pb'],
+                'value' => $_REQUEST['pb'],
                 'size'  => 10
             ]) . ' RON', 1);
         $label     = _('i18n_Form_Label_AdditionalNettoAmount');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'pn',
-                'value' => @$_REQUEST['pn'],
+                'value' => $_REQUEST['pn'],
                 'size'  => 10
             ]) . ' RON', 1);
         $label     = sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice1'), '175%');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'os175',
-                'value' => @$_REQUEST['os175'],
+                'value' => $_REQUEST['os175'],
                 'size'  => 2
             ]), 1);
         $label     = sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice2'), '200%');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'os200',
-                'value' => @$_REQUEST['os200'],
+                'value' => $_REQUEST['os200'],
                 'size'  => 2
             ]), 1);
         for ($counter = 0; $counter <= 4; $counter++) {
             $temp[] = $counter;
         }
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PersonsSupported')
-            , $this->setArray2Select($temp, @$_REQUEST['pi'], 'pi', ['size' => 1])
+            , $this->setArray2Select($temp, $_REQUEST['pi'], 'pi', ['size' => 1])
             , 1);
         unset($temp);
         $choices   = [
@@ -510,25 +511,25 @@ class Salariu
             _('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
         ];
         $label     = _('i18n_Form_Label_CatholicEasterFree');
-        $select    = $this->setArray2Select($choices, @$_REQUEST['pc'], 'pc', ['size' => 1]);
+        $select    = $this->setArray2Select($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
         $sReturn[] = $this->setFormRow($label, $select, 1);
         unset($choices);
         $label     = _('i18n_Form_Label_SeisureAmout');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'szamnt',
-                'value' => @$_REQUEST['szamnt'],
+                'value' => $_REQUEST['szamnt'],
                 'size'  => 10
             ]), 1);
         $label     = _('i18n_Form_Label_WorkedDaysWithoutFoodBonuses');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'zfb',
-                'value' => @$_REQUEST['zfb'],
+                'value' => $_REQUEST['zfb'],
                 'size'  => 2
             ]), 1);
         $label     = _('i18n_Form_Label_FoodBonusesValue');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'gbns',
-                'value' => @$_REQUEST['gbns'],
+                'value' => $_REQUEST['gbns'],
                 'size'  => 2]), 1);
         $label     = _('i18n_Form_Disclaimer');
         $sReturn[] = $this->setStringIntoTag($this->setStringIntoTag($label . $this->setStringIntoShortTag('input', [
@@ -706,7 +707,6 @@ class Salariu
 
     private function setHeaderLanguages()
     {
-        global $cfg;
         $sReturn = [];
         foreach ($this->applicationFlags['available_languages'] as $key => $value) {
             if ($_SESSION['lang'] === $key) {
