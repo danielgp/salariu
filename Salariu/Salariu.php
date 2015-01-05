@@ -378,8 +378,7 @@ class Salariu
             $temp[] = $counter;
         }
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PersonsSupported')
-            , $this->setArray2Select($temp, $_REQUEST['pi'], 'pi', ['size' => 1])
-            , 1);
+            , $this->setArray2Select($temp, $_REQUEST['pi'], 'pi', ['size' => 1]), 1);
         unset($temp);
         $choices   = [
             _('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
@@ -425,21 +424,18 @@ class Salariu
             ]);
             $submit_btn_txt = _('i18n_Form_Button_Calculate');
         }
-        $sReturn[] = $this->setFormRow($reset_btn
-            , $this->setStringIntoShortTag('input', [
+        $sReturn[] = $this->setFormRow($reset_btn, $this->setStringIntoShortTag('input', [
                 'type'  => 'submit',
                 'id'    => 'submit',
                 'value' => $submit_btn_txt
             ]), 1);
-        return $this->setStringIntoTag(
-                $this->setStringIntoTag(_('i18n_FieldsetLabel_Inputs'), 'legend')
+        return $this->setStringIntoTag($this->setStringIntoTag(_('i18n_FieldsetLabel_Inputs'), 'legend')
                 . $this->setStringIntoTag(
                     $this->setStringIntoTag(implode('', $sReturn), 'table')
                     , 'form', [
                     'method' => 'get',
                     'action' => $_SERVER['SCRIPT_NAME']
-                ])
-                , 'fieldset', ['style' => 'float: left;']);
+                ]), 'fieldset', ['style' => 'float: left;']);
     }
 
     private function setFormOutput()
@@ -573,7 +569,6 @@ class Salariu
             . '<meta name="viewport" content="width=device-width" />'
             . '<title>' . _('i18n_ApplicationName') . '</title>'
             . $this->setCssFile('css/main.css')
-            . '<link rel="icon" href="favicon.ico" type="image/x-icon"/>'
             . '</head>'
             . '<body>'
             . '<h1>' . _('i18n_ApplicationName') . '</h1>'
@@ -751,10 +746,8 @@ class Salariu
     {
         $counter           = 0;
         $daying [$counter] = mktime(0, 0, 0, 1, 1, date('Y', $lngDate));
-// January 1st
         $counter++;
         $daying[$counter]  = mktime(0, 0, 0, 1, 2, date('Y', $lngDate));
-// January 2nd
         if ($include_easter == 0) {
             $counter++;
             if (date('Y', $lngDate) == '2005') {
@@ -803,54 +796,30 @@ class Salariu
                 break;
             case '2005':
                 $daying[$counter]  = mktime(0, 0, 0, 5, 2, date('Y', $lngDate));
-                /**
-                 * Easter 2nd day according to Romanian calendar
-                 * (1st Day it is a Legal Holiday anyway)
-                 */ break;
+                break;
             case '2006':
                 $daying[$counter]  = mktime(0, 0, 0, 4, 24, date('Y', $lngDate));
-                /**
-                 * Easter 2nd day according to Romanian calendar
-                 * (1st Day it is a Legal Holiday anyway)
-                 */ break;
+                break;
             case '2007':
                 $daying[$counter]  = mktime(0, 0, 0, 4, 9, date('Y', $lngDate));
-                /**
-                 * Easter 2nd day according to Romanian calendar
-                 * (1st Day it is a Legal Holiday anyway)
-                 */ break;
+                break;
             case '2008':
                 $daying[$counter]  = mktime(0, 0, 0, 4, 28, date('Y', $lngDate));
-                /**
-                 * Easter 2nd day according to Romanian calendar
-                 * (1st Day it is a Legal Holiday anyway)
-                 */ break;
+                break;
             case '2009':
                 $daying[$counter]  = mktime(0, 0, 0, 4, 20, date('Y', $lngDate));
-                /**
-                 * Easter 2nd day according to Romanian calendar
-                 * (1st Day it is a Legal Holiday anyway)
-                 */ $counter++;
+                $counter++;
                 $daying[$counter]  = mktime(0, 0, 0, 6, 8, date('Y', $lngDate));
-// Rusalii
                 break;
             case '2010':
                 $daying[$counter]  = mktime(0, 0, 0, 4, 5, date('Y', $lngDate));
-                /**
-                 * Easter 2nd day according to Romanian calendar
-                 * (1st Day it is a Legal Holiday anyway)
-                 */ $counter++;
+                $counter++;
                 $daying[$counter]  = mktime(0, 0, 0, 5, 24, date('Y', $lngDate));
-// Rusalii
                 break;
             case '2011':
                 $daying[$counter]  = mktime(0, 0, 0, 4, 25, date('Y', $lngDate));
-                /**
-                 * Easter 2nd day according to Romanian calendar
-                 * (1st Day it is a Legal Holiday anyway)
-                 */ $counter++;
+                $counter++;
                 $daying [$counter] = mktime(0, 0, 0, 6, 13, date('Y', $lngDate));
-// Rusalii
                 break;
             case '2012':
                 $daying[$counter]  = mktime(0, 0, 0, 4, 16, date('Y', $lngDate));
@@ -1057,23 +1026,13 @@ class Salariu
     {
         switch (date('Y', $lngDate)) {
             case 2001:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                        $nReturn = 1099000;
-                        break;
-                    case 7:
-                    case 8:
-                    case 9:
-                        $nReturn = 1273000;
-                        break;
-                    default:
-                        $nReturn = 1300000;
-                        break;
+                $mnth = date('n', $lngDate);
+                if ($mnth <= 6) {
+                    $nReturn = 1099000;
+                } elseif ($mnth <= 9) {
+                    $nReturn = 1273000;
+                } else {
+                    $nReturn = 1300000;
                 }
                 break;
             case 2002:
@@ -1089,15 +1048,10 @@ class Salariu
                 if ($lngBrutto >= 30000000) {
                     $nReturn = 0;
                 } else {
-                    switch ($sPersons) {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                            $nReturn = 2500000 + ($sPersons * 1000000);
-                            break;
-                        default:
-                            $nReturn = 6500000;
+                    if ($sPersons <= 3) {
+                        $nReturn = 2500000 + ($sPersons * 1000000);
+                    } else {
+                        $nReturn = 6500000;
                     }
                     if ($lngBrutto > 10000000) {
                         $nReturn = $nReturn *
