@@ -334,10 +334,8 @@ class Salariu
                 }
             }
         }
-        unset($crtDate);
         $select    = $this->setArray2Select($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CalculationMonth'), $select, 1);
-        unset($temp);
         $label     = _('i18n_Form_Label_NegotiatedSalary');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'sn',
@@ -375,11 +373,10 @@ class Salariu
                 'size'  => 2
             ]), 1);
         for ($counter = 0; $counter <= 4; $counter++) {
-            $temp[] = $counter;
+            $temp2[] = $counter;
         }
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PersonsSupported')
-            , $this->setArray2Select($temp, $_REQUEST['pi'], 'pi', ['size' => 1]), 1);
-        unset($temp);
+            , $this->setArray2Select($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]), 1);
         $choices   = [
             _('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
             _('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
@@ -387,7 +384,6 @@ class Salariu
         $label     = _('i18n_Form_Label_CatholicEasterFree');
         $select    = $this->setArray2Select($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
         $sReturn[] = $this->setFormRow($label, $select, 1);
-        unset($choices);
         $label     = _('i18n_Form_Label_SeisureAmout');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'szamnt',
@@ -430,9 +426,7 @@ class Salariu
                 'value' => $submit_btn_txt
             ]), 1);
         return $this->setStringIntoTag($this->setStringIntoTag(_('i18n_FieldsetLabel_Inputs'), 'legend')
-                . $this->setStringIntoTag(
-                    $this->setStringIntoTag(implode('', $sReturn), 'table')
-                    , 'form', [
+                . $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
                     'method' => 'get',
                     'action' => $_SERVER['SCRIPT_NAME']
                 ]), 'fieldset', ['style' => 'float: left;']);
