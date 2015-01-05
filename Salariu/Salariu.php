@@ -45,13 +45,8 @@ class Salariu
                 'en_US' => 'EN',
                 'ro_RO' => 'RO',
             ],
-            'default_language'    => 'ro_RO',
-            'error_dir'           => pathinfo(ini_get('error_log'))['dirname'],
-            'error_file'          => 'php' . PHP_VERSION_ID . 'errors_salariu_' . date('Y-m-d') . '.log',
+            'default_language'    => 'ro_RO'
         ];
-
-        // generate an error log file that is for this module only and current date
-        ini_set('error_log', $this->applicationFlags['error_dir'] . '/' . $this->applicationFlags['error_file']);
         $this->handleLocalizationSalariu();
         echo $this->setHeaderHtml();
         echo $this->setFormInput();
@@ -201,222 +196,102 @@ class Salariu
      * */
     private function setFoodTicketsValue($lngDate)
     {
+        $mnth = date('n', $lngDate);
         switch (date('Y', $lngDate)) {
             case 2001:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 28800;
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        $nReturn = 34000;
-                        break;
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 41000;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 28800;
+                } elseif ($mnth <= 8) {
+                    $nReturn = 34000;
+                } else {
+                    $nReturn = 41000;
                 }
                 break;
             case 2002:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 41000;
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        $nReturn = 45000;
-                        break;
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 50000;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 41000;
+                } elseif ($mnth <= 8) {
+                    $nReturn = 45000;
+                } else {
+                    $nReturn = 50000;
                 }
                 break;
             case 2003:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 50000;
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                        $nReturn = 53000;
-                        break;
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 58000;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 50000;
+                } elseif ($mnth <= 9) {
+                    $nReturn = 53000;
+                } else {
+                    $nReturn = 58000;
                 }
                 break;
             case 2004:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 58000;
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        $nReturn = 61000;
-                        break;
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 65000;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 58000;
+                } elseif ($mnth <= 8) {
+                    $nReturn = 61000;
+                } else {
+                    $nReturn = 65000;
                 }
                 break;
             case 2005:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 65000;
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        $nReturn = 68000;
-                        break;
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 70000;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 65000;
+                } elseif ($mnth <= 8) {
+                    $nReturn = 68000;
+                } else {
+                    $nReturn = 70000;
                 }
                 break;
             case 2006:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 70000;
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        $nReturn = 71500;
-                        break;
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 74100;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 70000;
+                } elseif ($mnth <= 8) {
+                    $nReturn = 71500;
+                } else {
+                    $nReturn = 74100;
                 }
                 break;
             case 2007:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                        $nReturn = 74100;
-                        break;
-                    case 8:
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 75600;
-                        break;
+                if ($mnth <= 8) {
+                    $nReturn = 74100;
+                } else {
+                    $nReturn = 75600;
                 }
                 break;
             case 2008:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 75600;
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        $nReturn = 78800;
-                        break;
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 83100;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 75600;
+                } elseif ($mnth <= 8) {
+                    $nReturn = 78800;
+                } else {
+                    $nReturn = 83100;
                 }
                 break;
             case 2009:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 83100;
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                        $nReturn = 84800;
-                        break;
-                    case 9:
-                    case 10:
-                    case 11:
-                    case 12:
-                        $nReturn = 87200;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 83100;
+                } elseif ($mnth <= 8) {
+                    $nReturn = 84800;
+                } else {
+                    $nReturn = 87200;
                 }
                 break;
             case 2010:
                 $nReturn = 87200;
                 break;
             case 2011:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                        $nReturn = 87200;
-                        break;
-                    default:
-                        $nReturn = 90000;
-                        break;
+                if ($mnth <= 2) {
+                    $nReturn = 87200;
+                } else {
+                    $nReturn = 90000;
                 }
                 break;
             case 2012:
                 $nReturn = 90000;
                 break;
             case 2013:
-                if (date('n', $lngDate) < 5) {
+                if ($mnth < 5) {
                     $nReturn = 90000;
                 } else {
                     $nReturn = 93500;
@@ -698,6 +573,7 @@ class Salariu
             . '<meta name="viewport" content="width=device-width" />'
             . '<title>' . _('i18n_ApplicationName') . '</title>'
             . $this->setCssFile('css/main.css')
+            . '<link rel="icon" href="favicon.ico" type="image/x-icon"/>'
             . '</head>'
             . '<body>'
             . '<h1>' . _('i18n_ApplicationName') . '</h1>'
