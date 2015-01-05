@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fffce0b4eff242f057b801a3f630113a",
+    "hash": "20697c5832cf60e7332dd5a75c7bdb8b",
     "packages": [
         {
             "name": "danielgp/common-lib",
@@ -39,6 +39,54 @@
             ],
             "description": "Informations about environment served via web",
             "time": "2015-01-04 23:00:00"
+        },
+        {
+            "name": "inetsys/phpgettext",
+            "version": "1.0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inetsys/phpgettext.git",
+                "reference": "cc8b5b65b8392ef4efe73705d2bde7bc114649e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inetsys/phpgettext/zipball/cc8b5b65b8392ef4efe73705d2bde7bc114649e1",
+                "reference": "cc8b5b65b8392ef4efe73705d2bde7bc114649e1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "gettext.php",
+                    "streams.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU GPL v2"
+            ],
+            "authors": [
+                {
+                    "name": "Danilo Segan",
+                    "homepage": "https://launchpad.net/php-gettext/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Pablo Banderas",
+                    "homepage": "http://www.inetsys.es/",
+                    "role": "Wrapper"
+                }
+            ],
+            "description": "PHP implementation of gettext",
+            "homepage": "https://github.com/inetsys/phpgettext",
+            "keywords": [
+                "gettext",
+                "phpgettext"
+            ],
+            "time": "2014-02-07 10:24:48"
         }
     ],
     "packages-dev": [],

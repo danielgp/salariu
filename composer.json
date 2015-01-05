@@ -13,7 +13,8 @@
     ],
     "require": {
         "php": ">=5.4",
-        "danielgp/common-lib": ">=1.0.1"
+        "danielgp/common-lib": ">=1.0.1",
+        "inetsys/phpgettext":">=1.0.11"
     },
     "minimum-stability": "stable",
     "prefer-stable":    true,

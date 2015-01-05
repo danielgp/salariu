@@ -25,10 +25,10 @@
  * SOFTWARE.
  *
  */
-require_once 'PHP-GetText/gettext.inc';
 require_once 'config/salariu.config.inc.php';
 require_once 'config/default.values.inc.php';
 require_once '../vendor/danielgp/common-lib/source/common.inc.php';
+require_once '../vendor/inetsys/phpgettext/gettext.inc';
 require_once 'salariu.class.inc.php';
 
 $app = new danielgp\salariu\Salariu();
