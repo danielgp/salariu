@@ -199,79 +199,79 @@ class Salariu
         $mnth = date('n', $lngDate);
         switch (date('Y', $lngDate)) {
             case 2001:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 28800;
-                } elseif (date('n', $lngDate) <= 8) {
+                } elseif ($mnth <= 8) {
                     $nReturn = 34000;
                 } else {
                     $nReturn = 41000;
                 }
                 break;
             case 2002:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 41000;
-                } elseif (date('n', $lngDate) <= 8) {
+                } elseif ($mnth <= 8) {
                     $nReturn = 45000;
                 } else {
                     $nReturn = 50000;
                 }
                 break;
             case 2003:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 50000;
-                } elseif (date('n', $lngDate) <= 9) {
+                } elseif ($mnth <= 9) {
                     $nReturn = 53000;
                 } else {
                     $nReturn = 58000;
                 }
                 break;
             case 2004:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 58000;
-                } elseif (date('n', $lngDate) <= 8) {
+                } elseif ($mnth <= 8) {
                     $nReturn = 61000;
                 } else {
                     $nReturn = 65000;
                 }
                 break;
             case 2005:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 65000;
-                } elseif (date('n', $lngDate) <= 8) {
+                } elseif ($mnth <= 8) {
                     $nReturn = 68000;
                 } else {
                     $nReturn = 70000;
                 }
                 break;
             case 2006:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 70000;
-                } elseif (date('n', $lngDate) <= 8) {
+                } elseif ($mnth <= 8) {
                     $nReturn = 71500;
                 } else {
                     $nReturn = 74100;
                 }
                 break;
             case 2007:
-                if (date('n', $lngDate) <= 78) {
+                if ($mnth <= 8) {
                     $nReturn = 74100;
                 } else {
                     $nReturn = 75600;
                 }
                 break;
             case 2008:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 75600;
-                } elseif (date('n', $lngDate) <= 8) {
+                } elseif ($mnth <= 8) {
                     $nReturn = 78800;
                 } else {
                     $nReturn = 83100;
                 }
                 break;
             case 2009:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 83100;
-                } elseif (date('n', $lngDate) <= 8) {
+                } elseif ($mnth <= 8) {
                     $nReturn = 84800;
                 } else {
                     $nReturn = 87200;
@@ -281,7 +281,7 @@ class Salariu
                 $nReturn = 87200;
                 break;
             case 2011:
-                if (date('n', $lngDate) <= 2) {
+                if ($mnth <= 2) {
                     $nReturn = 87200;
                 } else {
                     $nReturn = 90000;
@@ -291,7 +291,7 @@ class Salariu
                 $nReturn = 90000;
                 break;
             case 2013:
-                if (date('n', $lngDate) < 5) {
+                if ($mnth < 5) {
                     $nReturn = 90000;
                 } else {
                     $nReturn = 93500;
@@ -573,7 +573,7 @@ class Salariu
             . '<meta name="viewport" content="width=device-width" />'
             . '<title>' . _('i18n_ApplicationName') . '</title>'
             . $this->setCssFile('css/main.css')
-            . '<link rel="icon" href="image/49cecc168d10078dc029d8bf50c7acd8.ico" type="image/x-icon"/>'
+            . '<link rel="icon" href="favicon.ico" type="image/x-icon"/>'
             . '</head>'
             . '<body>'
             . '<h1>' . _('i18n_ApplicationName') . '</h1>'
