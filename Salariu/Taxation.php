@@ -76,7 +76,7 @@ class Taxation extends Bonuses
             case 2015:
                 $nReturn = 10.5;
                 break;
-            default :
+            default:
                 $nReturn = 0;
                 break;
         }
@@ -169,7 +169,7 @@ class Taxation extends Bonuses
             case 2001:
                 $nReturn = $this->setIncomeTax2001($lngDate, $lngTaxBase);
                 break;
-            case 2002 :
+            case 2002:
                 $nReturn = $this->setIncomeTax2002($lngTaxBase);
                 break;
             case 2003:

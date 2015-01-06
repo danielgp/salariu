@@ -325,56 +325,49 @@ class Salariu extends Taxation
     private function setFormOutput()
     {
         $overtime  = $this->getOvertimes();
-        $brut      = ($_REQUEST['sn'] * (1 + $_REQUEST['sc'] / 100) + $_REQUEST['pb'] + $overtime['os175'] + $overtime['os200']) * pow(10, 4);
-        $sReturn[] = $this->setFormRow(
-            str_replace('%1', date('d.m.Y', $this->exchangeRateDate)
-                , _('i18n_Form_Label_ExchangeRateAtDate')), 1000000);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NegotiatedSalary')
-            , $_REQUEST['sn'] * 10000);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CumulatedAddedValue')
-            , $_REQUEST['sn'] * $_REQUEST['sc'] * 100);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_AdditionalBruttoAmount')
-            , $_REQUEST['pb'] * 10000);
-        $sReturn[] = $this->setFormRow(
-            sprintf(_('i18n_Form_Label_OvertimeAmount'), _('i18n_Form_Label_OvertimeChoice1'), '175%')
-            , ($overtime['os175'] * pow(10, 4)));
-        $sReturn[] = $this->setFormRow(
-            sprintf(_('i18n_Form_Label_OvertimeAmount'), _('i18n_Form_Label_OvertimeChoice2'), '200%')
-            , ($overtime['os200'] * pow(10, 4)));
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_BruttoSalary')
-            , $brut);
+        $additions = $_REQUEST['pb'] + $overtime['os175'] + $overtime['os200'];
+        $brut      = ($_REQUEST['sn'] * (1 + $_REQUEST['sc'] / 100) + $additions) * pow(10, 4);
+        $xRate     = str_replace('%1', date('d.m.Y', $this->exchangeRateDate), _('i18n_Form_Label_ExchangeRateAtDate'));
+        $sReturn[] = $this->setFormRow($xRate, 1000000);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NegotiatedSalary'), $_REQUEST['sn'] * 10000);
+        $prima     = $_REQUEST['sn'] * $_REQUEST['sc'] * 100;
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CumulatedAddedValue'), $prima);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_AdditionalBruttoAmount'), $_REQUEST['pb'] * 10000);
+        $ovTime    = [
+            'main' => _('i18n_Form_Label_OvertimeAmount'),
+            1      => _('i18n_Form_Label_OvertimeChoice1'),
+            2      => _('i18n_Form_Label_OvertimeChoice2'),
+        ];
+        $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[1], '175%'), ($overtime['os175'] * pow(10, 4)));
+        $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[2], '200%'), ($overtime['os200'] * pow(10, 4)));
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_BruttoSalary'), $brut);
         $amount    = $this->getValues($brut);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PensionFund')
-            , $amount['cas']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_HealthTax')
-            , $amount['sanatate']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_UnemploymentTax')
-            , $amount['somaj']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_ExciseTax')
-            , $amount['impozit']);
-        $net       = $brut - $amount['cas'] - $amount['somaj'] - $amount['sanatate'] - $amount['impozit'] + $_REQUEST['pn'] * 10000;
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_AdditionalNettoAmount')
-            , $_REQUEST['pn'] * 10000);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PensionFund'), $amount['cas']);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_HealthTax'), $amount['sanatate']);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_ExciseTax'), $amount['impozit']);
+        $retineri  = $amount['cas'] + $amount['somaj'] + $amount['sanatate'] + $amount['impozit'];
+        $net       = $brut - $retineri + $_REQUEST['pn'] * 10000;
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_AdditionalNettoAmount'), $_REQUEST['pn'] * 10000);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NettoSalary'), $net);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_SeisureAmout')
-            , $_REQUEST['szamnt'] * 10000);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NettoSalaryCash')
-            , ($net - $_REQUEST['szamnt'] * 10000));
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_WorkingDays')
-            , $amount['zile'], 'value');
-        $sReturn[] = $this->setFormRow(
-            sprintf(_('i18n_Form_Label_FoodBonuses'), _('i18n_Form_Label_FoodBonusesChoiceValue'), _('i18n_Form_Label_FoodBonusesChoiceNo'), ($amount['zile'] - $_REQUEST['zfb'])
-            ), $amount['ba']);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_SeisureAmout'), $_REQUEST['szamnt'] * 10000);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NettoSalaryCash'), ($net - $_REQUEST['szamnt'] * 10000));
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_WorkingDays'), $amount['zile'], 'value');
+        $fBonus    = [
+            'main'  => _('i18n_Form_Label_FoodBonuses'),
+            'no'    => _('i18n_Form_Label_FoodBonusesChoiceNo'),
+            'value' => _('i18n_Form_Label_FoodBonusesChoiceValue')
+        ];
+        $fBonusTxt = sprintf($fBonus['main'], $fBonus['value'], $fBonus['no'], ($amount['zile'] - $_REQUEST['zfb']));
+        $sReturn[] = $this->setFormRow($fBonusTxt, $amount['ba']);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_FoodBonusesValue'), $amount['gbns']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_Total')
-            , ($net + $amount['ba'] + + $amount['gbns'] - $_REQUEST['szamnt'] * 10000));
-        return $this->setStringIntoTag(
-                $this->setStringIntoTag(
-                    sprintf(_('i18n_FieldsetLabel_Results'), strftime('%B', $_GET['ym']), date('Y', $_GET['ym']))
-                    , 'legend')
-                . $this->setStringIntoTag(implode('', $sReturn)
-                    , 'table')
-                , 'fieldset', ['style' => 'float: left;']);
+        $total     = ($net + $amount['ba'] + $amount['gbns'] - $_REQUEST['szamnt'] * 10000);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_Total'), $total);
+        $legend    = sprintf(_('i18n_FieldsetLabel_Results'), strftime('%B', $_GET['ym']), date('Y', $_GET['ym']));
+        return $this->setStringIntoTag(implode('', [
+                $this->setStringIntoTag($amount, 'legend'),
+                $this->setStringIntoTag(implode('', $sReturn), 'table')
+                ]), 'fieldset', ['style' => 'float: left;']);
     }
 
     private function setFormRow($text, $value, $type = 'amount')
@@ -422,15 +415,13 @@ class Salariu extends Taxation
                 foreach ($this->exchangeRatesDefined as $key2 => $value2) {
                     $fmt         = new \NumberFormatter($value2['locale'], \NumberFormatter::CURRENCY);
                     $fmt->setAttribute(\NumberFormatter::FRACTION_DIGITS, $value2['decimals']);
-                    $cellValue[] = $this->setStringIntoTag(
-                        $fmt->formatCurrency($value / $this->exchangeRatesValue[$key2], $key2)
-                        , 'td', $defaultCellStyle2);
+                    $finalValue  = $fmt->formatCurrency($value / $this->exchangeRatesValue[$key2], $key2);
+                    $cellValue[] = $this->setStringIntoTag($finalValue, 'td', $defaultCellStyle2);
                 }
                 $value2show = implode('', $cellValue);
                 break;
             case 'value':
-                $value2show = $this->setStringIntoTag($value . $a
-                    , 'td', $defaultCellStyle);
+                $value2show = $this->setStringIntoTag($value . $a, 'td', $defaultCellStyle);
                 break;
             default:
                 $value2show = $this->setStringIntoTag($value, 'td');
@@ -439,9 +430,7 @@ class Salariu extends Taxation
         if (!in_array($text, ['', '&nbsp;']) && (strpos($text, '<input') === false)) {
             $text .= ':';
         }
-        return $this->setStringIntoTag(
-                $this->setStringIntoTag($text, 'td', $defaultCellStyle)
-                . $value2show, 'tr');
+        return $this->setStringIntoTag($this->setStringIntoTag($text, 'td', $defaultCellStyle) . $value2show, 'tr');
     }
 
     private function setHeaderHtml()
