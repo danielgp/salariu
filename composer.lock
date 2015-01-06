@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "56bb097c4dbb70ae45543644b36ff8fd",
+    "hash": "8408c898ba8340cd44c7dcfc9a22d498",
     "packages": [
         {
             "name": "danielgp/common-lib",
-            "version": "1.0.8",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "1b2b82539f612db4a38f62099638ca61b4d50d9b"
+                "reference": "3ae9a04df4554241905dde36291e61c45a7155f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/1b2b82539f612db4a38f62099638ca61b4d50d9b",
-                "reference": "1b2b82539f612db4a38f62099638ca61b4d50d9b",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/3ae9a04df4554241905dde36291e61c45a7155f7",
+                "reference": "3ae9a04df4554241905dde36291e61c45a7155f7",
                 "shasum": ""
             },
             "require": {
@@ -26,9 +26,10 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "": "source/"
-                }
+                "classmap": [
+                    "RomanianHolidays.php",
+                    "CommonCode.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -42,7 +43,7 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-01-05 19:50:37"
+            "time": "2015-01-06 15:07:02"
         },
         {
             "name": "inetsys/phpgettext",

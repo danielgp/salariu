@@ -12,14 +12,19 @@
     ],
     "require": {
         "php": ">=5.4",
-        "danielgp/common-lib": ">=1.0.8",
+        "danielgp/common-lib": ">=1.1.2",
         "inetsys/phpgettext": ">=1.0.11"
     },
     "autoload": {
         "psr-4": {
             "": "Salariu/",
             "danielgp\\common_lib\\": "vendor/danielgp/common-lib/"
-        }
+        },
+        "classmap": [
+            "Salariu/Bonuses.php",
+            "Salariu/Taxation.php",
+            "Salariu/Salariu.php"
+        ]
     },
     "minimum-stability": "stable",
     "prefer-stable": true,

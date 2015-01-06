@@ -280,7 +280,7 @@ class Salariu extends Taxation
                     'name'  => 'action',
                     'value' => $_SERVER['SERVER_NAME']
                 ]), 'td', ['colspan' => 2, 'style' => 'color: red;']), 'tr');
-        if (isset($_GET['ym'])) {
+        if (isset($_REQUEST['ym'])) {
             $reset_btn      = '';
             $submit_btn_txt = _('i18n_Form_Button_Recalculate');
         } else {
@@ -363,7 +363,7 @@ class Salariu extends Taxation
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_FoodBonusesValue'), $amount['gbns']);
         $total     = ($net + $amount['ba'] + $amount['gbns'] - $_REQUEST['szamnt'] * 10000);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_Total'), $total);
-        $legend    = sprintf(_('i18n_FieldsetLabel_Results'), strftime('%B', $_GET['ym']), date('Y', $_GET['ym']));
+        $legend    = sprintf(_('i18n_FieldsetLabel_Results'), strftime('%B', $_REQUEST['ym']), date('Y', $_REQUEST['ym']));
         return $this->setStringIntoTag(implode('', [
                 $this->setStringIntoTag($legend, 'legend'),
                 $this->setStringIntoTag(implode('', $sReturn), 'table')

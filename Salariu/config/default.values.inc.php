@@ -7,6 +7,9 @@ if (isset($_REQUEST)) {
         }
     }
 }
+if (!isset($_REQUEST['ym'])) {
+    $_REQUEST['ym'] = mktime(0, 0, 0, date('m'), 1, date('Y'));
+}
 if (!isset($_REQUEST['sn'])) {
     $_REQUEST['sn'] = 975;
 }
@@ -15,6 +18,12 @@ if (!isset($_REQUEST['sc'])) {
 }
 if (!isset($_REQUEST['pb'])) {
     $_REQUEST['pb'] = 0;
+}
+if (!isset($_REQUEST['pi'])) {
+    $_REQUEST['pi'] = 0;
+}
+if (!isset($_REQUEST['pc'])) {
+    $_REQUEST['pc'] = 0;
 }
 if (!isset($_REQUEST['pn'])) {
     $_REQUEST['pn'] = 0;
