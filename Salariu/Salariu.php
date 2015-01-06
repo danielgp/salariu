@@ -196,7 +196,21 @@ class Salariu
      * */
     private function setFoodTicketsValue($lngDate)
     {
-        $mnth = date('n', $lngDate);
+        $historyValye = [
+            $this->setFoodTicketsValueBetween2001and2005($lngDate),
+            $this->setFoodTicketsValueBetween2006and2009($lngDate),
+            $this->setFoodTicketsValueBetween2011and2015($lngDate)
+        ];
+        return array_sum($historyValue);
+    }
+
+    /**
+     * Tichete de alimente
+     * */
+    private function setFoodTicketsValueBetween2001and2005($lngDate)
+    {
+        $mnth    = date('n', $lngDate);
+        $nReturn = 0;
         switch (date('Y', $lngDate)) {
             case 2001:
                 if ($mnth <= 2) {
@@ -243,6 +257,17 @@ class Salariu
                     $nReturn = 70000;
                 }
                 break;
+        }
+        return $nReturn;
+    }
+
+    /**
+     * Tichete de alimente
+     * */
+    private function setFoodTicketsValueBetween2006and2009($lngDate)
+    {
+        $mnth = date('n', $lngDate);
+        switch (date('Y', $lngDate)) {
             case 2006:
                 if ($mnth <= 2) {
                     $nReturn = 70000;
@@ -280,6 +305,20 @@ class Salariu
             case 2010:
                 $nReturn = 87200;
                 break;
+            default:
+                $nReturn = 0;
+                break;
+        }
+        return $nReturn;
+    }
+
+    /**
+     * Tichete de alimente
+     * */
+    private function setFoodTicketsValueBetween2011and2015($lngDate)
+    {
+        $mnth = date('n', $lngDate);
+        switch (date('Y', $lngDate)) {
             case 2011:
                 if ($mnth <= 2) {
                     $nReturn = 87200;
@@ -736,115 +775,132 @@ class Salariu
      * @param int $include_easter
      * @return array
      */
-    private function setHolidays($lngDate, $include_easter)
+    private function setHolidays($lngDate, $include_easter = 0)
     {
-        $counter           = 0;
-        $daying [$counter] = mktime(0, 0, 0, 1, 1, date('Y', $lngDate));
-        $counter++;
-        $daying[$counter]  = mktime(0, 0, 0, 1, 2, date('Y', $lngDate));
+        $yr = date('Y', $lngDate);
         if ($include_easter == 0) {
-            $counter++;
-            if (date('Y', $lngDate) == '2005') {
+            if ($yr == '2005') {
 // in Windows returns a faulty day so I treated special
-                $daying[$counter] = mktime(0, 0, 0, 3, 27, 2005);
+                $daying[] = mktime(0, 0, 0, 3, 27, 2005);
 // Easter 1st day
-                $counter++;
-                $daying[$counter] = mktime(0, 0, 0, 3, 28, 2005);
+                $daying[] = mktime(0, 0, 0, 3, 28, 2005);
 // Easter 2nd day
             } else {
-                $daying[$counter] = mktime(0, 0, 0, date('m'
+                $daying[] = mktime(0, 0, 0, date('m'
                         , easter_date(date('Y', $lngDate))), date('j'
                         , easter_date(date('Y', $lngDate))), date('Y'
                         , easter_date(date('Y', $lngDate))));  // Easter 1st day
-                $counter++;
-                $daying[$counter] = mktime(0, 0, 0, date('m'
+                $daying[] = mktime(0, 0, 0, date('m'
                         , easter_date(date('Y', $lngDate))), date('j'
                         , easter_date(date('Y', $lngDate))) + 1, date('Y'
                         , easter_date(date('Y', $lngDate)))); // Easter 2nd day
             }
         }
-        $counter++;
-        $daying[$counter]  = mktime(0, 0, 0, 5, 1, date('Y', $lngDate));
-// May 1st
-        $counter++;
-        $daying[$counter]  = mktime(0, 0, 0, 12, 1, date('Y', $lngDate));
-// Romanian National Day
-        $counter++;
-        $daying [$counter] = mktime(0, 0, 0, 12, 25, date('Y', $lngDate));
-// December 25th
-        $counter++;
-        $daying[$counter]  = mktime(0, 0, 0, 12, 26, date('Y', $lngDate));
-// December 26th
-        $counter++;
-        switch (date('Y', $lngDate)) {
-            case '2003':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 26, date('Y', $lngDate));
-// Easter 1st day according to Romanian calendar
-                $counter++;
-                $daying[$counter]  = mktime(0, 0, 0, 4, 27, date('Y', $lngDate));
-// Easter 2nd day according to Romanian calendar
-                break;
-            case '2004':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 9, date('Y', $lngDate));
-// NATO Day according to Romanian calendar
-                break;
-            case '2005':
-                $daying[$counter]  = mktime(0, 0, 0, 5, 2, date('Y', $lngDate));
-                break;
-            case '2006':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 24, date('Y', $lngDate));
-                break;
-            case '2007':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 9, date('Y', $lngDate));
-                break;
-            case '2008':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 28, date('Y', $lngDate));
-                break;
-            case '2009':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 20, date('Y', $lngDate));
-                $counter++;
-                $daying[$counter]  = mktime(0, 0, 0, 6, 8, date('Y', $lngDate));
-                break;
-            case '2010':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 5, date('Y', $lngDate));
-                $counter++;
-                $daying[$counter]  = mktime(0, 0, 0, 5, 24, date('Y', $lngDate));
-                break;
-            case '2011':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 25, date('Y', $lngDate));
-                $counter++;
-                $daying [$counter] = mktime(0, 0, 0, 6, 13, date('Y', $lngDate));
-                break;
-            case '2012':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 16, date('Y', $lngDate));
-                $counter++;
-                $daying [$counter] = mktime(0, 0, 0, 6, 04, date('Y', $lngDate));
-                break;
-            case '2013':
-                $daying[$counter]  = mktime(0, 0, 0, 5, 6, date('Y', $lngDate));
-                $counter++;
-                $daying [$counter] = mktime(0, 0, 0, 6, 24, date('Y', $lngDate));
-                break;
-            case '2014':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 21, date('Y', $lngDate));
-                $counter++;
-                $daying [$counter] = mktime(0, 0, 0, 6, 09, date('Y', $lngDate));
-                break;
-            case '2015':
-                $daying[$counter]  = mktime(0, 0, 0, 4, 13, date('Y', $lngDate));
-                $counter++;
-                $daying [$counter] = mktime(0, 0, 0, 6, 1, date('Y', $lngDate));
-                break;
+        if (($yr >= 2003) && ($yr >= 2009)) {
+            $daying = array_merge($daying, $this->setHolidaysEasterBetween2003and2009());
+        } elseif (($yr >= 2010) && ($yr >= 2015)) {
+            $daying = array_merge($daying, $this->setHolidaysEasterBetween2010and2015());
         }
+        return array_merge($daying, $this->setHolidaysFixed($lngDate));
+    }
+
+    private function setHolidaysFixed($lngDate)
+    {
+        $daying [] = mktime(0, 0, 0, 1, 1, date('Y', $lngDate));
+// Happy New Year
+        $daying[]  = mktime(0, 0, 0, 1, 2, date('Y', $lngDate));
+// recovering from New Year party
+        $daying[]  = mktime(0, 0, 0, 5, 1, date('Y', $lngDate));
+// May 1st
         if (date('Y', $lngDate) >= 2009) {
 // St. Marry
-            $counter++;
-            $daying[$counter] = mktime(0, 0, 0, 8, 15, date('Y', $lngDate));
+            $daying[] = mktime(0, 0, 0, 8, 15, date('Y', $lngDate));
         }
         if (date('Y', $lngDate) >= 2012) {
 // St. Andrew
-            $counter++;
-            $daying[$counter] = mktime(0, 0, 0, 11, 30, date('Y', $lngDate));
+            $daying[] = mktime(0, 0, 0, 11, 30, date('Y', $lngDate));
+        }
+        $daying[]  = mktime(0, 0, 0, 12, 1, date('Y', $lngDate));
+// Romanian National Day
+        $daying [] = mktime(0, 0, 0, 12, 25, date('Y', $lngDate));
+// December 25th
+        $daying[]  = mktime(0, 0, 0, 12, 26, date('Y', $lngDate));
+// December 26th
+        return $daying;
+    }
+
+    private function setHolidaysEasterBetween2003and2009()
+    {
+        $variableHolidays = [
+            2003 => [
+                mktime(0, 0, 0, 4, 26, date('Y', $lngDate)),
+                mktime(0, 0, 0, 4, 27, date('Y', $lngDate))
+            ],
+            2004 => [
+                mktime(0, 0, 0, 4, 9, date('Y', $lngDate))
+            ],
+            2005 => [
+                mktime(0, 0, 0, 5, 2, date('Y', $lngDate))
+            ],
+            2006 => [
+                mktime(0, 0, 0, 4, 24, date('Y', $lngDate))
+            ],
+            2007 => [
+                mktime(0, 0, 0, 4, 9, date('Y', $lngDate))
+            ],
+            2008 => [
+                mktime(0, 0, 0, 4, 28, date('Y', $lngDate))
+            ],
+            2009 => [
+                mktime(0, 0, 0, 4, 20, date('Y', $lngDate)),
+                mktime(0, 0, 0, 6, 8, date('Y', $lngDate))
+            ]
+        ];
+        $daying           = [];
+        $yr               = date('Y', $lngDate);
+        if (in_array($yr, array_keys($variableHolidays))) {
+            foreach ($variableHolidays[$yr] as $value) {
+                $daying[] = $value;
+            }
+        }
+        return $daying;
+    }
+
+    private function setHolidaysEasterBetween2010and2015()
+    {
+        $variableHolidays = [
+
+            2010 => [
+                mktime(0, 0, 0, 4, 5, date('Y', $lngDate)),
+                mktime(0, 0, 0, 5, 24, date('Y', $lngDate))
+            ],
+            2011 => [
+                mktime(0, 0, 0, 4, 25, date('Y', $lngDate)),
+                mktime(0, 0, 0, 6, 13, date('Y', $lngDate))
+            ],
+            2012 => [
+                mktime(0, 0, 0, 4, 16, date('Y', $lngDate)),
+                mktime(0, 0, 0, 6, 04, date('Y', $lngDate))
+            ],
+            2013 => [
+                mktime(0, 0, 0, 5, 6, date('Y', $lngDate)),
+                mktime(0, 0, 0, 6, 24, date('Y', $lngDate))
+            ],
+            2014 => [
+                mktime(0, 0, 0, 4, 21, date('Y', $lngDate)),
+                mktime(0, 0, 0, 6, 09, date('Y', $lngDate))
+            ],
+            2015 => [
+                mktime(0, 0, 0, 4, 13, date('Y', $lngDate)),
+                mktime(0, 0, 0, 6, 1, date('Y', $lngDate))
+            ]
+        ];
+        $daying           = [];
+        $yr               = date('Y', $lngDate);
+        if (in_array($yr, array_keys($variableHolidays))) {
+            foreach ($variableHolidays[$yr] as $value) {
+                $daying[] = $value;
+            }
         }
         return $daying;
     }
@@ -856,93 +912,16 @@ class Salariu
     {
         switch (date('Y', $lngDate)) {
             case 2001:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5 :
-                    case 6:
-                        if ($lngTaxBase <= 1259000) {
-                            $nReturn = $lngTaxBase * 18 / 100;
-                        } elseif ($lngTaxBase <= 3090000) {
-                            $nReturn = 226620 + ($lngTaxBase - 1259000 ) * 23 / 100;
-                        } elseif ($lngTaxBase <= 4921000) {
-                            $nReturn = 647750 + ($lngTaxBase - 3090000 ) * 28 / 100;
-                        } elseif ($lngTaxBase <= 6867000) {
-                            $nReturn = 1160430 + ($lngTaxBase - 4921000 ) * 34 / 100;
-                        } else {
-                            $nReturn = 1822070 + ($lngTaxBase - 6867000 ) * 40 / 100;
-                        }
-                        break;
-                    case 7:
-                    case 8 :
-                    case 9:
-                        if ($lngTaxBase <= 1458000) {
-                            $nReturn = $lngTaxBase * 18 / 100;
-                        } elseif ($lngTaxBase <= 3578000) {
-                            $nReturn = 262440 + ($lngTaxBase - 1458000 ) * 23 / 100;
-                        } elseif ($lngTaxBase <= 5699000) {
-                            $nReturn = 750040 + ($lngTaxBase - 3578000 ) * 28 / 100;
-                        } elseif ($lngTaxBase <= 7952000) {
-                            $nReturn = 1343920 + ($lngTaxBase - 5699000 ) * 34 / 100;
-                        } else {
-                            $nReturn = 2109940 + ($lngTaxBase - 7952000 ) * 40 / 100;
-                        }
-                        break;
-                    default:
-                        if ($lngTaxBase <= 1500000) {
-                            $nReturn = $lngTaxBase * 18 / 100;
-                        } elseif ($lngTaxBase <= 3800000) {
-                            $nReturn = 270000 + ($lngTaxBase - 1500000 ) * 23 / 100;
-                        } elseif ($lngTaxBase <= 6000000) {
-                            $nReturn = 799000 + ($lngTaxBase - 3800000 ) * 28 / 100;
-                        } elseif ($lngTaxBase <= 8400000) {
-                            $nReturn = 1415000 + ($lngTaxBase - 6000000 ) * 34 / 100;
-                        } else {
-                            $nReturn = 2231000 + ($lngTaxBase - 8400000 ) * 40 / 100;
-                        }
-                        break;
-                }
+                $nReturn = $this->setIncomeTax2001($lngDate, $lngTaxBase);
                 break;
             case 2002 :
-                if ($lngTaxBase <= 1800000) {
-                    $nReturn = $lngTaxBase * 18 / 100;
-                } elseif ($lngTaxBase <= 4600000) {
-                    $nReturn = 324000 + ($lngTaxBase - 1800000 ) * 23 / 100;
-                } elseif ($lngTaxBase <= 7300000) {
-                    $nReturn = 968000 + ($lngTaxBase - 4600000 ) * 28 / 100;
-                } elseif ($lngTaxBase <= 10200000) {
-                    $nReturn = 1724000 + ($lngTaxBase - 7300000 ) * 34 / 100;
-                } else {
-                    $nReturn = 2710000 + ($lngTaxBase - 10200000 ) * 40 / 100;
-                }
+                $nReturn = $this->setIncomeTax2002($lngDate, $lngTaxBase);
                 break;
             case 2003:
-                if ($lngTaxBase <= 2100000) {
-                    $nReturn = ($lngTaxBase * 18) / 100;
-                } elseif ($lngTaxBase <= 5200000) {
-                    $nReturn = 324000 + ($lngTaxBase - 2100000 ) * 23 / 100;
-                } elseif ($lngTaxBase <= 8300000) {
-                    $nReturn = 1091000 + ($lngTaxBase - 5200000 ) * 28 / 100;
-                } elseif ($lngTaxBase <= 11600000) {
-                    $nReturn = 1959000 + ($lngTaxBase - 8300000 ) * 34 / 100;
-                } else {
-                    $nReturn = 3081000 + ($lngTaxBase - 11600000 ) * 40 / 100;
-                }
+                $nReturn = $this->setIncomeTax2003($lngDate, $lngTaxBase);
                 break;
             case 2004:
-                if ($lngTaxBase <= 2400000) {
-                    $nReturn = ($lngTaxBase * 18) / 100;
-                } elseif ($lngTaxBase <= 5800000) {
-                    $nReturn = 432000 + ($lngTaxBase - 2400000 ) * 23 / 100;
-                } elseif ($lngTaxBase <= 9300000) {
-                    $nReturn = 1214000 + ($lngTaxBase - 5800000 ) * 28 / 100;
-                } elseif ($lngTaxBase <= 13000000) {
-                    $nReturn = 2194000 + ($lngTaxBase - 9300000 ) * 34 / 100;
-                } else {
-                    $nReturn = 3452000 + ($lngTaxBase - 13000000 ) * 40 / 100;
-                }
+                $nReturn = $this->setIncomeTax2004($lngDate, $lngTaxBase);
                 break;
             default:
                 $nReturn = $lngTaxBase * 16 / 100;
@@ -950,6 +929,100 @@ class Salariu
         }
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = round($nReturn, -4);
+        }
+        return $nReturn;
+    }
+
+    /**
+     * Impozit pe salariu
+     * */
+    private function setIncomeTax2001($lngDate, $lngTaxBase)
+    {
+        $mnth = date('n', $lngDate);
+        if ($mnth <= 6) {
+            if ($lngTaxBase <= 1259000) {
+                $nReturn = $lngTaxBase * 18 / 100;
+            } elseif ($lngTaxBase <= 3090000) {
+                $nReturn = 226620 + ($lngTaxBase - 1259000 ) * 23 / 100;
+            } elseif ($lngTaxBase <= 4921000) {
+                $nReturn = 647750 + ($lngTaxBase - 3090000 ) * 28 / 100;
+            } elseif ($lngTaxBase <= 6867000) {
+                $nReturn = 1160430 + ($lngTaxBase - 4921000 ) * 34 / 100;
+            } else {
+                $nReturn = 1822070 + ($lngTaxBase - 6867000 ) * 40 / 100;
+            }
+        } elseif ($mnth <= 9) {
+            if ($lngTaxBase <= 1458000) {
+                $nReturn = $lngTaxBase * 18 / 100;
+            } elseif ($lngTaxBase <= 3578000) {
+                $nReturn = 262440 + ($lngTaxBase - 1458000 ) * 23 / 100;
+            } elseif ($lngTaxBase <= 5699000) {
+                $nReturn = 750040 + ($lngTaxBase - 3578000 ) * 28 / 100;
+            } elseif ($lngTaxBase <= 7952000) {
+                $nReturn = 1343920 + ($lngTaxBase - 5699000 ) * 34 / 100;
+            } else {
+                $nReturn = 2109940 + ($lngTaxBase - 7952000 ) * 40 / 100;
+            }
+        } else {
+            if ($lngTaxBase <= 1500000) {
+                $nReturn = $lngTaxBase * 18 / 100;
+            } elseif ($lngTaxBase <= 3800000) {
+                $nReturn = 270000 + ($lngTaxBase - 1500000 ) * 23 / 100;
+            } elseif ($lngTaxBase <= 6000000) {
+                $nReturn = 799000 + ($lngTaxBase - 3800000 ) * 28 / 100;
+            } elseif ($lngTaxBase <= 8400000) {
+                $nReturn = 1415000 + ($lngTaxBase - 6000000 ) * 34 / 100;
+            } else {
+                $nReturn = 2231000 + ($lngTaxBase - 8400000 ) * 40 / 100;
+            }
+        }
+        return $nReturn;
+    }
+
+    private function setIncomeTax2002($lngDate, $lngTaxBase)
+    {
+        if ($lngTaxBase <= 1800000) {
+            $nReturn = $lngTaxBase * 18 / 100;
+        } elseif ($lngTaxBase <= 4600000) {
+            $nReturn = 324000 + ($lngTaxBase - 1800000 ) * 23 / 100;
+        } elseif ($lngTaxBase <= 7300000) {
+            $nReturn = 968000 + ($lngTaxBase - 4600000 ) * 28 / 100;
+        } elseif ($lngTaxBase <= 10200000) {
+            $nReturn = 1724000 + ($lngTaxBase - 7300000 ) * 34 / 100;
+        } else {
+            $nReturn = 2710000 + ($lngTaxBase - 10200000 ) * 40 / 100;
+        }
+        return $nReturn;
+    }
+
+    private function setIncomeTax2003($lngDate, $lngTaxBase)
+    {
+        if ($lngTaxBase <= 2100000) {
+            $nReturn = ($lngTaxBase * 18) / 100;
+        } elseif ($lngTaxBase <= 5200000) {
+            $nReturn = 324000 + ($lngTaxBase - 2100000 ) * 23 / 100;
+        } elseif ($lngTaxBase <= 8300000) {
+            $nReturn = 1091000 + ($lngTaxBase - 5200000 ) * 28 / 100;
+        } elseif ($lngTaxBase <= 11600000) {
+            $nReturn = 1959000 + ($lngTaxBase - 8300000 ) * 34 / 100;
+        } else {
+            $nReturn = 3081000 + ($lngTaxBase - 11600000 ) * 40 / 100;
+        }
+        return $nReturn;
+    }
+
+    private function setIncomeTax2004($lngDate, $lngTaxBase)
+    {
+        if ($lngTaxBase <= 2400000) {
+            $nReturn = ($lngTaxBase * 18) / 100;
+        } elseif ($lngTaxBase <= 5800000) {
+            $nReturn = 432000 + ($lngTaxBase - 2400000 ) * 23 / 100;
+        } elseif ($lngTaxBase <= 9300000) {
+            $nReturn = 1214000 + ($lngTaxBase - 5800000 ) * 28 / 100;
+        } elseif ($lngTaxBase <= 13000000) {
+            $nReturn = 2194000 + ($lngTaxBase - 9300000 ) * 34 / 100;
+        } else {
+            $nReturn = 3452000 + ($lngTaxBase - 13000000 ) * 40 / 100;
         }
         return $nReturn;
     }
