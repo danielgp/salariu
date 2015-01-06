@@ -365,7 +365,7 @@ class Salariu extends Taxation
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_Total'), $total);
         $legend    = sprintf(_('i18n_FieldsetLabel_Results'), strftime('%B', $_GET['ym']), date('Y', $_GET['ym']));
         return $this->setStringIntoTag(implode('', [
-                $this->setStringIntoTag($amount, 'legend'),
+                $this->setStringIntoTag($legend, 'legend'),
                 $this->setStringIntoTag(implode('', $sReturn), 'table')
                 ]), 'fieldset', ['style' => 'float: left;']);
     }
