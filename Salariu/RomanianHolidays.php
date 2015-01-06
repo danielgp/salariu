@@ -172,4 +172,24 @@ class RomanianHolidays
         }
         return $daying;
     }
+
+    /**
+     * returns working days in a given month
+     *
+     * @param date $lngDate
+     * @param int $include_easter
+     * @return int
+     */
+    protected function setWorkingDaysInMonth($lngDate, $include_easter)
+    {
+        $days_in_given_month = round((mktime(0, 0, 0, date('m', $lngDate) + 1, 1, date('Y', $lngDate)) - mktime(0, 0, 0, date('m', $lngDate), 1, date('Y', $lngDate))) / (60 * 60 * 24), 0);
+        $tmp_value           = 0;
+        for ($counter = 1; $counter <= $days_in_given_month; $counter++) {
+            $current_day = mktime(0, 0, 0, date('m', $lngDate), $counter, date('Y', $lngDate));
+            if ((!in_array($current_day, $this->setHolidays($lngDate, $include_easter))) && (strftime('%w', $current_day) != 0) && (strftime('%w', $current_day) != 6)) {
+                $tmp_value += 1;
+            }
+        }
+        return $tmp_value;
+    }
 }
