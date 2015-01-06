@@ -1,10 +1,10 @@
 <?php
 
-/*
- * The MIT License
+/**
  *
- * Copyright Error: on line 6, column 29 in Templates/Licenses/license-mit.txt
-  The string doesn't match the expected date/time format. The string to parse was: "06.01.2015". The expected format was: "MMM d, yyyy". E303778.
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -13,16 +13,17 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
  */
 
 namespace danielgp\salariu;
@@ -37,10 +38,11 @@ class Taxation extends Bonuses
 
     /**
      * CAS
+     *
+     * http://www.lapensie.com/forum/salariul-mediu-brut.php
      * */
     protected function setHealthFundTax($lngDate, $lngBrutto)
     {
-        // http://www.lapensie.com/forum/salariul-mediu-brut.php
         switch (date('Y', $lngDate)) {
             case 2001 :
                 $base = min($lngBrutto, 3 * 4148653);
@@ -68,7 +70,7 @@ class Taxation extends Bonuses
                 break;
             case 2008:
             case 2009:
-            case 2010: //1836
+            case 2010:
                 $base = $lngBrutto;
                 break;
             case 2011:

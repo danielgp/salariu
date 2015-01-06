@@ -1,202 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpcs version="2.1.1">
-<file name="C:\Users\Transformer-\Documents\Git\danielgp.GitHub\salariu\Salariu\salariu.class.inc.php" errors="191" warnings="5" fixable="191">
- <error line="670" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="671" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="671" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="672" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="672" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="672" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="672" column="16" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="700" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="705" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="705" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="705" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="705" column="19" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="717" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="718" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="718" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="722" column="17" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="722" column="18" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="724" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
- <error line="725" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
- <error line="731" column="21" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="731" column="23" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="731" column="31" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="734" column="18" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="735" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 16</error>
- <error line="735" column="17" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="735" column="19" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="735" column="31" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="735" column="58" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <warning line="741" column="142" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 142 characters</warning>
- <error line="743" column="13" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="743" column="31" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="744" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
- <error line="744" column="17" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="744" column="19" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="744" column="58" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="744" column="61" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="744" column="68" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="745" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="746" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="746" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="746" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="746" column="38" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="747" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="748" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="748" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="748" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="748" column="54" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="749" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="750" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="750" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="750" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="750" column="38" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="753" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="753" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="753" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="753" column="48" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="756" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="756" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="756" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="756" column="48" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="757" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="758" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="758" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="758" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="758" column="20" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="760" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="761" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="761" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="761" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="761" column="29" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="762" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="763" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="763" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="763" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="763" column="34" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="764" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="765" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="765" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="765" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="765" column="31" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="766" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="767" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="767" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="767" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="767" column="33" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <warning line="768" column="132" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 132 characters</warning>
- <error line="769" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="770" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="770" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="770" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="770" column="38" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="772" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="773" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="773" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="773" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="773" column="42" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="774" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="775" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="775" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="775" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="775" column="51" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="776" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="777" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="777" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="777" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="777" column="32" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="777" column="39" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="779" column="13" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="779" column="55" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="779" column="100" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="779" column="142" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <warning line="779" column="177" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 177 characters</warning>
- <error line="780" column="16" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="780" column="29" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="781" column="9" source="Generic.WhiteSpace.ScopeIndent.Incorrect" severity="5" fixable="1">Line indented incorrectly; expected at least 12 spaces, found 8</error>
- <error line="782" column="9" source="Generic.WhiteSpace.ScopeIndent.Incorrect" severity="5" fixable="1">Line indented incorrectly; expected at least 12 spaces, found 8</error>
- <error line="782" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="783" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
- <error line="783" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="783" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="783" column="87" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="784" column="9" source="Generic.WhiteSpace.ScopeIndent.Incorrect" severity="5" fixable="1">Line indented incorrectly; expected at least 12 spaces, found 8</error>
- <error line="785" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
- <error line="787" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 16 spaces but found 20</error>
- <error line="787" column="21" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="787" column="23" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="787" column="31" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="788" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
- <error line="788" column="26" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="789" column="21" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="789" column="23" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="789" column="32" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="790" column="42" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="791" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 16</error>
- <error line="791" column="17" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="791" column="19" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="791" column="31" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="791" column="58" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="841" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 20 spaces but found 24</error>
- <error line="841" column="25" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="841" column="27" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="841" column="33" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="841" column="51" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="846" column="38" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="847" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 16 spaces but found 20</error>
- <error line="847" column="21" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="847" column="23" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="847" column="29" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="847" column="46" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="857" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
- <error line="858" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 16</error>
- <error line="858" column="32" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="858" column="36" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="903" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
- <error line="906" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
- <error line="909" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
- <error line="991" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonDEFAULT" severity="5" fixable="1">There must be no space before the colon in a DEFAULT statement</error>
- <error line="1062" column="53" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="1063" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 16 spaces but found 24</error>
- <error line="1063" column="25" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="1063" column="27" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="1063" column="59" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="1063" column="62" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="1064" column="25" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="1064" column="27" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="1064" column="59" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="1064" column="62" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="1065" column="25" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="1065" column="27" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="1065" column="59" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="1067" column="53" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="1068" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 16 spaces but found 24</error>
- <error line="1068" column="25" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="1068" column="27" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="1068" column="59" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="1068" column="62" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="1069" column="25" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="1069" column="27" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="1069" column="59" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="1069" column="66" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
- <error line="1070" column="25" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
- <error line="1070" column="27" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
- <error line="1070" column="59" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
- <error line="1103" column="21" source="PSR2.ControlStructures.SwitchDeclaration.BreakIndent" severity="5" fixable="1">Terminating statement must be indented to the same level as the CASE body</error>
- <error line="1103" column="21" source="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore" severity="5" fixable="1">Closing brace must be on a line by itself</error>
- <error line="1109" column="21" source="PSR2.ControlStructures.SwitchDeclaration.BreakIndent" severity="5" fixable="1">Terminating statement must be indented to the same level as the CASE body</error>
- <error line="1109" column="21" source="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore" severity="5" fixable="1">Closing brace must be on a line by itself</error>
- <error line="1115" column="21" source="PSR2.ControlStructures.SwitchDeclaration.BreakIndent" severity="5" fixable="1">Terminating statement must be indented to the same level as the CASE body</error>
- <error line="1115" column="21" source="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore" severity="5" fixable="1">Closing brace must be on a line by itself</error>
- <error line="1121" column="21" source="PSR2.ControlStructures.SwitchDeclaration.BreakIndent" severity="5" fixable="1">Terminating statement must be indented to the same level as the CASE body</error>
- <error line="1121" column="21" source="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore" severity="5" fixable="1">Closing brace must be on a line by itself</error>
- <error line="1195" column="21" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
- <error line="1210" column="21" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
- <error line="1239" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
- <warning line="1500" column="188" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 188 characters</warning>
- <warning line="1504" column="169" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 169 characters</warning>
+<phpcs version="2.0.0">
+<file name="D:\Documents\GitHub\salariu\Salariu\RomanianHolidays.php" errors="0" warnings="2" fixable="0">
+ <warning line="179" column="188" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 188 characters</warning>
+ <warning line="183" column="169" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 169 characters</warning>
+</file>
+<file name="D:\Documents\GitHub\salariu\Salariu\Salariu.php" errors="119" warnings="3" fixable="119">
+ <warning line="323" column="142" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 142 characters</warning>
+ <error line="325" column="13" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="325" column="31" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="326" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
+ <error line="326" column="17" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="326" column="19" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="326" column="58" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="326" column="61" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="326" column="68" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="327" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="328" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="328" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="328" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="328" column="38" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="329" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="330" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="330" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="330" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="330" column="54" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="331" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="332" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="332" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="332" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="332" column="38" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="335" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="335" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="335" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="335" column="48" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="338" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="338" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="338" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="338" column="48" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="339" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="340" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="340" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="340" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="340" column="20" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="342" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="343" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="343" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="343" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="343" column="29" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="344" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="345" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="345" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="345" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="345" column="34" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="346" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="347" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="347" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="347" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="347" column="31" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="348" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="349" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="349" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="349" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="349" column="33" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <warning line="350" column="132" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 132 characters</warning>
+ <error line="351" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="352" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="352" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="352" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="352" column="38" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="354" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="355" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="355" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="355" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="355" column="42" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="356" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="357" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="357" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="357" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="357" column="51" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="358" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="359" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="359" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="359" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="359" column="32" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="359" column="39" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="361" column="13" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="361" column="55" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="361" column="100" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="361" column="142" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <warning line="361" column="177" source="Generic.Files.LineLength.TooLong" severity="5" fixable="0">Line exceeds 120 characters; contains 177 characters</warning>
+ <error line="362" column="16" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="362" column="29" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="364" column="29" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="365" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 12</error>
+ <error line="365" column="13" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="365" column="15" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="365" column="87" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="367" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
+ <error line="369" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 16 spaces but found 20</error>
+ <error line="369" column="21" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="369" column="23" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="369" column="31" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="370" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
+ <error line="370" column="26" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="371" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 16 spaces but found 20</error>
+ <error line="371" column="21" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="371" column="23" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="371" column="30" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="372" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 16</error>
+ <error line="372" column="17" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="372" column="19" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="372" column="31" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="372" column="58" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="422" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 20 spaces but found 24</error>
+ <error line="422" column="25" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="422" column="27" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="422" column="33" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="422" column="51" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="427" column="38" source="PSR2.Methods.FunctionCallSignature.ContentAfterOpenBracket" severity="5" fixable="1">Opening parenthesis of a multi-line function call must be the last content on the line</error>
+ <error line="428" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 16 spaces but found 20</error>
+ <error line="428" column="21" source="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma" severity="5" fixable="1">Space found before comma in function call</error>
+ <error line="428" column="23" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="428" column="29" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="428" column="46" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+ <error line="438" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 12 spaces but found 16</error>
+ <error line="439" column="1" source="PSR2.Methods.FunctionCallSignature.Indent" severity="5" fixable="1">Multi-line function call not indented correctly; expected 8 spaces but found 16</error>
+ <error line="439" column="32" source="PSR2.Methods.FunctionCallSignature.MultipleArguments" severity="5" fixable="1">Only one argument is allowed per line in a multi-line function call</error>
+ <error line="439" column="36" source="PSR2.Methods.FunctionCallSignature.CloseBracketLine" severity="5" fixable="1">Closing parenthesis of a multi-line function call must be on a line by itself</error>
+</file>
+<file name="D:\Documents\GitHub\salariu\Salariu\Taxation.php" errors="5" warnings="0" fixable="5">
+ <error line="47" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
+ <error line="50" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
+ <error line="53" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
+ <error line="135" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonDEFAULT" severity="5" fixable="1">There must be no space before the colon in a DEFAULT statement</error>
+ <error line="190" column="13" source="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE" severity="5" fixable="1">There must be no space before the colon in a CASE statement</error>
 </file>
 </phpcs>
 

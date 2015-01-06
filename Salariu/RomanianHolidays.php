@@ -54,14 +54,8 @@ class RomanianHolidays
                 $daying[] = mktime(0, 0, 0, 3, 28, 2005);
 // Easter 2nd day
             } else {
-                $daying[] = mktime(0, 0, 0, date('m'
-                        , easter_date(date('Y', $lngDate))), date('j'
-                        , easter_date(date('Y', $lngDate))), date('Y'
-                        , easter_date(date('Y', $lngDate))));  // Easter 1st day
-                $daying[] = mktime(0, 0, 0, date('m'
-                        , easter_date(date('Y', $lngDate))), date('j'
-                        , easter_date(date('Y', $lngDate))) + 1, date('Y'
-                        , easter_date(date('Y', $lngDate)))); // Easter 2nd day
+                $daying[] = easter_date(date('Y', $lngDate)); // Easter 1st day
+                $daying[] = strtotime('+1 day', easter_date(date('Y', $lngDate))); // Easter 2nd day
             }
         }
         if (($yr >= 2003) && ($yr >= 2009)) {

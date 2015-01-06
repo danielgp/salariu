@@ -258,39 +258,38 @@ class Salariu extends Taxation
         for ($counter = 0; $counter <= 4; $counter++) {
             $temp2[] = $counter;
         }
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PersonsSupported')
-            , $this->setArray2Select($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]), 1);
-        $choices   = [
+        $selectTemp = $this->setArray2Select($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]);
+        $sReturn[]  = $this->setFormRow(_('i18n_Form_Label_PersonsSupported'), $selectTemp, 1);
+        $choices    = [
             _('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
             _('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
         ];
-        $label     = _('i18n_Form_Label_CatholicEasterFree');
-        $select    = $this->setArray2Select($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
-        $sReturn[] = $this->setFormRow($label, $select, 1);
-        $label     = _('i18n_Form_Label_SeisureAmout');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+        $label      = _('i18n_Form_Label_CatholicEasterFree');
+        $select     = $this->setArray2Select($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
+        $sReturn[]  = $this->setFormRow($label, $select, 1);
+        $label      = _('i18n_Form_Label_SeisureAmout');
+        $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'szamnt',
                 'value' => $_REQUEST['szamnt'],
                 'size'  => 10
             ]), 1);
-        $label     = _('i18n_Form_Label_WorkedDaysWithoutFoodBonuses');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+        $label      = _('i18n_Form_Label_WorkedDaysWithoutFoodBonuses');
+        $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'zfb',
                 'value' => $_REQUEST['zfb'],
                 'size'  => 2
             ]), 1);
-        $label     = _('i18n_Form_Label_FoodBonusesValue');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+        $label      = _('i18n_Form_Label_FoodBonusesValue');
+        $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'gbns',
                 'value' => $_REQUEST['gbns'],
                 'size'  => 2]), 1);
-        $label     = _('i18n_Form_Disclaimer');
-        $sReturn[] = $this->setStringIntoTag($this->setStringIntoTag($label . $this->setStringIntoShortTag('input', [
+        $label      = _('i18n_Form_Disclaimer');
+        $sReturn[]  = $this->setStringIntoTag($this->setStringIntoTag($label . $this->setStringIntoShortTag('input', [
                     'type'  => 'hidden',
                     'name'  => 'action',
                     'value' => $_SERVER['SERVER_NAME']
-                ]), 'td', ['colspan' => 2, 'style' => 'color: red;'])
-            , 'tr');
+                ]), 'td', ['colspan' => 2, 'style' => 'color: red;']), 'tr');
         if (isset($_GET['ym'])) {
             $reset_btn      = '';
             $submit_btn_txt = _('i18n_Form_Button_Recalculate');
@@ -308,10 +307,13 @@ class Salariu extends Taxation
                 'id'    => 'submit',
                 'value' => $submit_btn_txt
             ]), 1);
-        return $this->setStringIntoTag($this->setStringIntoTag(_('i18n_FieldsetLabel_Inputs'), 'legend')
-                . $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
-                    'method' => 'get',
-                    'action' => $_SERVER['SCRIPT_NAME']
+        $frm       = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
+            'method' => 'get',
+            'action' => $_SERVER['SCRIPT_NAME']
+        ]);
+        return $this->setStringIntoTag(implode('', [
+                $this->setStringIntoTag(_('i18n_FieldsetLabel_Inputs'), 'legend'),
+                $frm
                 ]), 'fieldset', ['style' => 'float: left;']);
     }
 
