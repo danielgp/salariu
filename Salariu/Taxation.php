@@ -39,9 +39,60 @@ class Taxation extends Bonuses
     /**
      * CAS
      *
-     * http://www.lapensie.com/forum/salariul-mediu-brut.php
      * */
     protected function setHealthFundTax($lngDate, $lngBrutto)
+    {
+        switch (date('Y', $lngDate)) {
+            case 2001:
+                if (date('n', $lngDate) <= 3) {
+                    $nReturn = 5;
+                } else {
+                    $nReturn = 11.67;
+                }
+                break;
+            case 2002:
+                $nReturn = 11.67;
+                break;
+            case 2003:
+            case 2004:
+            case 2005:
+            case 2006:
+            case 2007:
+            case 2008:
+                $nReturn = 9.5;
+                break;
+            case 2009:
+                if (date('n', $lngDate) == 1) {
+                    $nReturn = 9.5;
+                } else {
+                    $nReturn = 10.5;
+                }
+                break;
+            case 2010:
+            case 2011:
+            case 2012:
+            case 2013:
+            case 2014:
+            case 2015:
+                $nReturn = 10.5;
+                break;
+            default :
+                $nReturn = 0;
+                break;
+        }
+        $nReturn = round($this->setHealthFundTaxBase($lngDate, $lngBrutto) * $nReturn / 100, 0);
+        if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
+            $nReturn = round($nReturn, -4);
+        }
+        return $nReturn;
+    }
+
+    /**
+     * baza CAS
+     *
+     * http://www.lapensie.com/forum/salariul-mediu-brut.php
+     * */
+    private function setHealthFundTaxBase($lngDate, $lngBrutto)
     {
         switch (date('Y', $lngDate)) {
             case 2001 :
@@ -92,55 +143,7 @@ class Taxation extends Bonuses
                 $base = $lngBrutto;
                 break;
         }
-        switch (date('Y', $lngDate)) {
-            case 2001:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                    case 2:
-                    case 3:
-                        $nReturn = 5;
-                        break;
-                    default:
-                        $nReturn = 11.67;
-                }
-                break;
-            case 2002:
-                $nReturn = 11.67;
-                break;
-            case 2003:
-            case 2004:
-            case 2005:
-            case 2006:
-            case 2007:
-            case 2008:
-                $nReturn = 9.5;
-                break;
-            case 2009:
-                switch (date('n', $lngDate)) {
-                    case 1:
-                        $nReturn = 9.5;
-                        break;
-                    default:
-                        $nReturn = 10.5;
-                }
-                break;
-            case 2010:
-            case 2011:
-            case 2012:
-            case 2013:
-            case 2014:
-            case 2015:
-                $nReturn = 10.5;
-                break;
-            default :
-                $nReturn = 0;
-                break;
-        }
-        $nReturn = round($base * $nReturn / 100, 0);
-        if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
-            $nReturn = round($nReturn, -4);
-        }
-        return $nReturn;
+        return $base;
     }
 
     /**
