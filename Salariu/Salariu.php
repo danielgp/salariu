@@ -33,6 +33,8 @@ class Salariu
 
     use \danielgp\common_lib\CommonCode;
 
+use RomanianHolidays;
+
     private $applicationFlags;
     private $exchangeRateDate;
     private $exchangeRatesDefined;
@@ -196,7 +198,7 @@ class Salariu
      * */
     private function setFoodTicketsValue($lngDate)
     {
-        $historyValye = [
+        $historyValue = [
             $this->setFoodTicketsValueBetween2001and2005($lngDate),
             $this->setFoodTicketsValueBetween2006and2009($lngDate),
             $this->setFoodTicketsValueBetween2011and2015($lngDate)
@@ -766,143 +768,6 @@ class Salariu
             $nReturn = round($nReturn, -4);
         }
         return $nReturn;
-    }
-
-    /**
-     * List of legal holidays
-     *
-     * @param date $lngDate
-     * @param int $include_easter
-     * @return array
-     */
-    private function setHolidays($lngDate, $include_easter = 0)
-    {
-        $yr = date('Y', $lngDate);
-        if ($include_easter == 0) {
-            if ($yr == '2005') {
-// in Windows returns a faulty day so I treated special
-                $daying[] = mktime(0, 0, 0, 3, 27, 2005);
-// Easter 1st day
-                $daying[] = mktime(0, 0, 0, 3, 28, 2005);
-// Easter 2nd day
-            } else {
-                $daying[] = mktime(0, 0, 0, date('m'
-                        , easter_date(date('Y', $lngDate))), date('j'
-                        , easter_date(date('Y', $lngDate))), date('Y'
-                        , easter_date(date('Y', $lngDate))));  // Easter 1st day
-                $daying[] = mktime(0, 0, 0, date('m'
-                        , easter_date(date('Y', $lngDate))), date('j'
-                        , easter_date(date('Y', $lngDate))) + 1, date('Y'
-                        , easter_date(date('Y', $lngDate)))); // Easter 2nd day
-            }
-        }
-        if (($yr >= 2003) && ($yr >= 2009)) {
-            $daying = array_merge($daying, $this->setHolidaysEasterBetween2003and2009());
-        } elseif (($yr >= 2010) && ($yr >= 2015)) {
-            $daying = array_merge($daying, $this->setHolidaysEasterBetween2010and2015());
-        }
-        return array_merge($daying, $this->setHolidaysFixed($lngDate));
-    }
-
-    private function setHolidaysFixed($lngDate)
-    {
-        $daying [] = mktime(0, 0, 0, 1, 1, date('Y', $lngDate));
-// Happy New Year
-        $daying[]  = mktime(0, 0, 0, 1, 2, date('Y', $lngDate));
-// recovering from New Year party
-        $daying[]  = mktime(0, 0, 0, 5, 1, date('Y', $lngDate));
-// May 1st
-        if (date('Y', $lngDate) >= 2009) {
-// St. Marry
-            $daying[] = mktime(0, 0, 0, 8, 15, date('Y', $lngDate));
-        }
-        if (date('Y', $lngDate) >= 2012) {
-// St. Andrew
-            $daying[] = mktime(0, 0, 0, 11, 30, date('Y', $lngDate));
-        }
-        $daying[]  = mktime(0, 0, 0, 12, 1, date('Y', $lngDate));
-// Romanian National Day
-        $daying [] = mktime(0, 0, 0, 12, 25, date('Y', $lngDate));
-// December 25th
-        $daying[]  = mktime(0, 0, 0, 12, 26, date('Y', $lngDate));
-// December 26th
-        return $daying;
-    }
-
-    private function setHolidaysEasterBetween2003and2009()
-    {
-        $variableHolidays = [
-            2003 => [
-                mktime(0, 0, 0, 4, 26, date('Y', $lngDate)),
-                mktime(0, 0, 0, 4, 27, date('Y', $lngDate))
-            ],
-            2004 => [
-                mktime(0, 0, 0, 4, 9, date('Y', $lngDate))
-            ],
-            2005 => [
-                mktime(0, 0, 0, 5, 2, date('Y', $lngDate))
-            ],
-            2006 => [
-                mktime(0, 0, 0, 4, 24, date('Y', $lngDate))
-            ],
-            2007 => [
-                mktime(0, 0, 0, 4, 9, date('Y', $lngDate))
-            ],
-            2008 => [
-                mktime(0, 0, 0, 4, 28, date('Y', $lngDate))
-            ],
-            2009 => [
-                mktime(0, 0, 0, 4, 20, date('Y', $lngDate)),
-                mktime(0, 0, 0, 6, 8, date('Y', $lngDate))
-            ]
-        ];
-        $daying           = [];
-        $yr               = date('Y', $lngDate);
-        if (in_array($yr, array_keys($variableHolidays))) {
-            foreach ($variableHolidays[$yr] as $value) {
-                $daying[] = $value;
-            }
-        }
-        return $daying;
-    }
-
-    private function setHolidaysEasterBetween2010and2015()
-    {
-        $variableHolidays = [
-
-            2010 => [
-                mktime(0, 0, 0, 4, 5, date('Y', $lngDate)),
-                mktime(0, 0, 0, 5, 24, date('Y', $lngDate))
-            ],
-            2011 => [
-                mktime(0, 0, 0, 4, 25, date('Y', $lngDate)),
-                mktime(0, 0, 0, 6, 13, date('Y', $lngDate))
-            ],
-            2012 => [
-                mktime(0, 0, 0, 4, 16, date('Y', $lngDate)),
-                mktime(0, 0, 0, 6, 04, date('Y', $lngDate))
-            ],
-            2013 => [
-                mktime(0, 0, 0, 5, 6, date('Y', $lngDate)),
-                mktime(0, 0, 0, 6, 24, date('Y', $lngDate))
-            ],
-            2014 => [
-                mktime(0, 0, 0, 4, 21, date('Y', $lngDate)),
-                mktime(0, 0, 0, 6, 09, date('Y', $lngDate))
-            ],
-            2015 => [
-                mktime(0, 0, 0, 4, 13, date('Y', $lngDate)),
-                mktime(0, 0, 0, 6, 1, date('Y', $lngDate))
-            ]
-        ];
-        $daying           = [];
-        $yr               = date('Y', $lngDate);
-        if (in_array($yr, array_keys($variableHolidays))) {
-            foreach ($variableHolidays[$yr] as $value) {
-                $daying[] = $value;
-            }
-        }
-        return $daying;
     }
 
     /**
