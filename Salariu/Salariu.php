@@ -28,12 +28,10 @@
 
 namespace danielgp\salariu;
 
-class Salariu
+class Salariu extends RomanianHolidays
 {
 
     use \danielgp\common_lib\CommonCode;
-
-use RomanianHolidays;
 
     private $applicationFlags;
     private $exchangeRateDate;
@@ -780,13 +778,13 @@ use RomanianHolidays;
                 $nReturn = $this->setIncomeTax2001($lngDate, $lngTaxBase);
                 break;
             case 2002 :
-                $nReturn = $this->setIncomeTax2002($lngDate, $lngTaxBase);
+                $nReturn = $this->setIncomeTax2002($lngTaxBase);
                 break;
             case 2003:
-                $nReturn = $this->setIncomeTax2003($lngDate, $lngTaxBase);
+                $nReturn = $this->setIncomeTax2003($lngTaxBase);
                 break;
             case 2004:
-                $nReturn = $this->setIncomeTax2004($lngDate, $lngTaxBase);
+                $nReturn = $this->setIncomeTax2004($lngTaxBase);
                 break;
             default:
                 $nReturn = $lngTaxBase * 16 / 100;
@@ -844,7 +842,7 @@ use RomanianHolidays;
         return $nReturn;
     }
 
-    private function setIncomeTax2002($lngDate, $lngTaxBase)
+    private function setIncomeTax2002($lngTaxBase)
     {
         if ($lngTaxBase <= 1800000) {
             $nReturn = $lngTaxBase * 18 / 100;
@@ -860,7 +858,7 @@ use RomanianHolidays;
         return $nReturn;
     }
 
-    private function setIncomeTax2003($lngDate, $lngTaxBase)
+    private function setIncomeTax2003($lngTaxBase)
     {
         if ($lngTaxBase <= 2100000) {
             $nReturn = ($lngTaxBase * 18) / 100;
@@ -876,7 +874,7 @@ use RomanianHolidays;
         return $nReturn;
     }
 
-    private function setIncomeTax2004($lngDate, $lngTaxBase)
+    private function setIncomeTax2004($lngTaxBase)
     {
         if ($lngTaxBase <= 2400000) {
             $nReturn = ($lngTaxBase * 18) / 100;
