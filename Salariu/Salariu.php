@@ -207,18 +207,8 @@ class Salariu extends Taxation
     private function setFormInput()
     {
         setlocale(LC_TIME, explode('_', $_SESSION['lang'])[0]);
-        for ($counter = date('Y'); $counter >= 2001; $counter--) {
-            for ($counter2 = 12; $counter2 >= 1; $counter2--) {
-                if (($counter == date('Y')) && ($counter2 > date('m'))) {
-                    # se limiteaza pana la luna curenta
-                } else {
-                    $crtDate        = mktime(0, 0, 0, $counter2, 1, $counter);
-                    $temp[$crtDate] = strftime('%Y, %m (%B)', $crtDate);
-                }
-            }
-        }
-        $select    = $this->setArray2Select($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CalculationMonth'), $select, 1);
+
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CalculationMonth'), $this->setFormInputSelect(), 1);
         $label     = _('i18n_Form_Label_NegotiatedSalary');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'name'  => 'sn',
@@ -315,6 +305,21 @@ class Salariu extends Taxation
                 $this->setStringIntoTag(_('i18n_FieldsetLabel_Inputs'), 'legend'),
                 $frm
                 ]), 'fieldset', ['style' => 'float: left;']);
+    }
+
+    private function setFormInputSelect()
+    {
+        for ($counter = date('Y'); $counter >= 2001; $counter--) {
+            for ($counter2 = 12; $counter2 >= 1; $counter2--) {
+                if (($counter == date('Y')) && ($counter2 > date('m'))) {
+                    # se limiteaza pana la luna curenta
+                } else {
+                    $crtDate        = mktime(0, 0, 0, $counter2, 1, $counter);
+                    $temp[$crtDate] = strftime('%Y, %m (%B)', $crtDate);
+                }
+            }
+        }
+        return $this->setArray2Select($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
     }
 
     private function setFormOutput()

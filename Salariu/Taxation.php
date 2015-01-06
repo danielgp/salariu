@@ -94,54 +94,33 @@ class Taxation extends Bonuses
      * */
     private function setHealthFundTaxBase($lngDate, $lngBrutto)
     {
-        switch (date('Y', $lngDate)) {
-            case 2001 :
-                $base = min($lngBrutto, 3 * 4148653);
-                break;
-            case 2002 :
-                $base = min($lngBrutto, 3 * 5582000);
-                break;
-            case 2003 :
-                $base = min($lngBrutto, 5 * 6962000);
-                break;
-            case 2004:
-                $base = min($lngBrutto, 5 * 7682000);
-                break;
-            case 2005:
-                if (date('n', $lngDate) <= 6) {
-                    $base = min($lngBrutto, 5 * 9211000);
-                } else {
-                    $base = min($lngBrutto, 5 * 9210000);
-                }
-                break;
-            case 2006: $base = min($lngBrutto, 5 * 10770000);
-                break;
-            case 2007:
-                $base = min($lngBrutto, 5 * 12700000);
-                break;
-            case 2008:
-            case 2009:
-            case 2010:
-                $base = $lngBrutto;
-                break;
-            case 2011:
-                $base = min($lngBrutto, 5 * 20220000);
-                break;
-            case 2012:
-                $base = min($lngBrutto, 5 * 21170000);
-                break;
-            case 2013:
-                $base = min($lngBrutto, 5 * 22230000);
-                break;
-            case 2014:
-                $base = min($lngBrutto, 5 * 22980000);
-                break;
-            case 2015:
-                $base = min($lngBrutto, 5 * 23820000);
-                break;
-            default:
-                $base = $lngBrutto;
-                break;
+        $yr        = date('Y', $lngDate);
+        $baseArray = [
+            2001  => min($lngBrutto, 3 * 4148653),
+            2002  => min($lngBrutto, 3 * 5582000),
+            2003  => min($lngBrutto, 5 * 6962000),
+            2004  => min($lngBrutto, 5 * 7682000),
+            2006  => $base = min($lngBrutto, 5 * 10770000),
+            2007  => min($lngBrutto, 5 * 12700000),
+            2008  => min($lngBrutto, 5 * 15500000),
+            2009  => min($lngBrutto, 5 * 16930000),
+            2010  => min($lngBrutto, 5 * 18360000),
+            2011  => min($lngBrutto, 5 * 20220000),
+            2012  => min($lngBrutto, 5 * 21170000),
+            2013  => min($lngBrutto, 5 * 22230000),
+            2014  => min($lngBrutto, 5 * 22980000),
+            2015  => min($lngBrutto, 5 * 23820000),
+        ];
+        if ($yr == 2005) {
+            if (date('n', $lngDate) <= 6) {
+                $base = min($lngBrutto, 5 * 9211000);
+            } else {
+                $base = min($lngBrutto, 5 * 9210000);
+            }
+        } elseif (in_array($yr, array_keys($baseArray))) {
+            $base = $baseArray[$yr];
+        } else {
+            $base = $lngBrutto;
         }
         return $base;
     }
