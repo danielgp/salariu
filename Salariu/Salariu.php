@@ -211,36 +211,42 @@ class Salariu extends Taxation
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CalculationMonth'), $this->setFormInputSelect(), 1);
         $label     = _('i18n_Form_Label_NegotiatedSalary');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'sn',
                 'value' => $_REQUEST['sn'],
                 'size'  => 10
             ]) . ' RON', 1);
         $label     = _('i18n_Form_Label_CumulatedAddedValue');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'sc',
                 'value' => $_REQUEST['sc'],
                 'size'  => 2
             ]) . ' %', 1);
         $label     = _('i18n_Form_Label_AdditionalBruttoAmount');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'pb',
                 'value' => $_REQUEST['pb'],
                 'size'  => 10
             ]) . ' RON', 1);
         $label     = _('i18n_Form_Label_AdditionalNettoAmount');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'pn',
                 'value' => $_REQUEST['pn'],
                 'size'  => 10
             ]) . ' RON', 1);
         $label     = sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice1'), '175%');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'os175',
                 'value' => $_REQUEST['os175'],
                 'size'  => 2
             ]), 1);
         $label     = sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice2'), '200%');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'os200',
                 'value' => $_REQUEST['os200'],
                 'size'  => 2
@@ -259,18 +265,21 @@ class Salariu extends Taxation
         $sReturn[]  = $this->setFormRow($label, $select, 1);
         $label      = _('i18n_Form_Label_SeisureAmout');
         $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'szamnt',
                 'value' => $_REQUEST['szamnt'],
                 'size'  => 10
             ]), 1);
         $label      = _('i18n_Form_Label_WorkedDaysWithoutFoodBonuses');
         $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'zfb',
                 'value' => $_REQUEST['zfb'],
                 'size'  => 2
             ]), 1);
         $label      = _('i18n_Form_Label_FoodBonusesValue');
         $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
                 'name'  => 'gbns',
                 'value' => $_REQUEST['gbns'],
                 'size'  => 2]), 1);
@@ -419,13 +428,16 @@ class Salariu extends Taxation
                     $finalValue  = $fmt->formatCurrency($value / $this->exchangeRatesValue[$key2], $key2);
                     $cellValue[] = $this->setStringIntoTag($finalValue, 'td', $defaultCellStyle2);
                 }
-                $value2show = implode('', $cellValue);
+                $value2show        = implode('', $cellValue);
                 break;
             case 'value':
-                $value2show = $this->setStringIntoTag($value . $a, 'td', $defaultCellStyle);
+                $defaultCellStyle2 = array_merge($defaultCellStyle, [
+                    'colspan' => count($this->exchangeRatesDefined)
+                ]);
+                $value2show        = $this->setStringIntoTag($value . $a, 'td', $defaultCellStyle2);
                 break;
             default:
-                $value2show = $this->setStringIntoTag($value, 'td');
+                $value2show        = $this->setStringIntoTag($value, 'td');
                 break;
         }
         if (!in_array($text, ['', '&nbsp;']) && (strpos($text, '<input') === false)) {
