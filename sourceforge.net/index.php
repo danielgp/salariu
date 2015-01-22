@@ -24,13 +24,13 @@
  * THE SOFTWARE.
  */
 
-header('Location: http://www.pgd.ro/salariu/');
+header('Location: http://www.pgd.ro/salariu/Salariu/');
 ?>
 <html>
     <head>
         <title>Salariu</title>
     </head>
     <body>
-        <meta http-equiv="refresh" content="http://www.pgd.ro/salariu/" />
+        <meta http-equiv="refresh" content="1; url=http://www.pgd.ro/salariu/Salariu/" />
     </body>
 </html>

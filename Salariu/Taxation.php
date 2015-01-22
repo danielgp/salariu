@@ -82,7 +82,7 @@ class Taxation extends Bonuses
         }
         $nReturn = round($this->setHealthFundTaxBase($lngDate, $lngBrutto) * $nReturn / 100, 0);
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
-            $nReturn = round($nReturn, -4);
+            $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
         }
         return $nReturn;
     }
@@ -300,7 +300,8 @@ class Taxation extends Bonuses
             default:
                 $nReturn = 0.5;
                 break;
-        } $nReturn = round($lngBase * $nReturn / 100, 0);
+        }
+        $nReturn = round($lngBase * $nReturn / 100, 0);
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = round($nReturn, -4);
         }

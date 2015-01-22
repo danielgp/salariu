@@ -103,6 +103,9 @@ msgstr "Ore suplimentare %s (%s)"
 msgid "i18n_Form_Label_PensionFund"
 msgstr "Reținere CAS"
 
+msgid "i18n_Form_Label_PersonalDeduction"
+msgstr "Deducere personală"
+
 msgid "i18n_Form_Label_PersonsSupported"
 msgstr "Persoane aflate în întreținere"
 

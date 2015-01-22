@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "danielgp/common-lib",
-            "version": "1.1.7",
+            "version": "1.1.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "c351326054092d21d7a7f0865686713a4b8536f0"
+                "reference": "a3c92cf4f677b5665d692677117f6e6a57903c2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/c351326054092d21d7a7f0865686713a4b8536f0",
-                "reference": "c351326054092d21d7a7f0865686713a4b8536f0",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/a3c92cf4f677b5665d692677117f6e6a57903c2d",
+                "reference": "a3c92cf4f677b5665d692677117f6e6a57903c2d",
                 "shasum": ""
             },
             "require": {
@@ -27,6 +27,7 @@
             "type": "library",
             "autoload": {
                 "classmap": [
+                    "MySQLiByDanielGP.php",
                     "RomanianHolidays.php",
                     "CommonCode.php"
                 ]
@@ -43,7 +44,7 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-01-07 15:23:08"
+            "time": "2015-01-22 20:50:52"
         },
         {
             "name": "inetsys/phpgettext",

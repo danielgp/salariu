@@ -103,6 +103,9 @@ msgstr "Overtime hours %s (%s)"
 msgid "i18n_Form_Label_PensionFund"
 msgstr "Pension fund"
 
+msgid "i18n_Form_Label_PersonalDeduction"
+msgstr "Personal deduction"
+
 msgid "i18n_Form_Label_PersonsSupported"
 msgstr "Persons under-care"
 

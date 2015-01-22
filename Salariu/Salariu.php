@@ -61,7 +61,7 @@ class Salariu extends Taxation
     {
         $this->exchangeRatesDefined = [
             'RON' => [
-                'decimals' => 0,
+                'decimals' => 2,
                 'locale'   => 'ro_RO',
             ],
             'EUR' => [
@@ -139,8 +139,8 @@ class Salariu extends Taxation
                 $m = $this->setMonthlyAverageWorkingHours($_REQUEST['ym']);
                 break;
         }
-        $aReturn['os175'] = round($_REQUEST['os175'] * 1.75 * $_REQUEST['sn'] / $m, 0);
-        $aReturn['os200'] = round($_REQUEST['os200'] * 2 * $_REQUEST['sn'] / $m, 0);
+        $aReturn['os175'] = ceil($_REQUEST['os175'] * 1.75 * $_REQUEST['sn'] / $m);
+        $aReturn['os200'] = ceil($_REQUEST['os200'] * 2 * $_REQUEST['sn'] / $m);
         return $aReturn;
     }
 
@@ -153,10 +153,16 @@ class Salariu extends Taxation
         } else {
             $aReturn['somaj'] = $this->setUnemploymentTax($_REQUEST['ym'], $longBase);
         }
-        $wd            = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
-        $aReturn['ba'] = $this->setFoodTicketsValue($_REQUEST['ym']) * ($wd - $_REQUEST['zfb']);
-        $pd            = $this->setPersonalDeduction($_REQUEST['ym'], $longBase, $_REQUEST['pi']);
-        $rest          = $longBase - $aReturn['cas'] - $aReturn['sanatate'] - $aReturn['somaj'] - $pd;
+        $wd                = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
+        $aReturn['ba']     = $this->setFoodTicketsValue($_REQUEST['ym']) * ($wd - $_REQUEST['zfb']);
+        $aReturn['pd']     = $this->setPersonalDeduction($_REQUEST['ym'], ($longBase + $aReturn['ba']), $_REQUEST['pi']);
+        $restArrayToDeduct = [
+            $aReturn['cas'],
+            $aReturn['sanatate'],
+            $aReturn['somaj'],
+            $aReturn['pd'],
+        ];
+        $rest              = $longBase - array_sum($restArrayToDeduct);
         if ($_REQUEST['ym'] >= mktime(0, 0, 0, 7, 1, 2010)) {
             $rest += round($aReturn['ba'], -4);
         }
@@ -352,8 +358,9 @@ class Salariu extends Taxation
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_BruttoSalary'), $brut);
         $amount    = $this->getValues($brut);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PensionFund'), $amount['cas']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_HealthTax'), $amount['sanatate']);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_HealthTax'), $amount['sanatate']);
+        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PersonalDeduction'), $amount['pd']);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_ExciseTax'), $amount['impozit']);
         $retineri  = $amount['cas'] + $amount['somaj'] + $amount['sanatate'] + $amount['impozit'];
         $net       = $brut - $retineri + $_REQUEST['pn'] * 10000;

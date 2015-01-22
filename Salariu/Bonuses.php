@@ -227,11 +227,13 @@ class Bonuses
                         $nReturn = 6500000;
                     }
                     if ($lngBrutto > 10000000) {
-                        $nReturn = $nReturn *
-                            (1 - ($lngBrutto - 10000000) / 20000000);
+                        $nReturn = $nReturn * (1 - ($lngBrutto - 10000000) / 20000000);
                     }
                 }
                 break;
+        }
+        if ($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) {
+            $nReturn = round($nReturn, -4);
         }
         return $nReturn;
     }
