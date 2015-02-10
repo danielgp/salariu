@@ -109,7 +109,7 @@ class Taxation extends Bonuses
             2012  => min($lngBrutto, 5 * 21170000),
             2013  => min($lngBrutto, 5 * 22230000),
             2014  => min($lngBrutto, 5 * 22980000),
-            2015  => min($lngBrutto, 5 * 23820000),
+            2015  => min($lngBrutto, 5 * 24150000),
         ];
         if ($yr == 2005) {
             if (date('n', $lngDate) <= 6) {
