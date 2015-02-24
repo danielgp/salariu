@@ -43,3 +43,6 @@ if (!isset($_REQUEST['szamnt'])) {
 if (!isset($_REQUEST['gbns'])) {
     $_REQUEST['gbns'] = 0;
 }
+if (!isset($_REQUEST['afet'])) {
+    $_REQUEST['afet'] = 0;
+}

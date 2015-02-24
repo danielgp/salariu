@@ -40,6 +40,9 @@ msgstr "Additional brutto amount"
 msgid "i18n_Form_Label_AdditionalNettoAmount"
 msgstr "Additional netto amount"
 
+msgid "i18n_Form_Label_AdvantagesForExciseTax"
+msgstr "Advantages for excise tax"
+
 msgid "i18n_Form_Label_BruttoSalary"
 msgstr "Brutto salary"
 

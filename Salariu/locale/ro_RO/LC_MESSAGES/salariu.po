@@ -40,6 +40,9 @@ msgstr "Primă brută"
 msgid "i18n_Form_Label_AdditionalNettoAmount"
 msgstr "Primă netă"
 
+msgid "i18n_Form_Label_AdvantagesForExciseTax"
+msgstr "Avantaje pt. impozitare"
+
 msgid "i18n_Form_Label_BruttoSalary"
 msgstr "Salariu brut"
 

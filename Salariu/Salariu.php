@@ -166,10 +166,11 @@ class Salariu extends Taxation
         if ($_REQUEST['ym'] >= mktime(0, 0, 0, 7, 1, 2010)) {
             $rest += round($aReturn['ba'], -4);
         }
-        $aReturn['gbns'] = $_REQUEST['gbns'] * pow(10, 4);
         if ($_REQUEST['ym'] >= mktime(0, 0, 0, 10, 1, 2010)) {
+            $aReturn['gbns'] = $_REQUEST['gbns'] * pow(10, 4);
             $rest += round($aReturn['gbns'], -4);
         }
+        //$rest += $_REQUEST['afet'] * pow(10, 4);
         $aReturn['impozit'] = $this->setIncomeTax($_REQUEST['ym'], $rest);
         $aReturn['zile']    = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
         return $aReturn;
@@ -205,9 +206,7 @@ class Salariu extends Taxation
         $sReturn[] = '<div class="disclaimer">'
             . _('i18n_Disclaimer')
             . '</div>';
-        $sReturn[] = '</body>';
-        $sReturn[] = '</html>';
-        return implode('', $sReturn);
+        return $this->setFooterCommon(implode('', $sReturn));
     }
 
     private function setFormInput()
@@ -289,6 +288,12 @@ class Salariu extends Taxation
                 'name'  => 'gbns',
                 'value' => $_REQUEST['gbns'],
                 'size'  => 2]), 1);
+        $label      = _('i18n_Form_Label_AdvantagesForExciseTax');
+        $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
+                'type'  => 'text',
+                'name'  => 'afet',
+                'value' => $_REQUEST['afet'],
+                'size'  => 2]), 1);
         $label      = _('i18n_Form_Disclaimer');
         $sReturn[]  = $this->setStringIntoTag($this->setStringIntoTag($label . $this->setStringIntoShortTag('input', [
                     'type'  => 'hidden',
@@ -356,6 +361,7 @@ class Salariu extends Taxation
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[1], '175%'), ($overtime['os175'] * pow(10, 4)));
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[2], '200%'), ($overtime['os200'] * pow(10, 4)));
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_BruttoSalary'), $brut);
+        //$brut += $_REQUEST['afet'] * pow(10, 4);
         $amount    = $this->getValues($brut);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PensionFund'), $amount['cas']);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
@@ -455,15 +461,11 @@ class Salariu extends Taxation
 
     private function setHeaderHtml()
     {
-        return '<!DOCTYPE html>'
-            . '<html lang="' . str_replace('_', '-', $_SESSION['lang']) . '">'
-            . '<head>'
-            . '<meta charset="utf-8" />'
-            . '<meta name="viewport" content="width=device-width" />'
-            . '<title>' . _('i18n_ApplicationName') . '</title>'
-            . $this->setCssFile('css/main.css')
-            . '</head>'
-            . '<body>'
+        return $this->setHeaderCommon([
+                'lang'  => str_replace('_', '-', $_SESSION['lang']),
+                'title' => _('i18n_ApplicationName'),
+                'css'   => 'css/main.css',
+            ])
             . '<h1>' . _('i18n_ApplicationName') . '</h1>'
             . $this->setHeaderLanguages()
         ;
