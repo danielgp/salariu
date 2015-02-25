@@ -170,7 +170,7 @@ class Salariu extends Taxation
             $aReturn['gbns'] = $_REQUEST['gbns'] * pow(10, 4);
             $rest += round($aReturn['gbns'], -4);
         }
-        //$rest += $_REQUEST['afet'] * pow(10, 4);
+        $rest += $_REQUEST['afet'] * pow(10, 4);
         $aReturn['impozit'] = $this->setIncomeTax($_REQUEST['ym'], $rest);
         $aReturn['zile']    = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
         return $aReturn;
@@ -361,7 +361,7 @@ class Salariu extends Taxation
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[1], '175%'), ($overtime['os175'] * pow(10, 4)));
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[2], '200%'), ($overtime['os200'] * pow(10, 4)));
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_BruttoSalary'), $brut);
-        //$brut += $_REQUEST['afet'] * pow(10, 4);
+        $brut += $_REQUEST['afet'] * pow(10, 4);
         $amount    = $this->getValues($brut);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PensionFund'), $amount['cas']);
         $sReturn[] = $this->setFormRow(_('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
