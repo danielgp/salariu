@@ -13,8 +13,8 @@
     "require": {
         "php": ">=5.4",
         "ext-intl": "*",
-        "danielgp/common-lib": ">=1.1.7",
-        "inetsys/phpgettext": ">=1.0.11"
+        "danielgp/common-lib": "*",
+        "gettext/gettext": "*"
     },
     "autoload": {
         "psr-4": {

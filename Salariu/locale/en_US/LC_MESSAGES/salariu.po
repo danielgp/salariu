@@ -92,7 +92,7 @@ msgid "i18n_Form_Label_NettoSalaryCash"
 msgstr "Netto cash salary"
 
 msgid "i18n_Form_Label_OvertimeAmount"
-msgstr "Amount for %s overtime (%2)"
+msgstr "Amount for %s overtime (%s)"
 
 msgid "i18n_Form_Label_OvertimeChoice1"
 msgstr "normal"

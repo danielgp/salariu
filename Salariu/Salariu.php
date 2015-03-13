@@ -28,19 +28,19 @@
 
 namespace danielgp\salariu;
 
-class Salariu extends Taxation
+class Salariu
 {
 
-    use \danielgp\common_lib\CommonCode;
+    use \danielgp\common_lib\CommonCode,
+        \danielgp\salariu\Bonuses,
+        \danielgp\salariu\Taxation;
 
-    private $applicationFlags;
-    private $exchangeRateDate;
-    private $exchangeRatesDefined;
-    private $exchangeRatesValue;
+    private $appFlags;
+    private $tApp = null;
 
     public function __construct()
     {
-        $this->applicationFlags = [
+        $this->appFlags = [
             'available_languages' => [
                 'en_US' => 'EN',
                 'ro_RO' => 'RO',
@@ -59,7 +59,7 @@ class Salariu extends Taxation
 
     private function getExchangeRates()
     {
-        $this->exchangeRatesDefined = [
+        $this->appFlags['currency_exchanges']          = [
             'RON' => [
                 'decimals' => 2,
                 'locale'   => 'ro_RO',
@@ -85,9 +85,10 @@ class Salariu extends Taxation
                 'locale'   => 'en_US',
             ],
         ];
-        $this->exchangeRateDate     = strtotime('now');
-        foreach (array_keys($this->exchangeRatesDefined) as $value) {
-            $this->exchangeRatesValue[$value] = 1;
+        $this->appFlags['currency_exchange_rate_date'] = strtotime('now');
+        $k                                             = array_keys($this->appFlags['currency_exchanges']);
+        foreach ($k as $value) {
+            $this->appFlags['currency_exchange_rate_value'][$value] = 1;
         }
         $xml = new \XMLReader();
         $x   = EXCHANGE_RATES_LOCAL;
@@ -104,17 +105,16 @@ class Salariu extends Taxation
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
                     switch ($xml->localName) {
                         case 'Cube':
-                            $v                      = $xml->getAttribute('date');
-                            $this->exchangeRateDate = strtotime($v);
+                            $this->appFlags['currency_exchange_rate_date'] = strtotime($xml->getAttribute('date'));
                             break;
                         case 'Rate':
-                            if (in_array($xml->getAttribute('currency'), array_keys($this->exchangeRatesDefined))) {
-                                $c                            = $xml->getAttribute('currency');
-                                $this->exchangeRatesValue[$c] = $xml->readInnerXml();
+                            if (in_array($xml->getAttribute('currency'), $k)) {
+                                $c  = $xml->getAttribute('currency');
+                                $vl = $xml->readInnerXml();
                                 if (!is_null($xml->getAttribute('multiplier'))) {
-                                    $m                            = $xml->getAttribute('multiplier');
-                                    $this->exchangeRatesValue[$c] = $this->exchangeRatesValue[$c] / $m;
+                                    $vl = $vl / $xml->getAttribute('multiplier');
                                 }
+                                $this->appFlags['currency_exchange_rate_value'][$c] = $vl;
                             }
                             break;
                     }
@@ -144,25 +144,25 @@ class Salariu extends Taxation
         return $aReturn;
     }
 
-    private function getValues($longBase)
+    private function getValues($lngBase)
     {
-        $aReturn['cas']      = $this->setHealthFundTax($_REQUEST['ym'], $longBase);
-        $aReturn['sanatate'] = $this->setHealthTax($_REQUEST['ym'], $longBase);
+        $aReturn['cas']      = $this->setHealthFundTax($_REQUEST['ym'], $lngBase);
+        $aReturn['sanatate'] = $this->setHealthTax($_REQUEST['ym'], $lngBase);
         if ($_REQUEST['ym'] < mktime(0, 0, 0, 1, 1, 2008)) {
             $aReturn['somaj'] = $this->setUnemploymentTax($_REQUEST['ym'], $_REQUEST['sn']);
         } else {
-            $aReturn['somaj'] = $this->setUnemploymentTax($_REQUEST['ym'], $longBase);
+            $aReturn['somaj'] = $this->setUnemploymentTax($_REQUEST['ym'], $lngBase);
         }
         $wd                = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
         $aReturn['ba']     = $this->setFoodTicketsValue($_REQUEST['ym']) * ($wd - $_REQUEST['zfb']);
-        $aReturn['pd']     = $this->setPersonalDeduction($_REQUEST['ym'], ($longBase + $aReturn['ba']), $_REQUEST['pi']);
+        $aReturn['pd']     = $this->setPersonalDeduction($_REQUEST['ym'], ($lngBase + $aReturn['ba']), $_REQUEST['pi']);
         $restArrayToDeduct = [
             $aReturn['cas'],
             $aReturn['sanatate'],
             $aReturn['somaj'],
             $aReturn['pd'],
         ];
-        $rest              = $longBase - array_sum($restArrayToDeduct);
+        $rest              = $lngBase - array_sum($restArrayToDeduct);
         if ($_REQUEST['ym'] >= mktime(0, 0, 0, 7, 1, 2010)) {
             $rest += round($aReturn['ba'], -4);
         }
@@ -178,24 +178,19 @@ class Salariu extends Taxation
 
     private function handleLocalizationSalariu()
     {
-        $usedDomain = 'salariu';
         if (isset($_GET['lang'])) {
             $_SESSION['lang'] = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
         } elseif (!isset($_SESSION['lang'])) {
-            $_SESSION['lang'] = $this->applicationFlags['default_language'];
+            $_SESSION['lang'] = $this->appFlags['default_language'];
         }
         /* to avoid potential language injections from other applications that do not applies here */
-        if (!in_array($_SESSION['lang'], array_keys($this->applicationFlags['available_languages']))) {
-            $_SESSION['lang'] = $this->applicationFlags['default_language'];
+        if (!in_array($_SESSION['lang'], array_keys($this->appFlags['available_languages']))) {
+            $_SESSION['lang'] = $this->appFlags['default_language'];
         }
-        T_setlocale(LC_MESSAGES, $_SESSION['lang']);
-        if (function_exists('bindtextdomain')) {
-            bindtextdomain($usedDomain, realpath('./locale'));
-            bind_textdomain_codeset($usedDomain, 'UTF-8');
-            textdomain($usedDomain);
-        } else {
-            echo 'No gettext extension/library is active in current PHP configuration!';
-        }
+        $localizationFile = 'locale/' . $_SESSION['lang'] . '/LC_MESSAGES/salariu.mo';
+        $translations     = \Gettext\Extractors\Mo::fromFile($localizationFile);
+        $this->tApp       = new \Gettext\Translator();
+        $this->tApp->loadTranslations($translations);
     }
 
     private function setFooterHtml()
@@ -204,52 +199,59 @@ class Salariu extends Taxation
         $sReturn[] = '<div class="resetOnly author">&copy; 2015 Daniel Popiniuc</div>';
         $sReturn[] = '<hr/>';
         $sReturn[] = '<div class="disclaimer">'
-            . _('i18n_Disclaimer')
+            . $this->tApp->gettext('i18n_Disclaimer')
             . '</div>';
         return $this->setFooterCommon(implode('', $sReturn));
     }
 
     private function setFormInput()
     {
-        setlocale(LC_TIME, explode('_', $_SESSION['lang'])[0]);
-
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CalculationMonth'), $this->setFormInputSelect(), 1);
-        $label     = _('i18n_Form_Label_NegotiatedSalary');
+        $label     = $this->tApp->gettext('i18n_Form_Label_CalculationMonth');
+        $sReturn[] = $this->setFormRow($label, $this->setFormInputSelect(), 1);
+        $label     = $this->tApp->gettext('i18n_Form_Label_NegotiatedSalary');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'sn',
                 'value' => $_REQUEST['sn'],
                 'size'  => 10
             ]) . ' RON', 1);
-        $label     = _('i18n_Form_Label_CumulatedAddedValue');
+        $label     = $this->tApp->gettext('i18n_Form_Label_CumulatedAddedValue');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'sc',
                 'value' => $_REQUEST['sc'],
                 'size'  => 2
             ]) . ' %', 1);
-        $label     = _('i18n_Form_Label_AdditionalBruttoAmount');
+        $label     = $this->tApp->gettext('i18n_Form_Label_AdditionalBruttoAmount');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'pb',
                 'value' => $_REQUEST['pb'],
                 'size'  => 10
             ]) . ' RON', 1);
-        $label     = _('i18n_Form_Label_AdditionalNettoAmount');
+        $label     = $this->tApp->gettext('i18n_Form_Label_AdditionalNettoAmount');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'pn',
                 'value' => $_REQUEST['pn'],
                 'size'  => 10
             ]) . ' RON', 1);
-        $label     = sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice1'), '175%');
+        $pieces    = [
+            $this->tApp->gettext('i18n_Form_Label_OvertimeHours'),
+            $this->tApp->gettext('i18n_Form_Label_OvertimeChoice1'),
+        ];
+        $label     = sprintf($pieces[0], $pieces[1], '175%');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'os175',
                 'value' => $_REQUEST['os175'],
                 'size'  => 2
             ]), 1);
-        $label     = sprintf(_('i18n_Form_Label_OvertimeHours'), _('i18n_Form_Label_OvertimeChoice2'), '200%');
+        $pieces    = [
+            $this->tApp->gettext('i18n_Form_Label_OvertimeHours'),
+            $this->tApp->gettext('i18n_Form_Label_OvertimeChoice2'),
+        ];
+        $label     = sprintf($pieces[0], $pieces[1], '200%');
         $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'os200',
@@ -260,41 +262,41 @@ class Salariu extends Taxation
             $temp2[] = $counter;
         }
         $selectTemp = $this->setArray2Select($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]);
-        $sReturn[]  = $this->setFormRow(_('i18n_Form_Label_PersonsSupported'), $selectTemp, 1);
+        $sReturn[]  = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PersonsSupported'), $selectTemp, 1);
         $choices    = [
-            _('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
-            _('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
+            $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
+            $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
         ];
-        $label      = _('i18n_Form_Label_CatholicEasterFree');
+        $label      = $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree');
         $select     = $this->setArray2Select($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
         $sReturn[]  = $this->setFormRow($label, $select, 1);
-        $label      = _('i18n_Form_Label_SeisureAmout');
+        $label      = $this->tApp->gettext('i18n_Form_Label_SeisureAmout');
         $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'szamnt',
                 'value' => $_REQUEST['szamnt'],
                 'size'  => 10
             ]), 1);
-        $label      = _('i18n_Form_Label_WorkedDaysWithoutFoodBonuses');
+        $label      = $this->tApp->gettext('i18n_Form_Label_WorkedDaysWithoutFoodBonuses');
         $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'zfb',
                 'value' => $_REQUEST['zfb'],
                 'size'  => 2
             ]), 1);
-        $label      = _('i18n_Form_Label_FoodBonusesValue');
+        $label      = $this->tApp->gettext('i18n_Form_Label_FoodBonusesValue');
         $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'gbns',
                 'value' => $_REQUEST['gbns'],
                 'size'  => 2]), 1);
-        $label      = _('i18n_Form_Label_AdvantagesForExciseTax');
+        $label      = $this->tApp->gettext('i18n_Form_Label_AdvantagesForExciseTax');
         $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
                 'type'  => 'text',
                 'name'  => 'afet',
                 'value' => $_REQUEST['afet'],
                 'size'  => 2]), 1);
-        $label      = _('i18n_Form_Disclaimer');
+        $label      = $this->tApp->gettext('i18n_Form_Disclaimer');
         $sReturn[]  = $this->setStringIntoTag($this->setStringIntoTag($label . $this->setStringIntoShortTag('input', [
                     'type'  => 'hidden',
                     'name'  => 'action',
@@ -302,15 +304,15 @@ class Salariu extends Taxation
                 ]), 'td', ['colspan' => 2, 'style' => 'color: red;']), 'tr');
         if (isset($_REQUEST['ym'])) {
             $reset_btn      = '';
-            $submit_btn_txt = _('i18n_Form_Button_Recalculate');
+            $submit_btn_txt = $this->tApp->gettext('i18n_Form_Button_Recalculate');
         } else {
             $reset_btn      = $this->setStringIntoShortTag('input', [
                 'type'  => 'reset',
                 'id'    => 'reset',
-                'value' => _('i18n_Form_Button_Reset'),
+                'value' => $this->tApp->gettext('i18n_Form_Button_Reset'),
                 'style' => 'color:#000;'
             ]);
-            $submit_btn_txt = _('i18n_Form_Button_Calculate');
+            $submit_btn_txt = $this->tApp->gettext('i18n_Form_Button_Calculate');
         }
         $sReturn[] = $this->setFormRow($reset_btn, $this->setStringIntoShortTag('input', [
                 'type'  => 'submit',
@@ -322,7 +324,7 @@ class Salariu extends Taxation
             'action' => $_SERVER['SCRIPT_NAME']
         ]);
         return $this->setStringIntoTag(implode('', [
-                $this->setStringIntoTag(_('i18n_FieldsetLabel_Inputs'), 'legend'),
+                $this->setStringIntoTag($this->tApp->gettext('i18n_FieldsetLabel_Inputs'), 'legend'),
                 $frm
                 ]), 'fieldset', ['style' => 'float: left;']);
     }
@@ -347,46 +349,53 @@ class Salariu extends Taxation
         $overtime  = $this->getOvertimes();
         $additions = $_REQUEST['pb'] + $overtime['os175'] + $overtime['os200'];
         $brut      = ($_REQUEST['sn'] * (1 + $_REQUEST['sc'] / 100) + $additions) * pow(10, 4);
-        $xRate     = str_replace('%1', date('d.m.Y', $this->exchangeRateDate), _('i18n_Form_Label_ExchangeRateAtDate'));
+        $text      = $this->tApp->gettext('i18n_Form_Label_ExchangeRateAtDate');
+        $xRate     = str_replace('%1', date('d.m.Y', $this->appFlags['currency_exchange_rate_date']), $text);
         $sReturn[] = $this->setFormRow($xRate, 1000000);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NegotiatedSalary'), $_REQUEST['sn'] * 10000);
+        $text      = $this->tApp->gettext('i18n_Form_Label_NegotiatedSalary');
+        $sReturn[] = $this->setFormRow($text, $_REQUEST['sn'] * 10000);
         $prima     = $_REQUEST['sn'] * $_REQUEST['sc'] * 100;
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_CumulatedAddedValue'), $prima);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_AdditionalBruttoAmount'), $_REQUEST['pb'] * 10000);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_CumulatedAddedValue'), $prima);
+        $text      = $this->tApp->gettext('i18n_Form_Label_AdditionalBruttoAmount');
+        $sReturn[] = $this->setFormRow($text, $_REQUEST['pb'] * 10000);
         $ovTime    = [
-            'main' => _('i18n_Form_Label_OvertimeAmount'),
-            1      => _('i18n_Form_Label_OvertimeChoice1'),
-            2      => _('i18n_Form_Label_OvertimeChoice2'),
+            'main' => $this->tApp->gettext('i18n_Form_Label_OvertimeAmount'),
+            1      => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice1'),
+            2      => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice2'),
         ];
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[1], '175%'), ($overtime['os175'] * pow(10, 4)));
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[2], '200%'), ($overtime['os200'] * pow(10, 4)));
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_BruttoSalary'), $brut);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_BruttoSalary'), $brut);
         $brut += $_REQUEST['afet'] * pow(10, 4);
         $amount    = $this->getValues($brut);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PensionFund'), $amount['cas']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_HealthTax'), $amount['sanatate']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_PersonalDeduction'), $amount['pd']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_ExciseTax'), $amount['impozit']);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PensionFund'), $amount['cas']);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_HealthTax'), $amount['sanatate']);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PersonalDeduction'), $amount['pd']);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_ExciseTax'), $amount['impozit']);
         $retineri  = $amount['cas'] + $amount['somaj'] + $amount['sanatate'] + $amount['impozit'];
         $net       = $brut - $retineri + $_REQUEST['pn'] * 10000;
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_AdditionalNettoAmount'), $_REQUEST['pn'] * 10000);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NettoSalary'), $net);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_SeisureAmout'), $_REQUEST['szamnt'] * 10000);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_NettoSalaryCash'), ($net - $_REQUEST['szamnt'] * 10000));
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_WorkingDays'), $amount['zile'], 'value');
+        $text      = $this->tApp->gettext('i18n_Form_Label_AdditionalNettoAmount');
+        $sReturn[] = $this->setFormRow($text, $_REQUEST['pn'] * 10000);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_NettoSalary'), $net);
+        $text      = $this->tApp->gettext('i18n_Form_Label_SeisureAmout');
+        $sReturn[] = $this->setFormRow($text, $_REQUEST['szamnt'] * 10000);
+        $text      = $this->tApp->gettext('i18n_Form_Label_NettoSalaryCash');
+        $sReturn[] = $this->setFormRow($text, ($net - $_REQUEST['szamnt'] * 10000));
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_WorkingDays'), $amount['zile'], 'value');
         $fBonus    = [
-            'main'  => _('i18n_Form_Label_FoodBonuses'),
-            'no'    => _('i18n_Form_Label_FoodBonusesChoiceNo'),
-            'value' => _('i18n_Form_Label_FoodBonusesChoiceValue')
+            'main'  => $this->tApp->gettext('i18n_Form_Label_FoodBonuses'),
+            'no'    => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceNo'),
+            'value' => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceValue')
         ];
         $fBonusTxt = sprintf($fBonus['main'], $fBonus['value'], $fBonus['no'], ($amount['zile'] - $_REQUEST['zfb']));
         $sReturn[] = $this->setFormRow($fBonusTxt, $amount['ba']);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_FoodBonusesValue'), $amount['gbns']);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_FoodBonusesValue'), $amount['gbns']);
         $total     = ($net + $amount['ba'] + $amount['gbns'] - $_REQUEST['szamnt'] * 10000);
-        $sReturn[] = $this->setFormRow(_('i18n_Form_Label_Total'), $total);
+        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_Total'), $total);
+        setlocale(LC_TIME, explode('_', $_SESSION['lang'])[0]);
         $crtMonth  = strftime('%B', $_REQUEST['ym']);
-        $legend    = sprintf(_('i18n_FieldsetLabel_Results'), $crtMonth, date('Y', $_REQUEST['ym']));
+        $legend    = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results'), $crtMonth, date('Y', $_REQUEST['ym']));
         return $this->setStringIntoTag(implode('', [
                 $this->setStringIntoTag($legend, 'legend'),
                 $this->setStringIntoTag(implode('', $sReturn), 'table')
@@ -398,23 +407,23 @@ class Salariu extends Taxation
         $a                = '';
         $defaultCellStyle = ['class' => 'labelS'];
         switch ($text) {
-            case _('i18n_Form_Label_NegotiatedSalary'):
-            case _('i18n_Form_Label_BruttoSalary'):
-            case _('i18n_Form_Label_NettoSalaryCash'):
+            case $this->tApp->gettext('i18n_Form_Label_NegotiatedSalary'):
+            case $this->tApp->gettext('i18n_Form_Label_BruttoSalary'):
+            case $this->tApp->gettext('i18n_Form_Label_NettoSalaryCash'):
                 $defaultCellStyle = array_merge($defaultCellStyle, [
                     'style' => 'color:#000000;font-weight:bold;'
                 ]);
                 break;
-            case _('i18n_Form_Label_SeisureAmout'):
-            case _('i18n_Form_Label_PensionFund'):
-            case _('i18n_Form_Label_HealthTax'):
-            case _('i18n_Form_Label_UnemploymentTax'):
-            case _('i18n_Form_Label_ExciseTax'):
+            case $this->tApp->gettext('i18n_Form_Label_SeisureAmout'):
+            case $this->tApp->gettext('i18n_Form_Label_PensionFund'):
+            case $this->tApp->gettext('i18n_Form_Label_HealthTax'):
+            case $this->tApp->gettext('i18n_Form_Label_UnemploymentTax'):
+            case $this->tApp->gettext('i18n_Form_Label_ExciseTax'):
                 $defaultCellStyle = array_merge($defaultCellStyle, [
                     'style' => 'color:#ff9900;'
                 ]);
                 break;
-            case _('i18n_Form_Label_Total'):
+            case $this->tApp->gettext('i18n_Form_Label_Total'):
                 $defaultCellStyle = array_merge($defaultCellStyle, [
                     'style' => 'font-weight:bold;color:#009933;font-size:larger;'
                 ]);
@@ -433,19 +442,19 @@ class Salariu extends Taxation
         switch ($type) {
             case 'amount':
                 $value                      = $value / pow(10, 4);
-                $defaultCellStyle2['style'] = $defaultCellStyle['style']
-                    . 'text-align:right;';
-                foreach ($this->exchangeRatesDefined as $key2 => $value2) {
+                $defaultCellStyle2['style'] = $defaultCellStyle['style'] . 'text-align:right;';
+                foreach ($this->appFlags['currency_exchanges'] as $key2 => $value2) {
                     $fmt         = new \NumberFormatter($value2['locale'], \NumberFormatter::CURRENCY);
                     $fmt->setAttribute(\NumberFormatter::FRACTION_DIGITS, $value2['decimals']);
-                    $finalValue  = $fmt->formatCurrency($value / $this->exchangeRatesValue[$key2], $key2);
+                    $x           = $this->appFlags['currency_exchange_rate_value'][$key2];
+                    $finalValue  = $fmt->formatCurrency($value / $x, $key2);
                     $cellValue[] = $this->setStringIntoTag($finalValue, 'td', $defaultCellStyle2);
                 }
                 $value2show        = implode('', $cellValue);
                 break;
             case 'value':
                 $defaultCellStyle2 = array_merge($defaultCellStyle, [
-                    'colspan' => count($this->exchangeRatesDefined)
+                    'colspan' => count($this->appFlags['currency_exchanges'])
                 ]);
                 $value2show        = $this->setStringIntoTag($value . $a, 'td', $defaultCellStyle2);
                 break;
@@ -463,10 +472,10 @@ class Salariu extends Taxation
     {
         return $this->setHeaderCommon([
                 'lang'  => str_replace('_', '-', $_SESSION['lang']),
-                'title' => _('i18n_ApplicationName'),
+                'title' => $this->tApp->gettext('i18n_ApplicationName'),
                 'css'   => 'css/main.css',
             ])
-            . '<h1>' . _('i18n_ApplicationName') . '</h1>'
+            . '<h1>' . $this->tApp->gettext('i18n_ApplicationName') . '</h1>'
             . $this->setHeaderLanguages()
         ;
     }
@@ -474,7 +483,7 @@ class Salariu extends Taxation
     private function setHeaderLanguages()
     {
         $sReturn = [];
-        foreach ($this->applicationFlags['available_languages'] as $key => $value) {
+        foreach ($this->appFlags['available_languages'] as $key => $value) {
             if ($_SESSION['lang'] === $key) {
                 $sReturn[] = '<b>' . $value . '</b>';
             } else {

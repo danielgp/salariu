@@ -33,7 +33,7 @@ namespace danielgp\salariu;
  *
  * @author E303778
  */
-class Bonuses
+trait Bonuses
 {
 
     /**

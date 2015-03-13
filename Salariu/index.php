@@ -27,7 +27,6 @@
  */
 require_once 'config/salariu.config.inc.php';
 require_once 'config/default.values.inc.php';
-require_once '../vendor/inetsys/phpgettext/gettext.inc';
 require_once '../vendor/autoload.php';
 
 $app = new \danielgp\salariu\Salariu();
