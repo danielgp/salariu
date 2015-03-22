@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "danielgp/common-lib",
-            "version": "1.4.1",
+            "version": "1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "fd1510473cdbe0b5107153ed473fee2340a6a222"
+                "reference": "00d94b00dc459e5aaba7f94caab501a7317ad1d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/fd1510473cdbe0b5107153ed473fee2340a6a222",
-                "reference": "fd1510473cdbe0b5107153ed473fee2340a6a222",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/00d94b00dc459e5aaba7f94caab501a7317ad1d8",
+                "reference": "00d94b00dc459e5aaba7f94caab501a7317ad1d8",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-03-13 13:45:30"
+            "time": "2015-03-22 02:48:48"
         },
         {
             "name": "gettext/gettext",
