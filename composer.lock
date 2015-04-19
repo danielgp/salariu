@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "danielgp/common-lib",
-            "version": "1.5",
+            "version": "1.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "00d94b00dc459e5aaba7f94caab501a7317ad1d8"
+                "reference": "574697cd855c6e0acefcb60401235d38bc3e4176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/00d94b00dc459e5aaba7f94caab501a7317ad1d8",
-                "reference": "00d94b00dc459e5aaba7f94caab501a7317ad1d8",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/574697cd855c6e0acefcb60401235d38bc3e4176",
+                "reference": "574697cd855c6e0acefcb60401235d38bc3e4176",
                 "shasum": ""
             },
             "require": {
@@ -29,11 +29,12 @@
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "CommonCode.php",
-                    "DomComponentsByDanielGP.php",
-                    "MySQLiByDanielGPqueries.php",
-                    "MySQLiByDanielGP.php",
-                    "RomanianHolidays.php"
+                    "source/CommonCode.php",
+                    "source/DomComponentsByDanielGPwithCDN.php",
+                    "source/DomComponentsByDanielGP.php",
+                    "source/MySQLiByDanielGPqueries.php",
+                    "source/MySQLiByDanielGP.php",
+                    "source/RomanianHolidays.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -48,28 +49,35 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-03-22 02:48:48"
+            "time": "2015-04-19 15:31:15"
         },
         {
             "name": "gettext/gettext",
-            "version": "v3.3",
+            "version": "v3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oscarotero/Gettext.git",
-                "reference": "3addf67466e8ab129b8a5b15ad374c3d1a9359b3"
+                "reference": "843c87d345b5be3bd168d77cf09ecaca72b74f8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oscarotero/Gettext/zipball/3addf67466e8ab129b8a5b15ad374c3d1a9359b3",
-                "reference": "3addf67466e8ab129b8a5b15ad374c3d1a9359b3",
+                "url": "https://api.github.com/repos/oscarotero/Gettext/zipball/843c87d345b5be3bd168d77cf09ecaca72b74f8f",
+                "reference": "843c87d345b5be3bd168d77cf09ecaca72b74f8f",
                 "shasum": ""
             },
             "require": {
                 "gettext/languages": "2.*",
                 "php": ">=5.3.0"
             },
+            "require-dev": {
+                "illuminate/view": "*",
+                "twig/extensions": "*",
+                "twig/twig": "*"
+            },
             "suggest": {
-                "illuminate/view": "Is necessary if you want use the Blade extractor"
+                "illuminate/view": "Is necessary if you want to use the Blade extractor",
+                "twig/extensions": "Is necessary if you want to use the Twig extractor",
+                "twig/twig": "Is necessary if you want to use the Twig extractor"
             },
             "type": "library",
             "autoload": {
@@ -99,20 +107,20 @@
                 "po",
                 "translation"
             ],
-            "time": "2015-02-16 11:52:19"
+            "time": "2015-04-06 09:38:45"
         },
         {
             "name": "gettext/languages",
-            "version": "v2.1.1",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mlocati/cldr-to-gettext-plural-rules.git",
-                "reference": "7ea1b22590480e21950ab15ef7f56090153d3d21"
+                "reference": "c43ade7e3fb68bcf2379036513dce8d20553d9c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mlocati/cldr-to-gettext-plural-rules/zipball/7ea1b22590480e21950ab15ef7f56090153d3d21",
-                "reference": "7ea1b22590480e21950ab15ef7f56090153d3d21",
+                "url": "https://api.github.com/repos/mlocati/cldr-to-gettext-plural-rules/zipball/c43ade7e3fb68bcf2379036513dce8d20553d9c8",
+                "reference": "c43ade7e3fb68bcf2379036513dce8d20553d9c8",
                 "shasum": ""
             },
             "require": {
@@ -153,7 +161,7 @@
                 "translations",
                 "unicode"
             ],
-            "time": "2015-02-24 09:33:40"
+            "time": "2015-03-27 11:32:41"
         }
     ],
     "packages-dev": [],
