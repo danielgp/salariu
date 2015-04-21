@@ -261,14 +261,14 @@ class Salariu
         for ($counter = 0; $counter <= 4; $counter++) {
             $temp2[] = $counter;
         }
-        $selectTemp = $this->setArray2Select($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]);
+        $selectTemp = $this->setArrayToSelect($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]);
         $sReturn[]  = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PersonsSupported'), $selectTemp, 1);
         $choices    = [
             $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
             $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
         ];
         $label      = $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree');
-        $select     = $this->setArray2Select($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
+        $select     = $this->setArrayToSelect($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
         $sReturn[]  = $this->setFormRow($label, $select, 1);
         $label      = $this->tApp->gettext('i18n_Form_Label_SeisureAmout');
         $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
@@ -341,7 +341,7 @@ class Salariu
                 }
             }
         }
-        return $this->setArray2Select($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
+        return $this->setArrayToSelect($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
     }
 
     private function setFormOutput()
@@ -488,7 +488,7 @@ class Salariu
                 $sReturn[] = '<b>' . $value . '</b>';
             } else {
                 $sReturn[] = '<a href="?'
-                    . (isset($_REQUEST) ? $this->setArray2String4Url('&amp;', $_REQUEST, ['lang']) . '&amp;' : '')
+                    . (isset($_REQUEST) ? $this->setArrayToStringForUrl('&amp;', $_REQUEST, ['lang']) . '&amp;' : '')
                     . 'lang=' . $key
                     . '">' . $value . '</a>';
             }

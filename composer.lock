@@ -8,32 +8,34 @@
     "packages": [
         {
             "name": "danielgp/common-lib",
-            "version": "1.7.6",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "574697cd855c6e0acefcb60401235d38bc3e4176"
+                "reference": "f3c874d5a758f5d7a21ae38f5179bdef4d4b197f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/574697cd855c6e0acefcb60401235d38bc3e4176",
-                "reference": "574697cd855c6e0acefcb60401235d38bc3e4176",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/f3c874d5a758f5d7a21ae38f5179bdef4d4b197f",
+                "reference": "f3c874d5a758f5d7a21ae38f5179bdef4d4b197f",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-mysqli": "*",
                 "gettext/gettext": "*",
-                "php": ">=5.4"
+                "php": ">=5.4",
+                "phpoffice/phpexcel": "*"
             },
             "type": "library",
             "autoload": {
                 "classmap": [
                     "source/CommonCode.php",
-                    "source/DomComponentsByDanielGPwithCDN.php",
                     "source/DomComponentsByDanielGP.php",
+                    "source/DomComponentsByDanielGPwithCDN.php",
                     "source/MySQLiByDanielGPqueries.php",
                     "source/MySQLiByDanielGP.php",
+                    "source/NetworkComponentsByDanielGP.php",
                     "source/RomanianHolidays.php"
                 ]
             },
@@ -49,7 +51,7 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-04-19 15:31:15"
+            "time": "2015-04-21 18:23:57"
         },
         {
             "name": "gettext/gettext",
@@ -162,6 +164,63 @@
                 "unicode"
             ],
             "time": "2015-03-27 11:32:41"
+        },
+        {
+            "name": "phpoffice/phpexcel",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "reference": "e69a5e4d0ffa7fb6f171859e0a04346e580df30b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/e69a5e4d0ffa7fb6f171859e0a04346e580df30b",
+                "reference": "e69a5e4d0ffa7fb6f171859e0a04346e580df30b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Maarten Balliauw",
+                    "homepage": "http://blog.maartenballiauw.be"
+                },
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
+                },
+                {
+                    "name": "Erik Tilt"
+                }
+            ],
+            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "OpenXML",
+                "excel",
+                "php",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2014-03-02 15:22:49"
         }
     ],
     "packages-dev": [],
