@@ -46,16 +46,16 @@
         },
         {
             "name": "danielgp/common-lib",
-            "version": "1.8.6",
+            "version": "1.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "005383afbe8f45328fa314ab77bfb8b91f28123b"
+                "reference": "bb2df3a7d96041499632bbccd36daf925d4fe648"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/005383afbe8f45328fa314ab77bfb8b91f28123b",
-                "reference": "005383afbe8f45328fa314ab77bfb8b91f28123b",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/bb2df3a7d96041499632bbccd36daf925d4fe648",
+                "reference": "bb2df3a7d96041499632bbccd36daf925d4fe648",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,7 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-05-01 22:07:23"
+            "time": "2015-05-01 22:42:17"
         },
         {
             "name": "fortawesome/font-awesome",
