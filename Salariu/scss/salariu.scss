@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    outline: none;
+}
+a {
+    text-decoration:none;
+}
+h1 {
+    font-size: xx-large;
+}
+.author {
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+}
+@import "base.scss";
+@import "base.2014.scss";
+@import "form.scss";
+@import "gradients.scss";
+@import "table.scss";
+@import "../../vendor/danielgp/common-lib/source/scss/upperRightBox.scss";
+.disclaimer {
+    @extend .gradientGreyGloss2;
+    border: solid;
+    border-color: grey;
+    border-radius: 3px;
+    clear: both;
+    color: red; 
+    float: none;
+    font-weight: bold;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 3px;
+    text-align: center; 
+    width: 30%;
+}

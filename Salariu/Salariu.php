@@ -42,8 +42,8 @@ class Salariu
     {
         $this->appFlags = [
             'available_languages' => [
-                'en_US' => 'EN',
-                'ro_RO' => 'RO',
+                'en_US' => 'US English',
+                'ro_RO' => 'Română',
             ],
             'default_language'    => 'ro_RO'
         ];
@@ -196,6 +196,7 @@ class Salariu
     private function setFooterHtml()
     {
         $sReturn   = [];
+        $sReturn[] = $this->setUppeRightBoxLanguages($this->appFlags['available_languages']);
         $sReturn[] = '<div class="resetOnly author">&copy; 2015 Daniel Popiniuc</div>';
         $sReturn[] = '<hr/>';
         $sReturn[] = '<div class="disclaimer">'
@@ -473,28 +474,12 @@ class Salariu
         return $this->setHeaderCommon([
                 'lang'  => str_replace('_', '-', $_SESSION['lang']),
                 'title' => $this->tApp->gettext('i18n_ApplicationName'),
-                'css'   => 'css/main.css',
+                'css'   => [
+                    '../vendor/components/flag-icon-css/css/flag-icon.min.css',
+                    'css/salariu.css',
+                ],
             ])
             . '<h1>' . $this->tApp->gettext('i18n_ApplicationName') . '</h1>'
-            . $this->setHeaderLanguages()
         ;
-    }
-
-    private function setHeaderLanguages()
-    {
-        $sReturn = [];
-        foreach ($this->appFlags['available_languages'] as $key => $value) {
-            if ($_SESSION['lang'] === $key) {
-                $sReturn[] = '<b>' . $value . '</b>';
-            } else {
-                $sReturn[] = '<a href="?'
-                    . (isset($_REQUEST) ? $this->setArrayToStringForUrl('&amp;', $_REQUEST, ['lang']) . '&amp;' : '')
-                    . 'lang=' . $key
-                    . '">' . $value . '</a>';
-            }
-        }
-        return '<span class="language_box">'
-            . implode(' | ', $sReturn)
-            . '</span>';
     }
 }

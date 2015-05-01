@@ -7,25 +7,67 @@
     "hash": "6df35bfa33e5b4ed53d7bd08be1cb620",
     "packages": [
         {
-            "name": "danielgp/common-lib",
-            "version": "1.8.1",
+            "name": "components/flag-icon-css",
+            "version": "0.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "f3c874d5a758f5d7a21ae38f5179bdef4d4b197f"
+                "url": "https://github.com/lipis/flag-icon-css.git",
+                "reference": "db9d702ac15e74a84d5d859c9f3b1ce4c1882304"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/f3c874d5a758f5d7a21ae38f5179bdef4d4b197f",
-                "reference": "f3c874d5a758f5d7a21ae38f5179bdef4d4b197f",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/db9d702ac15e74a84d5d859c9f3b1ce4c1882304",
+                "reference": "db9d702ac15e74a84d5d859c9f3b1ce4c1882304",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "name": "flag-icon-css",
+                    "files": [
+                        "less/**",
+                        "css/**",
+                        "flags/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Panayiotis Lipiridis (Lipis)",
+                    "email": "lipiridis@gmail.com"
+                }
+            ],
+            "description": "CSS for vector based country flags",
+            "time": "2015-03-26 16:41:06"
+        },
+        {
+            "name": "danielgp/common-lib",
+            "version": "1.8.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/danielgp/common-lib.git",
+                "reference": "005383afbe8f45328fa314ab77bfb8b91f28123b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/005383afbe8f45328fa314ab77bfb8b91f28123b",
+                "reference": "005383afbe8f45328fa314ab77bfb8b91f28123b",
                 "shasum": ""
             },
             "require": {
+                "components/flag-icon-css": "*",
                 "ext-curl": "*",
                 "ext-mysqli": "*",
+                "fortawesome/font-awesome": "*",
                 "gettext/gettext": "*",
                 "php": ">=5.4",
-                "phpoffice/phpexcel": "*"
+                "phpoffice/phpexcel": "*",
+                "symfony/filesystem": "*",
+                "symfony/finder": "*"
             },
             "type": "library",
             "autoload": {
@@ -51,20 +93,68 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-04-21 18:23:57"
+            "time": "2015-05-01 22:07:23"
         },
         {
-            "name": "gettext/gettext",
-            "version": "v3.4",
+            "name": "fortawesome/font-awesome",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/oscarotero/Gettext.git",
-                "reference": "843c87d345b5be3bd168d77cf09ecaca72b74f8f"
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oscarotero/Gettext/zipball/843c87d345b5be3bd168d77cf09ecaca72b74f8f",
-                "reference": "843c87d345b5be3bd168d77cf09ecaca72b74f8f",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
+                "reference": "41b9ed01103e6820c3cb043ba7ddab30ecd3f4c0",
+                "shasum": ""
+            },
+            "require-dev": {
+                "jekyll": "1.0.2",
+                "lessc": "1.4.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OFL-1.1",
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Gandy",
+                    "email": "dave@fontawesome.io",
+                    "homepage": "http://twitter.com/davegandy",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The iconic font and CSS framework",
+            "homepage": "http://fontawesome.io/",
+            "keywords": [
+                "FontAwesome",
+                "awesome",
+                "bootstrap",
+                "font",
+                "icon"
+            ],
+            "time": "2015-01-22 18:09:42"
+        },
+        {
+            "name": "gettext/gettext",
+            "version": "v3.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oscarotero/Gettext.git",
+                "reference": "6d8fae62ce7df8676a351dfa5728c8f87f20ef53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oscarotero/Gettext/zipball/6d8fae62ce7df8676a351dfa5728c8f87f20ef53",
+                "reference": "6d8fae62ce7df8676a351dfa5728c8f87f20ef53",
                 "shasum": ""
             },
             "require": {
@@ -73,6 +163,7 @@
             },
             "require-dev": {
                 "illuminate/view": "*",
+                "phpunit/phpunit": "~4.0",
                 "twig/extensions": "*",
                 "twig/twig": "*"
             },
@@ -109,7 +200,7 @@
                 "po",
                 "translation"
             ],
-            "time": "2015-04-06 09:38:45"
+            "time": "2015-04-28 17:50:01"
         },
         {
             "name": "gettext/languages",
@@ -167,16 +258,16 @@
         },
         {
             "name": "phpoffice/phpexcel",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPExcel.git",
-                "reference": "e69a5e4d0ffa7fb6f171859e0a04346e580df30b"
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/e69a5e4d0ffa7fb6f171859e0a04346e580df30b",
-                "reference": "e69a5e4d0ffa7fb6f171859e0a04346e580df30b",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
                 "shasum": ""
             },
             "require": {
@@ -220,7 +311,107 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2014-03-02 15:22:49"
+            "time": "2015-05-01 07:00:55"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v2.6.6",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem.git",
+                "reference": "4983964b3693e4f13449cb3800c64a9112c301b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/4983964b3693e4f13449cb3800c64a9112c301b4",
+                "reference": "4983964b3693e4f13449cb3800c64a9112c301b4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com",
+            "time": "2015-03-22 16:55:57"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "v2.6.6",
+            "target-dir": "Symfony/Component/Finder",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Finder.git",
+                "reference": "5dbe2e73a580618f5b4880fda93406eed25de251"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/5dbe2e73a580618f5b4880fda93406eed25de251",
+                "reference": "5dbe2e73a580618f5b4880fda93406eed25de251",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Finder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Finder Component",
+            "homepage": "http://symfony.com",
+            "time": "2015-03-30 15:54:10"
         }
     ],
     "packages-dev": [],
