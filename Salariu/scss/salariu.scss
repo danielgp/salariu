@@ -16,12 +16,12 @@ h1 {
     font-size: larger;
     text-align: center;
 }
-@import "base.scss";
+@import "../../vendor/danielgp/common-styles/scss/base1.scss";
 @import "base.2014.scss";
-@import "form.scss";
-@import "../../vendor/danielgp/common-lib/source/scss/gradients.scss";
-@import "table.scss";
-@import "../../vendor/danielgp/common-lib/source/scss/upperRightBox.scss";
+@import "../../vendor/danielgp/common-styles/scss/form.scss";
+@import "../../vendor/danielgp/common-styles/scss/gradients.scss";
+@import "../../vendor/danielgp/common-styles/scss/table.scss";
+@import "../../vendor/danielgp/common-styles/scss/upperRightBox.scss";
 .disclaimer {
     @extend .gradientGreyGloss2;
     border: solid;
