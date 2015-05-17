@@ -11,17 +11,17 @@ a {
 h1 {
     font-size: xx-large;
 }
-.author {
-    font-weight: bold;
-    font-size: larger;
-    text-align: center;
-}
 @import "../../vendor/danielgp/common-styles/scss/base1.scss";
 @import "base.2014.scss";
 @import "../../vendor/danielgp/common-styles/scss/form.scss";
 @import "../../vendor/danielgp/common-styles/scss/gradients.scss";
 @import "../../vendor/danielgp/common-styles/scss/table.scss";
 @import "../../vendor/danielgp/common-styles/scss/upperRightBox.scss";
+.author {
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+}
 .disclaimer {
     @extend .gradientGreyGloss2;
     border: solid;
@@ -35,5 +35,5 @@ h1 {
     margin-right:auto;
     padding: 3px;
     text-align: center; 
-    width: 30%;
+    width: 95%;
 }

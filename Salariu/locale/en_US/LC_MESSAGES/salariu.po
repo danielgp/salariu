@@ -131,4 +131,4 @@ msgid "i18n_FieldsetLabel_Inputs"
 msgstr "Calculation parameters"
 
 msgid "i18n_FieldsetLabel_Results"
-msgstr "Results for the month %s year %d"
+msgstr "Results for the month %s %d"
