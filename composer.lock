@@ -46,16 +46,16 @@
         },
         {
             "name": "danielgp/common-lib",
-            "version": "1.9.10",
+            "version": "1.9.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "7ec7f438a8f705eec2a17528595609da750c478d"
+                "reference": "3525e2f6051036bc273609d300aeaee99251716f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/7ec7f438a8f705eec2a17528595609da750c478d",
-                "reference": "7ec7f438a8f705eec2a17528595609da750c478d",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/3525e2f6051036bc273609d300aeaee99251716f",
+                "reference": "3525e2f6051036bc273609d300aeaee99251716f",
                 "shasum": ""
             },
             "require": {
@@ -100,21 +100,24 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-05-17 18:32:14"
+            "time": "2015-05-29 21:06:35"
         },
         {
             "name": "danielgp/common-styles",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-styles.git",
-                "reference": "918467d1e2267eb13752b7c190ff117ee57e32fe"
+                "reference": "6475156ffba4764fc8dec6200d386a8bc80b2b48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-styles/zipball/918467d1e2267eb13752b7c190ff117ee57e32fe",
-                "reference": "918467d1e2267eb13752b7c190ff117ee57e32fe",
+                "url": "https://api.github.com/repos/danielgp/common-styles/zipball/6475156ffba4764fc8dec6200d386a8bc80b2b48",
+                "reference": "6475156ffba4764fc8dec6200d386a8bc80b2b48",
                 "shasum": ""
+            },
+            "require": {
+                "fortawesome/font-awesome": "*"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -129,7 +132,7 @@
                 }
             ],
             "description": "Common styles crafted in SCSS and targeted to specific DOM areas so assambling would be easier",
-            "time": "2015-05-07 12:49:07"
+            "time": "2015-05-20 21:52:30"
         },
         {
             "name": "doctrine/cache",
@@ -519,17 +522,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.6.7",
+            "version": "v2.6.8",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "f73904bd2dae525c42ea1f0340c7c98480ecacde"
+                "reference": "1f8429f72a5bfa58b33fd96824bea146fc4b3f49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/f73904bd2dae525c42ea1f0340c7c98480ecacde",
-                "reference": "f73904bd2dae525c42ea1f0340c7c98480ecacde",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/1f8429f72a5bfa58b33fd96824bea146fc4b3f49",
+                "reference": "1f8429f72a5bfa58b33fd96824bea146fc4b3f49",
                 "shasum": ""
             },
             "require": {
@@ -565,21 +568,21 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-08 00:09:07"
+            "time": "2015-05-15 13:32:45"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.6.7",
+            "version": "v2.6.8",
             "target-dir": "Symfony/Component/Finder",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder.git",
-                "reference": "704c64c8b12c8882640d5c0330a8414b1e06dc99"
+                "reference": "ffedd3e0ff8155188155e9322fe21b9ee012ac14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/704c64c8b12c8882640d5c0330a8414b1e06dc99",
-                "reference": "704c64c8b12c8882640d5c0330a8414b1e06dc99",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/ffedd3e0ff8155188155e9322fe21b9ee012ac14",
+                "reference": "ffedd3e0ff8155188155e9322fe21b9ee012ac14",
                 "shasum": ""
             },
             "require": {
@@ -615,7 +618,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-02 15:18:45"
+            "time": "2015-05-15 13:32:45"
         }
     ],
     "packages-dev": [],
