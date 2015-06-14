@@ -13,6 +13,7 @@
     "require": {
         "php": ">=5.4",
         "ext-intl": "*",
+        "danielgp/bank-holidays": "*",
         "danielgp/common-lib": "*",
         "danielgp/common-styles": "*",
         "gettext/gettext": "*"
@@ -20,6 +21,7 @@
     "autoload": {
         "psr-4": {
             "": "Salariu/",
+            "danielgp\\bank_holidays\\": "vendor/danielgp/bank-holidays/",
             "danielgp\\common_lib\\": "vendor/danielgp/common-lib/"
         },
         "classmap": [

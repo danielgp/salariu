@@ -31,7 +31,8 @@ namespace danielgp\salariu;
 class Salariu
 {
 
-    use \danielgp\common_lib\CommonCode,
+    use \danielgp\bank_holidays\Romanian,
+        \danielgp\common_lib\CommonCode,
         \danielgp\salariu\Bonuses,
         \danielgp\salariu\Taxation;
 

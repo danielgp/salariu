@@ -183,7 +183,11 @@ trait Bonuses
                 break;
             case 2014:
             case 2015:
-                $nReturn = 93500;
+                if ($mnth <= 5) {
+                    $nReturn = 93500;
+                } else {
+                    $nReturn = 94100;
+                }
                 break;
             default:
                 $nReturn = 0;

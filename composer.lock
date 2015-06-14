@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9d78e146caed51fe5e0cc0b4652a33cb",
+    "hash": "63b7fa7fcbe78f0cedaccd6b0f3bed8b",
     "packages": [
         {
             "name": "components/flag-icon-css",
@@ -45,17 +45,57 @@
             "time": "2015-03-26 16:41:06"
         },
         {
-            "name": "danielgp/common-lib",
-            "version": "1.9.16",
+            "name": "danielgp/bank-holidays",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "3525e2f6051036bc273609d300aeaee99251716f"
+                "url": "https://github.com/danielgp/bank-holidays.git",
+                "reference": "f8e1cd7aaada8b8a79c0a24d14b6ee11b32a7d14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/3525e2f6051036bc273609d300aeaee99251716f",
-                "reference": "3525e2f6051036bc273609d300aeaee99251716f",
+                "url": "https://api.github.com/repos/danielgp/bank-holidays/zipball/f8e1cd7aaada8b8a79c0a24d14b6ee11b32a7d14",
+                "reference": "f8e1cd7aaada8b8a79c0a24d14b6ee11b32a7d14",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "source/Romanian.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Popiniuc",
+                    "email": "danielpopiniuc@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Usefull functions to return list of all bank holidays per year and month plus working days in month",
+            "time": "2015-06-14 18:19:02"
+        },
+        {
+            "name": "danielgp/common-lib",
+            "version": "1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/danielgp/common-lib.git",
+                "reference": "7a55b6233b6d671447bd65a408906e73576fbc55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/7a55b6233b6d671447bd65a408906e73576fbc55",
+                "reference": "7a55b6233b6d671447bd65a408906e73576fbc55",
                 "shasum": ""
             },
             "require": {
@@ -84,8 +124,7 @@
                     "source/DomComponentsByDanielGPwithCDN.php",
                     "source/MySQLiByDanielGPqueries.php",
                     "source/MySQLiByDanielGP.php",
-                    "source/NetworkComponentsByDanielGP.php",
-                    "source/RomanianHolidays.php"
+                    "source/NetworkComponentsByDanielGP.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -100,7 +139,7 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-05-29 21:06:35"
+            "time": "2015-06-14 18:44:39"
         },
         {
             "name": "danielgp/common-styles",
@@ -471,16 +510,16 @@
         },
         {
             "name": "piwik/device-detector",
-            "version": "3.2",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/piwik/device-detector.git",
-                "reference": "331a7ce5f8fde8d758312e6ac4182c01beabc83b"
+                "reference": "c1b651af61aed864e793fe5896f1976aa06b939c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/piwik/device-detector/zipball/331a7ce5f8fde8d758312e6ac4182c01beabc83b",
-                "reference": "331a7ce5f8fde8d758312e6ac4182c01beabc83b",
+                "url": "https://api.github.com/repos/piwik/device-detector/zipball/c1b651af61aed864e793fe5896f1976aa06b939c",
+                "reference": "c1b651af61aed864e793fe5896f1976aa06b939c",
                 "shasum": ""
             },
             "require": {
@@ -518,25 +557,24 @@
                 "parser",
                 "useragent"
             ],
-            "time": "2015-05-10 18:34:07"
+            "time": "2015-05-31 20:06:34"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.6.8",
-            "target-dir": "Symfony/Component/Filesystem",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "1f8429f72a5bfa58b33fd96824bea146fc4b3f49"
+                "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/1f8429f72a5bfa58b33fd96824bea146fc4b3f49",
-                "reference": "1f8429f72a5bfa58b33fd96824bea146fc4b3f49",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a0d43eb3e17d4f4c6990289805a488a0482a07f3",
+                "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "require-dev": {
                 "symfony/phpunit-bridge": "~2.7"
@@ -544,11 +582,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\Filesystem\\": ""
                 }
             },
@@ -568,25 +606,24 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:32:45"
+            "time": "2015-06-08 09:37:21"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.6.8",
-            "target-dir": "Symfony/Component/Finder",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder.git",
-                "reference": "ffedd3e0ff8155188155e9322fe21b9ee012ac14"
+                "reference": "c13a40d638aeede1e8400f8c956c7f9246c05f75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/ffedd3e0ff8155188155e9322fe21b9ee012ac14",
-                "reference": "ffedd3e0ff8155188155e9322fe21b9ee012ac14",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/c13a40d638aeede1e8400f8c956c7f9246c05f75",
+                "reference": "c13a40d638aeede1e8400f8c956c7f9246c05f75",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "require-dev": {
                 "symfony/phpunit-bridge": "~2.7"
@@ -594,11 +631,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\Finder\\": ""
                 }
             },
@@ -618,7 +655,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:32:45"
+            "time": "2015-06-04 20:11:48"
         }
     ],
     "packages-dev": [],
