@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "63b7fa7fcbe78f0cedaccd6b0f3bed8b",
+    "hash": "caac58ab71b60f03c76ab2a41ff0b40e",
     "packages": [
         {
             "name": "components/flag-icon-css",
@@ -46,23 +46,23 @@
         },
         {
             "name": "danielgp/bank-holidays",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/bank-holidays.git",
-                "reference": "f8e1cd7aaada8b8a79c0a24d14b6ee11b32a7d14"
+                "reference": "51fa98c61ac5d84ee16c83445ede872ea93381ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/bank-holidays/zipball/f8e1cd7aaada8b8a79c0a24d14b6ee11b32a7d14",
-                "reference": "f8e1cd7aaada8b8a79c0a24d14b6ee11b32a7d14",
+                "url": "https://api.github.com/repos/danielgp/bank-holidays/zipball/51fa98c61ac5d84ee16c83445ede872ea93381ee",
+                "reference": "51fa98c61ac5d84ee16c83445ede872ea93381ee",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "*"
+                "phpunit/phpunit": ">=4.7"
             },
             "type": "library",
             "autoload": {
@@ -82,33 +82,79 @@
                 }
             ],
             "description": "Usefull functions to return list of all bank holidays per year and month plus working days in month",
-            "time": "2015-06-14 18:19:02"
+            "time": "2015-06-23 17:52:11"
         },
         {
-            "name": "danielgp/common-lib",
-            "version": "1.11.0",
+            "name": "danielgp/browser-agent-info",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "fe7a4e41309946607b2eb64445407351ba61d6dc"
+                "url": "https://github.com/danielgp/browser-agent-info.git",
+                "reference": "c33f48a3dbc11936c4220828f9317b6c3d74377d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/fe7a4e41309946607b2eb64445407351ba61d6dc",
-                "reference": "fe7a4e41309946607b2eb64445407351ba61d6dc",
+                "url": "https://api.github.com/repos/danielgp/browser-agent-info/zipball/c33f48a3dbc11936c4220828f9317b6c3d74377d",
+                "reference": "c33f48a3dbc11936c4220828f9317b6c3d74377d",
+                "shasum": ""
+            },
+            "require": {
+                "danielgp/network-components": ">=1.0",
+                "doctrine/cache": ">=1.4",
+                "php": ">=5.4",
+                "piwik/device-detector": ">=3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "danielgp\\network_components\\source\\": "vendor/danielgp/network-components/source/",
+                    "DeviceDetector\\": "vendor/piwik/device-detector/"
+                },
+                "classmap": [
+                    "source/BrowserAgentInfosByDanielGP.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Popiniuc",
+                    "email": "danielpopiniuc@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Get client information from browser agent string",
+            "time": "2015-06-22 11:35:28"
+        },
+        {
+            "name": "danielgp/common-lib",
+            "version": "1.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/danielgp/common-lib.git",
+                "reference": "af84be98903e35f1ce33bb7cc5403e4ff84d9d3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/af84be98903e35f1ce33bb7cc5403e4ff84d9d3b",
+                "reference": "af84be98903e35f1ce33bb7cc5403e4ff84d9d3b",
                 "shasum": ""
             },
             "require": {
                 "components/flag-icon-css": "*",
-                "doctrine/cache": "*",
+                "danielgp/browser-agent-info": ">=1.0",
+                "danielgp/network-components": ">=1.0",
                 "ext-curl": "*",
                 "ext-mysqli": "*",
-                "fortawesome/font-awesome": "*",
-                "gettext/gettext": "*",
+                "gettext/gettext": ">=3.4",
                 "php": ">=5.4",
-                "piwik/device-detector": "*",
-                "symfony/filesystem": "*",
-                "symfony/finder": "*"
+                "symfony/filesystem": ">2.7",
+                "symfony/finder": ">=2.7"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -117,13 +163,11 @@
             "autoload": {
                 "classmap": [
                     "source/CommonLibLocale.php",
-                    "source/BrowserAgentInfosByDanielGP.php",
                     "source/CommonCode.php",
                     "source/DomComponentsByDanielGP.php",
                     "source/DomComponentsByDanielGPwithCDN.php",
                     "source/MySQLiByDanielGPqueries.php",
-                    "source/MySQLiByDanielGP.php",
-                    "source/NetworkComponentsByDanielGP.php"
+                    "source/MySQLiByDanielGP.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -138,7 +182,7 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-06-16 22:45:35"
+            "time": "2015-07-07 17:02:53"
         },
         {
             "name": "danielgp/common-styles",
@@ -171,6 +215,46 @@
             ],
             "description": "Common styles crafted in SCSS and targeted to specific DOM areas so assambling would be easier",
             "time": "2015-05-20 21:52:30"
+        },
+        {
+            "name": "danielgp/network-components",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/danielgp/network-components.git",
+                "reference": "0ef961b7d35d6aa97bc351e90d10cc8ff6c94ef3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/danielgp/network-components/zipball/0ef961b7d35d6aa97bc351e90d10cc8ff6c94ef3",
+                "reference": "0ef961b7d35d6aa97bc351e90d10cc8ff6c94ef3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4.7"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "source/NetworkComponentsByDanielGP.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Popiniuc",
+                    "email": "danielpopiniuc@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Common functions to be used where needed",
+            "time": "2015-06-20 19:49:39"
         },
         {
             "name": "doctrine/cache",
@@ -452,16 +536,16 @@
         },
         {
             "name": "piwik/device-detector",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/piwik/device-detector.git",
-                "reference": "c1b651af61aed864e793fe5896f1976aa06b939c"
+                "reference": "e755813db54fb94d31436efce7fc9840b6038c8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/piwik/device-detector/zipball/c1b651af61aed864e793fe5896f1976aa06b939c",
-                "reference": "c1b651af61aed864e793fe5896f1976aa06b939c",
+                "url": "https://api.github.com/repos/piwik/device-detector/zipball/e755813db54fb94d31436efce7fc9840b6038c8b",
+                "reference": "e755813db54fb94d31436efce7fc9840b6038c8b",
                 "shasum": ""
             },
             "require": {
@@ -499,7 +583,7 @@
                 "parser",
                 "useragent"
             ],
-            "time": "2015-05-31 20:06:34"
+            "time": "2015-06-23 21:25:52"
         },
         {
             "name": "symfony/filesystem",
@@ -607,8 +691,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4",
-        "ext-intl": "*"
+        "php": ">=5.4"
     },
     "platform-dev": []
 }
