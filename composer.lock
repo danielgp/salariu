@@ -5,19 +5,20 @@
         "This file is @generated automatically"
     ],
     "hash": "caac58ab71b60f03c76ab2a41ff0b40e",
+    "content-hash": "65c7062842c21885882d99a4a4156bc4",
     "packages": [
         {
             "name": "components/flag-icon-css",
-            "version": "0.7.1",
+            "version": "0.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lipis/flag-icon-css.git",
-                "reference": "db9d702ac15e74a84d5d859c9f3b1ce4c1882304"
+                "reference": "63b89f891914b589d12c6e71989a0eb54d35a7a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/db9d702ac15e74a84d5d859c9f3b1ce4c1882304",
-                "reference": "db9d702ac15e74a84d5d859c9f3b1ce4c1882304",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/63b89f891914b589d12c6e71989a0eb54d35a7a3",
+                "reference": "63b89f891914b589d12c6e71989a0eb54d35a7a3",
                 "shasum": ""
             },
             "type": "component",
@@ -42,24 +43,24 @@
                 }
             ],
             "description": "CSS for vector based country flags",
-            "time": "2015-03-26 16:41:06"
+            "time": "2015-09-05 08:34:56"
         },
         {
             "name": "danielgp/bank-holidays",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/bank-holidays.git",
-                "reference": "51fa98c61ac5d84ee16c83445ede872ea93381ee"
+                "reference": "d14f0cdb5ba02265c0225b4708a671dca2f50891"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/bank-holidays/zipball/51fa98c61ac5d84ee16c83445ede872ea93381ee",
-                "reference": "51fa98c61ac5d84ee16c83445ede872ea93381ee",
+                "url": "https://api.github.com/repos/danielgp/bank-holidays/zipball/d14f0cdb5ba02265c0225b4708a671dca2f50891",
+                "reference": "d14f0cdb5ba02265c0225b4708a671dca2f50891",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4"
+                "php": ">=5.5"
             },
             "require-dev": {
                 "phpunit/phpunit": ">=4.7"
@@ -82,20 +83,20 @@
                 }
             ],
             "description": "Usefull functions to return list of all bank holidays per year and month plus working days in month",
-            "time": "2015-06-23 17:52:11"
+            "time": "2015-10-17 15:41:03"
         },
         {
             "name": "danielgp/browser-agent-info",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/browser-agent-info.git",
-                "reference": "8453db23f1cd42bb340d33be775156e86ac26aa0"
+                "reference": "a5bdbe602afff0a637c3c4b66d3fcd9734fe319f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/browser-agent-info/zipball/8453db23f1cd42bb340d33be775156e86ac26aa0",
-                "reference": "8453db23f1cd42bb340d33be775156e86ac26aa0",
+                "url": "https://api.github.com/repos/danielgp/browser-agent-info/zipball/a5bdbe602afff0a637c3c4b66d3fcd9734fe319f",
+                "reference": "a5bdbe602afff0a637c3c4b66d3fcd9734fe319f",
                 "shasum": ""
             },
             "require": {
@@ -129,20 +130,20 @@
                 }
             ],
             "description": "Get client information from browser agent string",
-            "time": "2015-07-21 15:43:40"
+            "time": "2015-10-17 13:52:15"
         },
         {
             "name": "danielgp/common-lib",
-            "version": "2.0.0",
+            "version": "2.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-lib.git",
-                "reference": "22bd548470d8b4710b448a4fa0d7663180534e16"
+                "reference": "a97f83eecdd7a7359103c0e349f7d1fca04e376a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/22bd548470d8b4710b448a4fa0d7663180534e16",
-                "reference": "22bd548470d8b4710b448a4fa0d7663180534e16",
+                "url": "https://api.github.com/repos/danielgp/common-lib/zipball/a97f83eecdd7a7359103c0e349f7d1fca04e376a",
+                "reference": "a97f83eecdd7a7359103c0e349f7d1fca04e376a",
                 "shasum": ""
             },
             "require": {
@@ -183,20 +184,20 @@
                 }
             ],
             "description": "Common functions to be used where needed",
-            "time": "2015-08-29 21:53:35"
+            "time": "2015-10-16 19:17:55"
         },
         {
             "name": "danielgp/common-styles",
-            "version": "1.0.9",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielgp/common-styles.git",
-                "reference": "c940a196ef73140c01f7ad499b57096d2cd49d7a"
+                "reference": "98fcced2546cc53907e4731f28be05a4aa869f0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielgp/common-styles/zipball/c940a196ef73140c01f7ad499b57096d2cd49d7a",
-                "reference": "c940a196ef73140c01f7ad499b57096d2cd49d7a",
+                "url": "https://api.github.com/repos/danielgp/common-styles/zipball/98fcced2546cc53907e4731f28be05a4aa869f0d",
+                "reference": "98fcced2546cc53907e4731f28be05a4aa869f0d",
                 "shasum": ""
             },
             "require": {
@@ -216,7 +217,7 @@
                 }
             ],
             "description": "Common styles crafted in SCSS and targeted to specific DOM areas so assambling would be easier",
-            "time": "2015-08-04 19:06:10"
+            "time": "2015-09-25 17:01:25"
         },
         {
             "name": "danielgp/network-components",
@@ -260,16 +261,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "c9eadeb743ac6199f7eec423cb9426bc518b7b03"
+                "reference": "8c434000f420ade76a07c64cbe08ca47e5c101ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/c9eadeb743ac6199f7eec423cb9426bc518b7b03",
-                "reference": "c9eadeb743ac6199f7eec423cb9426bc518b7b03",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/8c434000f420ade76a07c64cbe08ca47e5c101ca",
+                "reference": "8c434000f420ade76a07c64cbe08ca47e5c101ca",
                 "shasum": ""
             },
             "require": {
@@ -326,7 +327,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-04-15 00:11:59"
+            "time": "2015-08-31 12:36:41"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -538,16 +539,16 @@
         },
         {
             "name": "piwik/device-detector",
-            "version": "3.4.0",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/piwik/device-detector.git",
-                "reference": "afa85c4a1ebada71cec1e5422b02408b9b9952be"
+                "reference": "fcb61cc9e669653febdce2cd1a1f0833b569fbb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/piwik/device-detector/zipball/afa85c4a1ebada71cec1e5422b02408b9b9952be",
-                "reference": "afa85c4a1ebada71cec1e5422b02408b9b9952be",
+                "url": "https://api.github.com/repos/piwik/device-detector/zipball/fcb61cc9e669653febdce2cd1a1f0833b569fbb6",
+                "reference": "fcb61cc9e669653febdce2cd1a1f0833b569fbb6",
                 "shasum": ""
             },
             "require": {
@@ -585,20 +586,20 @@
                 "parser",
                 "useragent"
             ],
-            "time": "2015-08-23 20:35:24"
+            "time": "2015-09-09 20:28:18"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.7.3",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "2d7b2ddaf3f548f4292df49a99d19c853d43f0b8"
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "a17f8a17c20e8614c15b8e116e2f4bcde102cfab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/2d7b2ddaf3f548f4292df49a99d19c853d43f0b8",
-                "reference": "2d7b2ddaf3f548f4292df49a99d19c853d43f0b8",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/a17f8a17c20e8614c15b8e116e2f4bcde102cfab",
+                "reference": "a17f8a17c20e8614c15b8e116e2f4bcde102cfab",
                 "shasum": ""
             },
             "require": {
@@ -634,20 +635,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-07-09 16:07:40"
+            "time": "2015-09-09 17:42:36"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.7.3",
+            "version": "v2.7.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Finder.git",
-                "reference": "ae0f363277485094edc04c9f3cbe595b183b78e4"
+                "url": "https://github.com/symfony/finder.git",
+                "reference": "8262ab605973afbb3ef74b945daabf086f58366f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/ae0f363277485094edc04c9f3cbe595b183b78e4",
-                "reference": "ae0f363277485094edc04c9f3cbe595b183b78e4",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/8262ab605973afbb3ef74b945daabf086f58366f",
+                "reference": "8262ab605973afbb3ef74b945daabf086f58366f",
                 "shasum": ""
             },
             "require": {
@@ -683,7 +684,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2015-07-09 16:07:40"
+            "time": "2015-09-19 19:59:23"
         }
     ],
     "packages-dev": [],
