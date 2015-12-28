@@ -2,8 +2,7 @@
 /*
  * The MIT License
  *
- * Copyright Error: on line 6, column 29 in Templates/Licenses/license-mit.txt
-  The string doesn't match the expected date/time format. The string to parse was: "02.01.2015". The expected format was: "dd-MMM-yyyy". Transformer-.
+ * Copyright 2015 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
