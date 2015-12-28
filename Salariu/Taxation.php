@@ -44,10 +44,9 @@ trait Taxation
     {
         switch (date('Y', $lngDate)) {
             case 2001:
+                $nReturn = 11.67;
                 if (date('n', $lngDate) <= 3) {
                     $nReturn = 5;
-                } else {
-                    $nReturn = 11.67;
                 }
                 break;
             case 2002:
@@ -62,10 +61,9 @@ trait Taxation
                 $nReturn = 9.5;
                 break;
             case 2009:
+                $nReturn = 10.5;
                 if (date('n', $lngDate) == 1) {
                     $nReturn = 9.5;
-                } else {
-                    $nReturn = 10.5;
                 }
                 break;
             case 2010:
@@ -74,6 +72,7 @@ trait Taxation
             case 2013:
             case 2014:
             case 2015:
+            case 2016:
                 $nReturn = 10.5;
                 break;
             default:
@@ -94,33 +93,32 @@ trait Taxation
      * */
     private function setHealthFundTaxBase($lngDate, $lngBrutto)
     {
-        $yr        = date('Y', $lngDate);
+        $givenYear = date('Y', $lngDate);
         $baseArray = [
-            2001  => min($lngBrutto, 3 * 4148653),
-            2002  => min($lngBrutto, 3 * 5582000),
-            2003  => min($lngBrutto, 5 * 6962000),
-            2004  => min($lngBrutto, 5 * 7682000),
-            2006  => $base = min($lngBrutto, 5 * 10770000),
-            2007  => min($lngBrutto, 5 * 12700000),
-            2008  => min($lngBrutto, 5 * 15500000),
-            2009  => min($lngBrutto, 5 * 16930000),
-            2010  => min($lngBrutto, 5 * 18360000),
-            2011  => min($lngBrutto, 5 * 20220000),
-            2012  => min($lngBrutto, 5 * 21170000),
-            2013  => min($lngBrutto, 5 * 22230000),
-            2014  => min($lngBrutto, 5 * 22980000),
-            2015  => min($lngBrutto, 5 * 24150000),
+            2001 => min($lngBrutto, 3 * 4148653),
+            2002 => min($lngBrutto, 3 * 5582000),
+            2003 => min($lngBrutto, 5 * 6962000),
+            2004 => min($lngBrutto, 5 * 7682000),
+            2006 => min($lngBrutto, 5 * 10770000),
+            2007 => min($lngBrutto, 5 * 12700000),
+            2008 => min($lngBrutto, 5 * 15500000),
+            2009 => min($lngBrutto, 5 * 16930000),
+            2010 => min($lngBrutto, 5 * 18360000),
+            2011 => min($lngBrutto, 5 * 20220000),
+            2012 => min($lngBrutto, 5 * 21170000),
+            2013 => min($lngBrutto, 5 * 22230000),
+            2014 => min($lngBrutto, 5 * 22980000),
+            2015 => min($lngBrutto, 5 * 24150000),
+            2016 => min($lngBrutto, 5 * 24150000),
         ];
-        if ($yr == 2005) {
+        $base      = $lngBrutto;
+        if ($givenYear == 2005) {
+            $base = min($lngBrutto, 5 * 9210000);
             if (date('n', $lngDate) <= 6) {
                 $base = min($lngBrutto, 5 * 9211000);
-            } else {
-                $base = min($lngBrutto, 5 * 9210000);
             }
-        } elseif (in_array($yr, array_keys($baseArray))) {
-            $base = $baseArray[$yr];
-        } else {
-            $base = $lngBrutto;
+        } elseif (in_array($givenYear, array_keys($baseArray))) {
+            $base = $baseArray[$givenYear];
         }
         return $base;
     }
@@ -143,10 +141,9 @@ trait Taxation
                 $nReturn = 6.5;
                 break;
             case 2008:
+                $nReturn = 5.5;
                 if (date('n', $lngDate) < 7) {
                     $nReturn = 6.5;
-                } else {
-                    $nReturn = 5.5;
                 }
                 break;
             default:
@@ -195,6 +192,7 @@ trait Taxation
     {
         $mnth = date('n', $lngDate);
         if ($mnth <= 6) {
+            $nReturn = 1822070 + ($lngTaxBase - 6867000 ) * 40 / 100;
             if ($lngTaxBase <= 1259000) {
                 $nReturn = $lngTaxBase * 18 / 100;
             } elseif ($lngTaxBase <= 3090000) {
@@ -203,10 +201,9 @@ trait Taxation
                 $nReturn = 647750 + ($lngTaxBase - 3090000 ) * 28 / 100;
             } elseif ($lngTaxBase <= 6867000) {
                 $nReturn = 1160430 + ($lngTaxBase - 4921000 ) * 34 / 100;
-            } else {
-                $nReturn = 1822070 + ($lngTaxBase - 6867000 ) * 40 / 100;
             }
         } elseif ($mnth <= 9) {
+            $nReturn = 2109940 + ($lngTaxBase - 7952000 ) * 40 / 100;
             if ($lngTaxBase <= 1458000) {
                 $nReturn = $lngTaxBase * 18 / 100;
             } elseif ($lngTaxBase <= 3578000) {
@@ -215,10 +212,9 @@ trait Taxation
                 $nReturn = 750040 + ($lngTaxBase - 3578000 ) * 28 / 100;
             } elseif ($lngTaxBase <= 7952000) {
                 $nReturn = 1343920 + ($lngTaxBase - 5699000 ) * 34 / 100;
-            } else {
-                $nReturn = 2109940 + ($lngTaxBase - 7952000 ) * 40 / 100;
             }
-        } else {
+        } elseif ($mnth > 9) {
+            $nReturn = 2231000 + ($lngTaxBase - 8400000 ) * 40 / 100;
             if ($lngTaxBase <= 1500000) {
                 $nReturn = $lngTaxBase * 18 / 100;
             } elseif ($lngTaxBase <= 3800000) {
@@ -227,8 +223,6 @@ trait Taxation
                 $nReturn = 799000 + ($lngTaxBase - 3800000 ) * 28 / 100;
             } elseif ($lngTaxBase <= 8400000) {
                 $nReturn = 1415000 + ($lngTaxBase - 6000000 ) * 34 / 100;
-            } else {
-                $nReturn = 2231000 + ($lngTaxBase - 8400000 ) * 40 / 100;
             }
         }
         return $nReturn;
@@ -236,6 +230,7 @@ trait Taxation
 
     private function setIncomeTax2002($lngTaxBase)
     {
+        $nReturn = 2710000 + ($lngTaxBase - 10200000 ) * 40 / 100;
         if ($lngTaxBase <= 1800000) {
             $nReturn = $lngTaxBase * 18 / 100;
         } elseif ($lngTaxBase <= 4600000) {
@@ -244,14 +239,13 @@ trait Taxation
             $nReturn = 968000 + ($lngTaxBase - 4600000 ) * 28 / 100;
         } elseif ($lngTaxBase <= 10200000) {
             $nReturn = 1724000 + ($lngTaxBase - 7300000 ) * 34 / 100;
-        } else {
-            $nReturn = 2710000 + ($lngTaxBase - 10200000 ) * 40 / 100;
         }
         return $nReturn;
     }
 
     private function setIncomeTax2003($lngTaxBase)
     {
+        $nReturn = 3081000 + ($lngTaxBase - 11600000 ) * 40 / 100;
         if ($lngTaxBase <= 2100000) {
             $nReturn = ($lngTaxBase * 18) / 100;
         } elseif ($lngTaxBase <= 5200000) {
@@ -260,14 +254,13 @@ trait Taxation
             $nReturn = 1091000 + ($lngTaxBase - 5200000 ) * 28 / 100;
         } elseif ($lngTaxBase <= 11600000) {
             $nReturn = 1959000 + ($lngTaxBase - 8300000 ) * 34 / 100;
-        } else {
-            $nReturn = 3081000 + ($lngTaxBase - 11600000 ) * 40 / 100;
         }
         return $nReturn;
     }
 
     private function setIncomeTax2004($lngTaxBase)
     {
+        $nReturn = 3452000 + ($lngTaxBase - 13000000 ) * 40 / 100;
         if ($lngTaxBase <= 2400000) {
             $nReturn = ($lngTaxBase * 18) / 100;
         } elseif ($lngTaxBase <= 5800000) {
@@ -276,8 +269,6 @@ trait Taxation
             $nReturn = 1214000 + ($lngTaxBase - 5800000 ) * 28 / 100;
         } elseif ($lngTaxBase <= 13000000) {
             $nReturn = 2194000 + ($lngTaxBase - 9300000 ) * 34 / 100;
-        } else {
-            $nReturn = 3452000 + ($lngTaxBase - 13000000 ) * 40 / 100;
         }
         return $nReturn;
     }
@@ -355,6 +346,7 @@ trait Taxation
                 $nReturn = 168;
                 break;
             case 2015:
+            case 2016:
                 $nReturn = 168.66;
                 break;
             default:
