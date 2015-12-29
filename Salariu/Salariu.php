@@ -307,21 +307,21 @@ class Salariu
                             'value' => $_SERVER['SERVER_NAME']
                         ]), 'td', ['colspan' => 2, 'style' => 'color: red;']), 'tr');
         if (isset($_REQUEST['ym'])) {
-            $reset_btn      = '';
-            $submit_btn_txt = $this->tApp->gettext('i18n_Form_Button_Recalculate');
+            $resetBtn      = '';
+            $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Recalculate');
         } else {
-            $reset_btn      = $this->setStringIntoShortTag('input', [
+            $resetBtn      = $this->setStringIntoShortTag('input', [
                 'type'  => 'reset',
                 'id'    => 'reset',
                 'value' => $this->tApp->gettext('i18n_Form_Button_Reset'),
                 'style' => 'color:#000;'
             ]);
-            $submit_btn_txt = $this->tApp->gettext('i18n_Form_Button_Calculate');
+            $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Calculate');
         }
-        $sReturn[] = $this->setFormRow($reset_btn, $this->setStringIntoShortTag('input', [
+        $sReturn[] = $this->setFormRow($resetBtn, $this->setStringIntoShortTag('input', [
                     'type'  => 'submit',
                     'id'    => 'submit',
-                    'value' => $submit_btn_txt
+                    'value' => $submitBtnTxt
                 ]), 1);
         $frm       = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
             'method' => 'get',
