@@ -307,10 +307,10 @@ class Salariu
                             'value' => $_SERVER['SERVER_NAME']
                         ]), 'td', ['colspan' => 2, 'style' => 'color: red;']), 'tr');
         if (isset($_REQUEST['ym'])) {
-            $resetBtn      = '';
+            $resetBtn     = '';
             $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Recalculate');
         } else {
-            $resetBtn      = $this->setStringIntoShortTag('input', [
+            $resetBtn     = $this->setStringIntoShortTag('input', [
                 'type'  => 'reset',
                 'id'    => 'reset',
                 'value' => $this->tApp->gettext('i18n_Form_Button_Reset'),
