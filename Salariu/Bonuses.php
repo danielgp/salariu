@@ -224,6 +224,18 @@ trait Bonuses
             case 2004:
                 $nReturn = 2000000;
                 break;
+            case 2016:
+                if ($sPersons <= 3) {
+                    $nReturn = 3500000 + ($sPersons * 1000000);
+                } elseif ($sPersons > 3) {
+                    $nReturn = 8000000;
+                }
+                if ($lngBrutto >= 30000000) {
+                    $nReturn = 0;
+                } elseif ($lngBrutto > 15000000) {
+                    $nReturn = $nReturn * (1 - ($lngBrutto - 15000000) / 15000000);
+                }
+                break;
             default:
                 if ($sPersons <= 3) {
                     $nReturn = 2500000 + ($sPersons * 1000000);
@@ -233,7 +245,7 @@ trait Bonuses
                 if ($lngBrutto >= 30000000) {
                     $nReturn = 0;
                 } elseif ($lngBrutto > 10000000) {
-                    $nReturn = $nReturn * (1 - ($lngBrutto - 10000000) / 20000000);
+                    $nReturn = $nReturn * (1 - ($lngBrutto - 10000000) / 10000000);
                 }
                 break;
         }

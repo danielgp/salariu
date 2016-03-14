@@ -109,7 +109,7 @@ trait Taxation
             2013 => min($lngBrutto, 5 * 22230000),
             2014 => min($lngBrutto, 5 * 22980000),
             2015 => min($lngBrutto, 5 * 24150000),
-            2016 => min($lngBrutto, 5 * 24150000),
+            2016 => min($lngBrutto, 5 * 26810000),
         ];
         $base      = $lngBrutto;
         if ($givenYear == 2005) {
