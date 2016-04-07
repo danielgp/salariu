@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-header('Location: http://www.pgd.ro/salariu/Salariu/');
+header('Location: http://www.pgd.ro/salariu/');
 ?>
 <html>
     <head>
