@@ -11,7 +11,7 @@ if (!isset($_REQUEST['ym'])) {
     $_REQUEST['ym'] = mktime(0, 0, 0, date('m'), 1, date('Y'));
 }
 if (!isset($_REQUEST['sn'])) {
-    $_REQUEST['sn'] = 1050;
+    $_REQUEST['sn'] = 1250;
 }
 if (!isset($_REQUEST['sc'])) {
     $_REQUEST['sc'] = 0;
