@@ -37,166 +37,39 @@ trait Bonuses
 {
 
     /**
+     * returns an array with non-standard holidays from a JSON file
+     *
+     * @param string $fileBaseName
+     * @return mixed
+     */
+    private function readTypeFromJsonFile($fileBaseName)
+    {
+        $fName       = __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . $fileBaseName . '.min.json';
+        $fJson       = fopen($fName, 'r');
+        $jSonContent = fread($fJson, filesize($fName));
+        fclose($fJson);
+        return json_decode($jSonContent, true);
+    }
+
+    /**
      * Tichete de alimente
      * */
     protected function setFoodTicketsValue($lngDate)
     {
-        $historyValue = [
-            $this->setFoodTicketsValueBetween2001and2005($lngDate),
-            $this->setFoodTicketsValueBetween2006and2009($lngDate),
-            $this->setFoodTicketsValueBetween2011and2015($lngDate)
-        ];
-        return array_sum($historyValue);
-    }
-
-    /**
-     * Tichete de alimente
-     * */
-    private function setFoodTicketsValueBetween2001and2005($lngDate)
-    {
-        $mnth    = date('n', $lngDate);
-        $nReturn = 0;
-        switch (date('Y', $lngDate)) {
-            case 2001:
-                if ($mnth <= 2) {
-                    $nReturn = 28800;
-                } elseif ($mnth <= 8) {
-                    $nReturn = 34000;
-                } else {
-                    $nReturn = 41000;
-                }
-                break;
-            case 2002:
-                if ($mnth <= 2) {
-                    $nReturn = 41000;
-                } elseif ($mnth <= 8) {
-                    $nReturn = 45000;
-                } else {
-                    $nReturn = 50000;
-                }
-                break;
-            case 2003:
-                if ($mnth <= 2) {
-                    $nReturn = 50000;
-                } elseif ($mnth <= 9) {
-                    $nReturn = 53000;
-                } else {
-                    $nReturn = 58000;
-                }
-                break;
-            case 2004:
-                if ($mnth <= 2) {
-                    $nReturn = 58000;
-                } elseif ($mnth <= 8) {
-                    $nReturn = 61000;
-                } else {
-                    $nReturn = 65000;
-                }
-                break;
-            case 2005:
-                if ($mnth <= 2) {
-                    $nReturn = 65000;
-                } elseif ($mnth <= 8) {
-                    $nReturn = 68000;
-                } else {
-                    $nReturn = 70000;
-                }
-                break;
+        $arrayValues           = $this->readTypeFromJsonFile('static')['Meal Ticket Value'];
+        $valueMealTicket       = 0;
+        $indexArrayValues      = 0;
+        $currentUpperLimitDate = mktime(0, 0, 0, date('n'), 1, date('Y'));
+        while (($valueMealTicket === 0)) {
+            $crtVal                = $arrayValues[$indexArrayValues];
+            $currentLowerLimitDate = mktime(0, 0, 0, $crtVal['Month'], 1, $crtVal['Year']);
+            if (($lngDate <= $currentUpperLimitDate) && ($lngDate >= $currentLowerLimitDate)) {
+                $valueMealTicket = $crtVal['Value'];
+            }
+            $currentUpperLimitDate = $currentLowerLimitDate;
+            $indexArrayValues++;
         }
-        return $nReturn;
-    }
-
-    /**
-     * Tichete de alimente
-     * */
-    private function setFoodTicketsValueBetween2006and2009($lngDate)
-    {
-        $mnth = date('n', $lngDate);
-        switch (date('Y', $lngDate)) {
-            case 2006:
-                if ($mnth <= 2) {
-                    $nReturn = 70000;
-                } elseif ($mnth <= 8) {
-                    $nReturn = 71500;
-                } else {
-                    $nReturn = 74100;
-                }
-                break;
-            case 2007:
-                if ($mnth <= 8) {
-                    $nReturn = 74100;
-                } else {
-                    $nReturn = 75600;
-                }
-                break;
-            case 2008:
-                if ($mnth <= 2) {
-                    $nReturn = 75600;
-                } elseif ($mnth <= 8) {
-                    $nReturn = 78800;
-                } else {
-                    $nReturn = 83100;
-                }
-                break;
-            case 2009:
-                if ($mnth <= 2) {
-                    $nReturn = 83100;
-                } elseif ($mnth <= 8) {
-                    $nReturn = 84800;
-                } else {
-                    $nReturn = 87200;
-                }
-                break;
-            case 2010:
-                $nReturn = 87200;
-                break;
-            default:
-                $nReturn = 0;
-                break;
-        }
-        return $nReturn;
-    }
-
-    /**
-     * Tichete de alimente
-     * */
-    private function setFoodTicketsValueBetween2011and2015($lngDate)
-    {
-        $mnth = date('n', $lngDate);
-        switch (date('Y', $lngDate)) {
-            case 2011:
-                if ($mnth <= 2) {
-                    $nReturn = 87200;
-                } else {
-                    $nReturn = 90000;
-                }
-                break;
-            case 2012:
-                $nReturn = 90000;
-                break;
-            case 2013:
-                if ($mnth < 5) {
-                    $nReturn = 90000;
-                } else {
-                    $nReturn = 93500;
-                }
-                break;
-            case 2014:
-            case 2015:
-                if ($mnth <= 5) {
-                    $nReturn = 93500;
-                } elseif ($mnth <= 12) {
-                    $nReturn = 94100;
-                }
-                break;
-            case 2016:
-                $nReturn = 94100;
-                break;
-            default:
-                $nReturn = 0;
-                break;
-        }
-        return $nReturn;
+        return $valueMealTicket;
     }
 
     /**
