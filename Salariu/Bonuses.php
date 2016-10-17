@@ -79,33 +79,16 @@ trait Bonuses
     {
         $yrDate  = date('Y', $lngDate);
         $nReturn = 0;
-        if ($yrDate == 2016) {
-            $nReturn = $this->setPersonalDeductionComplex($sPersons, $lngBrutto, [
-                'Limit persons'        => 3,
-                'Limit basic amount'   => 3500000,
-                'Limit maximum amount' => 8000000,
-                'Limit /person amount' => 1000000,
-                'Limit zero deduction' => 30000000,
-                'Reduced deduction'    => 15000000,
-            ]);
-        } elseif (($yrDate >= 2005) && ($yr <= 2015)) {
-            $nReturn = $this->setPersonalDeductionComplex($sPersons, $lngBrutto, [
-                'Limit persons'        => 3,
-                'Limit basic amount'   => 2500000,
-                'Limit maximum amount' => 6500000,
-                'Limit /person amount' => 1000000,
-                'Limit zero deduction' => 30000000,
-                'Reduced deduction'    => 10000000,
-            ]);
-        } elseif (($yrDate >= 2002) && ($yrDate <= 2004)) {
+        if ($yrDate >= 2005) {
+            $nReturn = $this->setPersonalDeductionComplex($sPersons, $lngBrutto, $yrDate);
+        } elseif ($yrDate >= 2001) {
             $valuesYearly = [
+                2001 => $this->setPersonalDeductionSimple2001($lngDate),
                 2002 => 1600000,
                 2003 => 1800000,
                 2004 => 2000000,
             ];
             $nReturn      = $valuesYearly[$yrDate];
-        } elseif ($yrDate == 2001) {
-            $nReturn = $this->setPersonalDeductionSimple2001($lngDate);
         }
         if ($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = round($nReturn, -4);
@@ -126,6 +109,33 @@ trait Bonuses
             $nReturn = $nDeduction * (1 - ($lngBrutto - $inRule['Reduced deduction']) / $inRule['Reduced deduction']);
         }
         return $nReturn;
+    }
+
+    private function setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate)
+    {
+        $nValues = [
+            2016 => [
+                'Limit persons'        => 3,
+                'Limit basic amount'   => 3500000,
+                'Limit maximum amount' => 8000000,
+                'Limit /person amount' => 1000000,
+                'Limit zero deduction' => 30000000,
+                'Reduced deduction'    => 15000000,
+            ],
+            2005 => [
+                'Limit persons'        => 3,
+                'Limit basic amount'   => 2500000,
+                'Limit maximum amount' => 6500000,
+                'Limit /person amount' => 1000000,
+                'Limit zero deduction' => 30000000,
+                'Reduced deduction'    => 10000000,
+            ],
+        ];
+        $inRule  = $nValues[2005];
+        if ($yrDate == 2016) {
+            $inRule = $nValues[2016];
+        }
+        return $this->setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule);
     }
 
     private function setPersonalDeductionSimple2001($lngDate)
