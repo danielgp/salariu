@@ -80,7 +80,7 @@ trait Bonuses
         $yrDate  = date('Y', $lngDate);
         $nReturn = 0;
         if ($yrDate >= 2005) {
-            $nReturn = $this->setPersonalDeductionComplex($sPersons, $lngBrutto, $yrDate);
+            $nReturn = $this->setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate);
         } elseif ($yrDate >= 2001) {
             $valuesYearly = [
                 2001 => $this->setPersonalDeductionSimple2001($lngDate),
