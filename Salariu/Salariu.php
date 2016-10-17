@@ -65,6 +65,7 @@ class Salariu
     {
         $xml = new \XMLReader();
         if ($xml->open(EXCHANGE_RATES_LOCAL, 'UTF-8')) {
+            $krncy = array_keys($this->appFlags['currency_exchanges']);
             while ($xml->read()) {
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
                     switch ($xml->localName) {
@@ -104,9 +105,10 @@ class Salariu
         $wkDay            = $this->setWorkingDaysInMonth($inDate, $_REQUEST['pc']);
         $nMealDays        = ($wkDay - $_REQUEST['zfb']);
         $shLbl            = [
-            'MTV'  => 'Meal Ticket Value',
             'HFP'  => 'Health Fund Percentage',
             'HFUL' => 'Health Fund Upper Limit',
+            'HTP'  => 'Health Tax Percentage',
+            'MTV'  => 'Meal Ticket Value',
         ];
         $unemploymentBase = $lngBase;
         if ($_REQUEST['ym'] < mktime(0, 0, 0, 1, 1, 2008)) {
@@ -115,7 +117,7 @@ class Salariu
         $aReturn           = [
             'ba'       => $this->setFoodTicketsValue($inDate, $aStngs[$shLbl['MTV']]) * $nMealDays,
             'cas'      => $this->setHealthFundTax($inDate, $lngBase, $aStngs[$shLbl['HFP']], $aStngs[$shLbl['HFUL']]),
-            'sanatate' => $this->setHealthTax($inDate, $lngBase),
+            'sanatate' => $this->setHealthTax($inDate, $lngBase, $aStngs[$shLbl['HTP']]),
             'somaj'    => $this->setUnemploymentTax($inDate, $unemploymentBase),
         ];
         $pdVal             = [

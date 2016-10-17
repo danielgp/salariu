@@ -42,7 +42,7 @@ trait Taxation
      * */
     protected function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues)
     {
-        $prcntg  = $this->setHealthFundTaxPercentage($lngDate, $nPercentages);
+        $prcntg  = $this->setValuesFromJson($lngDate, $nPercentages);
         $nReturn = round($this->setHealthFundTaxBase($lngDate, $lngBrutto, $nValues) * $prcntg / 100, 0);
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
@@ -67,46 +67,13 @@ trait Taxation
         return $base;
     }
 
-    private function setHealthFundTaxPercentage($lngDate, $nPercentages)
-    {
-        $crtValues = $nPercentages[date('Y', $lngDate)];
-        $nReturn   = $crtValues['Value'];
-        if (array_key_exists('Month Secondary Value', $crtValues)) {
-            if (date('n', $lngDate) >= $crtValues['Month Secondary Value']) {
-                $nReturn = $crtValues['Secondary Value'];
-            }
-        }
-        return $nReturn;
-    }
-
     /**
      * Sanatate
      * */
-    protected function setHealthTax($lngDate, $lngBrutto)
+    protected function setHealthTax($lngDate, $lngBrutto, $nPercentages)
     {
-        switch (date('Y', $lngDate)) {
-            case 2001:
-            case 2002:
-                $nReturn = 7;
-                break;
-            case 2003:
-            case 2004:
-            case 2005:
-            case 2006:
-            case 2007:
-                $nReturn = 6.5;
-                break;
-            case 2008:
-                $nReturn = 5.5;
-                if (date('n', $lngDate) < 7) {
-                    $nReturn = 6.5;
-                }
-                break;
-            default:
-                $nReturn = 5.5;
-                break;
-        }
-        $nReturn = round($lngBrutto * $nReturn / 100, 0);
+        $prcntg  = $this->setValuesFromJson($lngDate, $nPercentages);
+        $nReturn = round($lngBrutto * $prcntg / 100, 0);
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = round($nReturn, -4);
         }
@@ -259,6 +226,18 @@ trait Taxation
         $nReturn = $stdAvgWrkngHrs[date('Y', $lngDate)];
         if ($bCEaster) {
             $nReturn = ($nReturn * 12 - 8) / 12;
+        }
+        return $nReturn;
+    }
+
+    private function setValuesFromJson($lngDate, $nValues)
+    {
+        $crtValues = $nValues[date('Y', $lngDate)];
+        $nReturn   = $crtValues['Value'];
+        if (array_key_exists('Month Secondary Value', $crtValues)) {
+            if (date('n', $lngDate) >= $crtValues['Month Secondary Value']) {
+                $nReturn = $crtValues['Secondary Value'];
+            }
         }
         return $nReturn;
     }
