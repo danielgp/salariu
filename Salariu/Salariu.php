@@ -4,7 +4,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Daniel Popiniuc
+ * Copyright (c) 2016 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -148,16 +148,26 @@ class Salariu
 
     private function getValues($lngBase)
     {
-        $aReturn['cas']      = $this->setHealthFundTax($_REQUEST['ym'], $lngBase);
-        $aReturn['sanatate'] = $this->setHealthTax($_REQUEST['ym'], $lngBase);
+        $aryStngs         = $this->readSettingsFromJsonFile('static');
+        $wkDay            = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
+        $nMealDays        = ($wkDay - $_REQUEST['zfb']);
+        $unemploymentBase = $lngBase;
         if ($_REQUEST['ym'] < mktime(0, 0, 0, 1, 1, 2008)) {
-            $aReturn['somaj'] = $this->setUnemploymentTax($_REQUEST['ym'], $_REQUEST['sn']);
-        } else {
-            $aReturn['somaj'] = $this->setUnemploymentTax($_REQUEST['ym'], $lngBase);
+            $unemploymentBase = $_REQUEST['sn'];
         }
-        $wkDay             = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
-        $aReturn['ba']     = $this->setFoodTicketsValue($_REQUEST['ym']) * ($wkDay - $_REQUEST['zfb']);
-        $aReturn['pd']     = $this->setPersonalDeduction($_REQUEST['ym'], ($lngBase + $aReturn['ba']), $_REQUEST['pi']);
+        $aReturn           = [
+            'ba'       => $this->setFoodTicketsValue($_REQUEST['ym'], $aryStngs['Meal Ticket Value']) * $nMealDays,
+            'cas'      => $this->setHealthFundTax($_REQUEST['ym'], $lngBase),
+            'sanatate' => $this->setHealthTax($_REQUEST['ym'], $lngBase),
+            'somaj'    => $this->setUnemploymentTax($_REQUEST['ym'], $unemploymentBase),
+        ];
+        $pdVal             = [
+            $_REQUEST['ym'],
+            ($lngBase + $aReturn['ba']),
+            $_REQUEST['pi'],
+            $aryStngs['Personal Deduction'],
+        ];
+        $aReturn['pd']     = $this->setPersonalDeduction($pdVal[0], $pdVal[1], $pdVal[2], $pdVal[3]);
         $restArrayToDeduct = [
             $aReturn['cas'],
             $aReturn['sanatate'],
@@ -170,9 +180,9 @@ class Salariu
         }
         if ($_REQUEST['ym'] >= mktime(0, 0, 0, 10, 1, 2010)) {
             $aReturn['gbns'] = $_REQUEST['gbns'] * pow(10, 4);
-            $rest += round($aReturn['gbns'], -4);
+            $rest            += round($aReturn['gbns'], -4);
         }
-        $rest += $_REQUEST['afet'] * pow(10, 4);
+        $rest               += $_REQUEST['afet'] * pow(10, 4);
         $aReturn['impozit'] = $this->setIncomeTax($_REQUEST['ym'], $rest);
         $aReturn['zile']    = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
         return $aReturn;
@@ -370,7 +380,7 @@ class Salariu
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[1], '175%'), ($overtime['os175'] * pow(10, 4)));
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[2], '200%'), ($overtime['os200'] * pow(10, 4)));
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_BruttoSalary'), $brut);
-        $brut += $_REQUEST['afet'] * pow(10, 4);
+        $brut      += $_REQUEST['afet'] * pow(10, 4);
         $amount    = $this->getValues($brut);
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PensionFund'), $amount['cas']);
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);

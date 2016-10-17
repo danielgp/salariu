@@ -42,7 +42,7 @@ trait Bonuses
      * @param string $fileBaseName
      * @return mixed
      */
-    private function readTypeFromJsonFile($fileBaseName)
+    protected function readSettingsFromJsonFile($fileBaseName)
     {
         $fName       = __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . $fileBaseName . '.min.json';
         $fJson       = fopen($fName, 'r');
@@ -54,14 +54,13 @@ trait Bonuses
     /**
      * Tichete de alimente
      * */
-    protected function setFoodTicketsValue($lngDate)
+    protected function setFoodTicketsValue($lngDate, $arySettingMealTickets)
     {
-        $arrayValues           = $this->readTypeFromJsonFile('static')['Meal Ticket Value'];
         $valueMealTicket       = 0;
         $indexArrayValues      = 0;
         $currentUpperLimitDate = mktime(0, 0, 0, date('n'), 1, date('Y'));
         while (($valueMealTicket === 0)) {
-            $crtVal                = $arrayValues[$indexArrayValues];
+            $crtVal                = $arySettingMealTickets[$indexArrayValues];
             $currentLowerLimitDate = mktime(0, 0, 0, $crtVal['Month'], 1, $crtVal['Year']);
             if (($lngDate <= $currentUpperLimitDate) && ($lngDate >= $currentLowerLimitDate)) {
                 $valueMealTicket = $crtVal['Value'];
@@ -75,12 +74,12 @@ trait Bonuses
     /**
      * Deducere personala
      * */
-    protected function setPersonalDeduction($lngDate, $lngBrutto, $sPersons)
+    protected function setPersonalDeduction($lngDate, $lngBrutto, $sPersons, $cValues)
     {
         $yrDate  = date('Y', $lngDate);
         $nReturn = 0;
         if ($yrDate >= 2005) {
-            $nReturn = $this->setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate);
+            $nReturn = $this->setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate, $cValues);
         } elseif ($yrDate >= 2001) {
             $valuesYearly = [
                 2001 => $this->setPersonalDeductionSimple2001($lngDate),
@@ -111,29 +110,11 @@ trait Bonuses
         return $nReturn;
     }
 
-    private function setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate)
+    private function setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate, $cValues)
     {
-        $nValues = [
-            2016 => [
-                'Limit persons'        => 3,
-                'Limit basic amount'   => 3500000,
-                'Limit maximum amount' => 8000000,
-                'Limit /person amount' => 1000000,
-                'Limit zero deduction' => 30000000,
-                'Reduced deduction'    => 15000000,
-            ],
-            2005 => [
-                'Limit persons'        => 3,
-                'Limit basic amount'   => 2500000,
-                'Limit maximum amount' => 6500000,
-                'Limit /person amount' => 1000000,
-                'Limit zero deduction' => 30000000,
-                'Reduced deduction'    => 10000000,
-            ],
-        ];
-        $inRule  = $nValues[2005];
+        $inRule = $cValues[2005];
         if ($yrDate == 2016) {
-            $inRule = $nValues[2016];
+            $inRule = $cValues[2016];
         }
         return $this->setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule);
     }
