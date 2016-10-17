@@ -97,14 +97,14 @@ trait Bonuses
                 'Limit zero deduction' => 30000000,
                 'Reduced deduction'    => 10000000,
             ]);
-        } elseif (($yrDate >= 2002) && ($yr <= 2004)) {
+        } elseif (($yrDate >= 2002) && ($yrDate <= 2004)) {
             $valuesYearly = [
                 2002 => 1600000,
                 2003 => 1800000,
                 2004 => 2000000,
             ];
             $nReturn      = $valuesYearly[$yrDate];
-        } elseif ($yr == 2001) {
+        } elseif ($yrDate == 2001) {
             $nReturn = $this->setPersonalDeductionSimple2001($lngDate);
         }
         if ($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) {
