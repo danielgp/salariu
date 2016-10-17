@@ -52,40 +52,17 @@ class Salariu
         echo $this->setHeaderHtml();
         echo $this->setFormInput();
         if (isset($_REQUEST['ym'])) {
-            $this->getExchangeRates();
-            echo $this->setFormOutput();
+            $this->refreshExchangeRatesFile();
+            $aryStngs = $this->readSettingsFromJsonFile('static');
+            $this->getExchangeRates($aryStngs['Relevant Currencies']);
+            echo $this->setFormOutput($aryStngs);
         }
         echo $this->setFooterHtml();
     }
 
-    private function getExchangeRates()
+    private function getExchangeRates($aryRelevantCurrencies)
     {
-        $this->appFlags['currency_exchanges']          = [
-            'RON' => [
-                'decimals' => 2,
-                'locale'   => 'ro_RO',
-            ],
-            'EUR' => [
-                'decimals' => 2,
-                'locale'   => 'de_DE',
-            ],
-            'HUF' => [
-                'decimals' => 0,
-                'locale'   => 'hu_HU',
-            ],
-            'GBP' => [
-                'decimals' => 2,
-                'locale'   => 'en_UK',
-            ],
-            'CHF' => [
-                'decimals' => 2,
-                'locale'   => 'de_CH',
-            ],
-            'USD' => [
-                'decimals' => 2,
-                'locale'   => 'en_US',
-            ],
-        ];
+        $this->appFlags['currency_exchanges']          = $aryRelevantCurrencies;
         $this->appFlags['currency_exchange_rate_date'] = strtotime('now');
         $krncy                                         = array_keys($this->appFlags['currency_exchanges']);
         foreach ($krncy as $value) {
@@ -93,14 +70,6 @@ class Salariu
         }
         $xml   = new \XMLReader();
         $xFile = EXCHANGE_RATES_LOCAL;
-        if ((filemtime(EXCHANGE_RATES_LOCAL) + 90 * 24 * 60 * 60) < time()) {
-            $xFile  = EXCHANGE_RATES_SOURCE;
-            $fCntnt = file_get_contents(EXCHANGE_RATES_SOURCE);
-            if ($fCntnt !== false) {
-                chmod(EXCHANGE_RATES_LOCAL, 0666);
-                file_put_contents(EXCHANGE_RATES_LOCAL, $fCntnt);
-            }
-        }
         if ($xml->open($xFile, 'UTF-8')) {
             while ($xml->read()) {
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
@@ -132,6 +101,7 @@ class Salariu
 
     private function getOvertimes()
     {
+        $mnth = 1;
         switch ($_REQUEST['pc']) {
             case 0:
                 $mnth = $this->setMonthlyAverageWorkingHours($_REQUEST['ym'], true);
@@ -146,9 +116,8 @@ class Salariu
         ];
     }
 
-    private function getValues($lngBase)
+    private function getValues($lngBase, $aryStngs)
     {
-        $aryStngs         = $this->readSettingsFromJsonFile('static');
         $wkDay            = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
         $nMealDays        = ($wkDay - $_REQUEST['zfb']);
         $unemploymentBase = $lngBase;
@@ -200,10 +169,22 @@ class Salariu
             $_SESSION['lang'] = $this->appFlags['default_language'];
         }
         $localizationFile = 'Salariu/locale/' . $_SESSION['lang'] . '/LC_MESSAGES/salariu.mo';
-        $extrClass        = new \Gettext\Extractors\Mo();
-        $translations     = $extrClass->fromFile($localizationFile);
+        $translations     = new \Gettext\Translations;
+        $translations->addFromMoFile($localizationFile);
         $this->tApp       = new \Gettext\Translator();
         $this->tApp->loadTranslations($translations);
+    }
+
+    private function refreshExchangeRatesFile()
+    {
+        if ((filemtime(EXCHANGE_RATES_LOCAL) + 90 * 24 * 60 * 60) < time()) {
+            $xFile  = EXCHANGE_RATES_SOURCE;
+            $fCntnt = file_get_contents(EXCHANGE_RATES_SOURCE);
+            if ($fCntnt !== false) {
+                chmod(EXCHANGE_RATES_LOCAL, 0666);
+                file_put_contents(EXCHANGE_RATES_LOCAL, $fCntnt);
+            }
+        }
     }
 
     private function setFooterHtml()
@@ -272,6 +253,7 @@ class Salariu
                     'value' => $_REQUEST['os200'],
                     'size'  => 2
                 ]), 1);
+        $temp2     = [];
         for ($counter = 0; $counter <= 4; $counter++) {
             $temp2[] = $counter;
         }
@@ -345,6 +327,7 @@ class Salariu
 
     private function setFormInputSelect()
     {
+        $temp = [];
         for ($counter = date('Y'); $counter >= 2001; $counter--) {
             for ($counter2 = 12; $counter2 >= 1; $counter2--) {
                 if (($counter == date('Y')) && ($counter2 > date('m'))) {
@@ -358,7 +341,7 @@ class Salariu
         return $this->setArrayToSelect($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
     }
 
-    private function setFormOutput()
+    private function setFormOutput($aryStngs)
     {
         $overtime  = $this->getOvertimes();
         $additions = $_REQUEST['pb'] + $overtime['os175'] + $overtime['os200'];
@@ -381,7 +364,7 @@ class Salariu
         $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[2], '200%'), ($overtime['os200'] * pow(10, 4)));
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_BruttoSalary'), $brut);
         $brut      += $_REQUEST['afet'] * pow(10, 4);
-        $amount    = $this->getValues($brut);
+        $amount    = $this->getValues($brut, $aryStngs);
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PensionFund'), $amount['cas']);
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_HealthTax'), $amount['sanatate']);
@@ -457,6 +440,7 @@ class Salariu
             case 'amount':
                 $value                      = $value / pow(10, 4);
                 $defaultCellStyle2['style'] = $defaultCellStyle['style'] . 'text-align:right;';
+                $cellValue                  = [];
                 foreach ($this->appFlags['currency_exchanges'] as $key2 => $value2) {
                     $fmt         = new \NumberFormatter($value2['locale'], \NumberFormatter::CURRENCY);
                     $fmt->setAttribute(\NumberFormatter::FRACTION_DIGITS, $value2['decimals']);

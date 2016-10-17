@@ -128,5 +128,31 @@
             "Limit zero deduction": 30000000,
             "Reduced deduction": 10000000
         }
+    },
+    "Relevant Currencies": {
+        "RON": {
+            "decimals": 2,
+            "locale": "ro_RO"
+        },
+        "EUR": {
+            "decimals": 2,
+            "locale": "de_DE"
+        },
+        "HUF": {
+            "decimals": 0,
+            "locale": "hu_HU"
+        },
+        "GBP": {
+            "decimals": 2,
+            "locale": "en_UK"
+        },
+        "CHF": {
+            "decimals": 2,
+            "locale": "de_CH"
+        },
+        "USD": {
+            "decimals": 2,
+            "locale": "en_US"
+        }
     }
 }
