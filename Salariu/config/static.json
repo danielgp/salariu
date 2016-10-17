@@ -1,4 +1,126 @@
 {
+    "Health Fund Percentage": {
+        "2001": {
+            "Value": 5,
+            "Month Secondary Value": 4,
+            "Secondary Value": 11.67
+        },
+        "2002": {
+            "Value": 11.67
+        },
+        "2003": {
+            "Value": 9.5
+        },
+        "2004": {
+            "Value": 9.5
+        },
+        "2005": {
+            "Value": 9.5
+        },
+        "2006": {
+            "Value": 9.5
+        },
+        "2007": {
+            "Value": 9.5
+        },
+        "2008": {
+            "Value": 9.5
+        },
+        "2009": {
+            "Value": 9.5,
+            "Month Secondary Value": 2,
+            "Secondary Value": 10.5
+        },
+        "2010": {
+            "Value": 10.5
+        },
+        "2011": {
+            "Value": 10.5
+        },
+        "2012": {
+            "Value": 10.5
+        },
+        "2013": {
+            "Value": 10.5
+        },
+        "2014": {
+            "Value": 10.5
+        },
+        "2015": {
+            "Value": 10.5
+        },
+        "2016": {
+            "Value": 10.5
+        }
+    },
+    "Health Fund Upper Limit": {
+        "2001": {
+            "Multiplier": 3,
+            "Monthly Average Salary": 4148653
+        },
+        "2002": {
+            "Multiplier": 3,
+            "Monthly Average Salary": 5582000
+        },
+        "2003": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 6962000
+        },
+        "2004": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 7682000
+        },
+        "2005": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 9210000,
+            "Month Secondary Value": 7,
+            "Monthly Average Salary Secondary": 9211000
+        },
+        "2006": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 10770000
+        },
+        "2007": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 12700000
+        },
+        "2008": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 15500000
+        },
+        "2009": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 16930000
+        },
+        "2010": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 18360000
+        },
+        "2011": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 20220000
+        },
+        "2012": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 21170000
+        },
+        "2013": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 22230000
+        },
+        "2014": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 22980000
+        },
+        "2015": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 24150000
+        },
+        "2016": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 26810000
+        }
+    },
     "Meal Ticket Value": [
         {
             "Month": 6,
@@ -111,6 +233,24 @@
             "Value": 28800
         }
     ],
+    "Monthly Average Working Hours": {
+        "2001": 170,
+        "2002": 170,
+        "2003": 170,
+        "2004": 172,
+        "2005": 171.33,
+        "2006": 168.66,
+        "2007": 170,
+        "2008": 170,
+        "2009": 169.33,
+        "2010": 170.66,
+        "2011": 169.33,
+        "2012": 168.66,
+        "2013": 168,
+        "2014": 168,
+        "2015": 168.66,
+        "2016": 169.33
+    },
     "Personal Deduction": {
         "2016": {
             "Limit persons": 3,

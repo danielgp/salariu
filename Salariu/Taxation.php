@@ -40,46 +40,10 @@ trait Taxation
      * CAS
      *
      * */
-    protected function setHealthFundTax($lngDate, $lngBrutto)
+    protected function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues)
     {
-        switch (date('Y', $lngDate)) {
-            case 2001:
-                $nReturn = 11.67;
-                if (date('n', $lngDate) <= 3) {
-                    $nReturn = 5;
-                }
-                break;
-            case 2002:
-                $nReturn = 11.67;
-                break;
-            case 2003:
-            case 2004:
-            case 2005:
-            case 2006:
-            case 2007:
-            case 2008:
-                $nReturn = 9.5;
-                break;
-            case 2009:
-                $nReturn = 10.5;
-                if (date('n', $lngDate) == 1) {
-                    $nReturn = 9.5;
-                }
-                break;
-            case 2010:
-            case 2011:
-            case 2012:
-            case 2013:
-            case 2014:
-            case 2015:
-            case 2016:
-                $nReturn = 10.5;
-                break;
-            default:
-                $nReturn = 0;
-                break;
-        }
-        $nReturn = round($this->setHealthFundTaxBase($lngDate, $lngBrutto) * $nReturn / 100, 0);
+        $prcntg  = $this->setHealthFundTaxPercentage($lngDate, $nPercentages);
+        $nReturn = round($this->setHealthFundTaxBase($lngDate, $lngBrutto, $nValues) * $prcntg / 100, 0);
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
         }
@@ -91,36 +55,28 @@ trait Taxation
      *
      * http://www.lapensie.com/forum/salariul-mediu-brut.php
      * */
-    private function setHealthFundTaxBase($lngDate, $lngBrutto)
+    private function setHealthFundTaxBase($lngDate, $lngBrutto, $nValues)
     {
-        $givenYear = date('Y', $lngDate);
-        $baseArray = [
-            2001 => min($lngBrutto, 3 * 4148653),
-            2002 => min($lngBrutto, 3 * 5582000),
-            2003 => min($lngBrutto, 5 * 6962000),
-            2004 => min($lngBrutto, 5 * 7682000),
-            2006 => min($lngBrutto, 5 * 10770000),
-            2007 => min($lngBrutto, 5 * 12700000),
-            2008 => min($lngBrutto, 5 * 15500000),
-            2009 => min($lngBrutto, 5 * 16930000),
-            2010 => min($lngBrutto, 5 * 18360000),
-            2011 => min($lngBrutto, 5 * 20220000),
-            2012 => min($lngBrutto, 5 * 21170000),
-            2013 => min($lngBrutto, 5 * 22230000),
-            2014 => min($lngBrutto, 5 * 22980000),
-            2015 => min($lngBrutto, 5 * 24150000),
-            2016 => min($lngBrutto, 5 * 26810000),
-        ];
-        $base      = $lngBrutto;
-        if ($givenYear == 2005) {
-            $base = min($lngBrutto, 5 * 9210000);
-            if (date('n', $lngDate) <= 6) {
-                $base = min($lngBrutto, 5 * 9211000);
+        $crtValues = $nValues[date('Y', $lngDate)];
+        $base      = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary']);
+        if (array_key_exists('Month Secondary Value', $crtValues)) {
+            if (date('n', $lngDate) >= $crtValues['Month Secondary Value']) {
+                $base = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary Secondary']);
             }
-        } elseif (in_array($givenYear, array_keys($baseArray))) {
-            $base = $baseArray[$givenYear];
         }
         return $base;
+    }
+
+    private function setHealthFundTaxPercentage($lngDate, $nPercentages)
+    {
+        $crtValues = $nPercentages[date('Y', $lngDate)];
+        $nReturn   = $crtValues['Value'];
+        if (array_key_exists('Month Secondary Value', $crtValues)) {
+            if (date('n', $lngDate) >= $crtValues['Month Secondary Value']) {
+                $nReturn = $crtValues['Secondary Value'];
+            }
+        }
+        return $nReturn;
     }
 
     /**
@@ -278,19 +234,10 @@ trait Taxation
      * */
     protected function setUnemploymentTax($lngDate, $lngBase)
     {
-        switch (date('Y', $lngDate)) {
-            case 2001:
-            case 2002:
-            case 2003:
-            case 2004:
-            case 2005:
-            case 2006:
-            case 2007:
-                $nReturn = 1;
-                break;
-            default:
-                $nReturn = 0.5;
-                break;
+        $yrDate  = date('Y', $lngDate);
+        $nReturn = 0.5;
+        if ($yrDate <= 2007) {
+            $nReturn = 1;
         }
         $nReturn = round($lngBase * $nReturn / 100, 0);
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
@@ -307,52 +254,9 @@ trait Taxation
      * @param date $lngDate
      * @return number
      */
-    protected function setMonthlyAverageWorkingHours($lngDate, $bCEaster = false)
+    protected function setMonthlyAverageWorkingHours($lngDate, $stdAvgWrkngHrs, $bCEaster = false)
     {
-        switch (gmdate('Y', $lngDate)) {
-            case 2002:
-            case 2003:
-                $nReturn = 170;
-                break;
-            case 2004:
-                $nReturn = 172;
-                break;
-            case 2005:
-                $nReturn = 171.33;
-                break;
-            case 2006:
-                $nReturn = 168.66;
-                break;
-            case 2007:
-            case 2008:
-                $nReturn = 170;
-                break;
-            case 2009:
-                $nReturn = 169.33;
-                break;
-            case 2010:
-                $nReturn = 170.66;
-                break;
-            case 2011:
-                $nReturn = 169.33;
-                break;
-            case 2012:
-                $nReturn = 168.66;
-                break;
-            case 2013:
-                $nReturn = 168;
-                break;
-            case 2014:
-                $nReturn = 168;
-                break;
-            case 2015:
-            case 2016:
-                $nReturn = 168.66;
-                break;
-            default:
-                $nReturn = 0;
-                break;
-        }
+        $nReturn = $stdAvgWrkngHrs[date('Y', $lngDate)];
         if ($bCEaster) {
             $nReturn = ($nReturn * 12 - 8) / 12;
         }

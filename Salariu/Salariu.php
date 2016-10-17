@@ -54,23 +54,17 @@ class Salariu
         if (isset($_REQUEST['ym'])) {
             $this->refreshExchangeRatesFile();
             $aryStngs = $this->readSettingsFromJsonFile('static');
-            $this->getExchangeRates($aryStngs['Relevant Currencies']);
+            $this->setCurrencyExchangeVariables($aryStngs['Relevant Currencies']);
+            $this->getExchangeRates();
             echo $this->setFormOutput($aryStngs);
         }
         echo $this->setFooterHtml();
     }
 
-    private function getExchangeRates($aryRelevantCurrencies)
+    private function getExchangeRates()
     {
-        $this->appFlags['currency_exchanges']          = $aryRelevantCurrencies;
-        $this->appFlags['currency_exchange_rate_date'] = strtotime('now');
-        $krncy                                         = array_keys($this->appFlags['currency_exchanges']);
-        foreach ($krncy as $value) {
-            $this->appFlags['currency_exchange_rate_value'][$value] = 1;
-        }
-        $xml   = new \XMLReader();
-        $xFile = EXCHANGE_RATES_LOCAL;
-        if ($xml->open($xFile, 'UTF-8')) {
+        $xml = new \XMLReader();
+        if ($xml->open(EXCHANGE_RATES_LOCAL, 'UTF-8')) {
             while ($xml->read()) {
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
                     switch ($xml->localName) {
@@ -91,50 +85,44 @@ class Salariu
                 }
             }
             $xml->close();
-        } else {
-            $erLast = error_get_last();
-            echo '<div style="background-color: red; color: white;">'
-            . utf8_encode(json_encode($erLast, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT))
-            . '</div>';
         }
     }
 
-    private function getOvertimes()
+    private function getOvertimes($aryStngs)
     {
-        $mnth = 1;
-        switch ($_REQUEST['pc']) {
-            case 0:
-                $mnth = $this->setMonthlyAverageWorkingHours($_REQUEST['ym'], true);
-                break;
-            case 1:
-                $mnth = $this->setMonthlyAverageWorkingHours($_REQUEST['ym']);
-                break;
-        }
+        $pcToBoolean = [0 => true, 1 => false];
+        $mnth        = $this->setMonthlyAverageWorkingHours($_REQUEST['ym'], $aryStngs, $pcToBoolean[$_REQUEST['pc']]);
         return [
             'os175' => ceil($_REQUEST['os175'] * 1.75 * $_REQUEST['sn'] / $mnth),
             'os200' => ceil($_REQUEST['os200'] * 2 * $_REQUEST['sn'] / $mnth),
         ];
     }
 
-    private function getValues($lngBase, $aryStngs)
+    private function getValues($lngBase, $aStngs)
     {
-        $wkDay            = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
+        $inDate           = $_REQUEST['ym'];
+        $wkDay            = $this->setWorkingDaysInMonth($inDate, $_REQUEST['pc']);
         $nMealDays        = ($wkDay - $_REQUEST['zfb']);
+        $shLbl            = [
+            'MTV'  => 'Meal Ticket Value',
+            'HFP'  => 'Health Fund Percentage',
+            'HFUL' => 'Health Fund Upper Limit',
+        ];
         $unemploymentBase = $lngBase;
         if ($_REQUEST['ym'] < mktime(0, 0, 0, 1, 1, 2008)) {
             $unemploymentBase = $_REQUEST['sn'];
         }
         $aReturn           = [
-            'ba'       => $this->setFoodTicketsValue($_REQUEST['ym'], $aryStngs['Meal Ticket Value']) * $nMealDays,
-            'cas'      => $this->setHealthFundTax($_REQUEST['ym'], $lngBase),
-            'sanatate' => $this->setHealthTax($_REQUEST['ym'], $lngBase),
-            'somaj'    => $this->setUnemploymentTax($_REQUEST['ym'], $unemploymentBase),
+            'ba'       => $this->setFoodTicketsValue($inDate, $aStngs[$shLbl['MTV']]) * $nMealDays,
+            'cas'      => $this->setHealthFundTax($inDate, $lngBase, $aStngs[$shLbl['HFP']], $aStngs[$shLbl['HFUL']]),
+            'sanatate' => $this->setHealthTax($inDate, $lngBase),
+            'somaj'    => $this->setUnemploymentTax($inDate, $unemploymentBase),
         ];
         $pdVal             = [
-            $_REQUEST['ym'],
+            $inDate,
             ($lngBase + $aReturn['ba']),
             $_REQUEST['pi'],
-            $aryStngs['Personal Deduction'],
+            $aStngs['Personal Deduction'],
         ];
         $aReturn['pd']     = $this->setPersonalDeduction($pdVal[0], $pdVal[1], $pdVal[2], $pdVal[3]);
         $restArrayToDeduct = [
@@ -144,16 +132,16 @@ class Salariu
             $aReturn['pd'],
         ];
         $rest              = $lngBase - array_sum($restArrayToDeduct);
-        if ($_REQUEST['ym'] >= mktime(0, 0, 0, 7, 1, 2010)) {
+        if ($inDate >= mktime(0, 0, 0, 7, 1, 2010)) {
             $rest += round($aReturn['ba'], -4);
         }
-        if ($_REQUEST['ym'] >= mktime(0, 0, 0, 10, 1, 2010)) {
+        if ($inDate >= mktime(0, 0, 0, 10, 1, 2010)) {
             $aReturn['gbns'] = $_REQUEST['gbns'] * pow(10, 4);
             $rest            += round($aReturn['gbns'], -4);
         }
         $rest               += $_REQUEST['afet'] * pow(10, 4);
-        $aReturn['impozit'] = $this->setIncomeTax($_REQUEST['ym'], $rest);
-        $aReturn['zile']    = $this->setWorkingDaysInMonth($_REQUEST['ym'], $_REQUEST['pc']);
+        $aReturn['impozit'] = $this->setIncomeTax($inDate, $rest);
+        $aReturn['zile']    = $this->setWorkingDaysInMonth($inDate, $_REQUEST['pc']);
         return $aReturn;
     }
 
@@ -178,7 +166,6 @@ class Salariu
     private function refreshExchangeRatesFile()
     {
         if ((filemtime(EXCHANGE_RATES_LOCAL) + 90 * 24 * 60 * 60) < time()) {
-            $xFile  = EXCHANGE_RATES_SOURCE;
             $fCntnt = file_get_contents(EXCHANGE_RATES_SOURCE);
             if ($fCntnt !== false) {
                 chmod(EXCHANGE_RATES_LOCAL, 0666);
@@ -187,16 +174,25 @@ class Salariu
         }
     }
 
+    private function setCurrencyExchangeVariables($aryRelevantCurrencies)
+    {
+        $this->appFlags['currency_exchanges']          = $aryRelevantCurrencies;
+        $this->appFlags['currency_exchange_rate_date'] = strtotime('now');
+        $krncy                                         = array_keys($this->appFlags['currency_exchanges']);
+        foreach ($krncy as $value) {
+            $this->appFlags['currency_exchange_rate_value'][$value] = 1;
+        }
+    }
+
     private function setFooterHtml()
     {
-        $sReturn   = [];
-        $sReturn[] = $this->setUpperRightBoxLanguages($this->appFlags['available_languages']);
-        $sReturn[] = '<div class="resetOnly author">&copy; 2015 Daniel Popiniuc</div>';
-        $sReturn[] = '<hr/>';
-        $sReturn[] = '<div class="disclaimer">'
+        $sReturn = $this->setUpperRightBoxLanguages($this->appFlags['available_languages'])
+                . '<div class="resetOnly author">&copy; 2015 Daniel Popiniuc</div>'
+                . '<hr/>'
+                . '<div class="disclaimer">'
                 . $this->tApp->gettext('i18n_Disclaimer')
                 . '</div>';
-        return $this->setFooterCommon(implode('', $sReturn));
+        return $this->setFooterCommon($sReturn);
     }
 
     private function setFormInput()
@@ -330,10 +326,8 @@ class Salariu
         $temp = [];
         for ($counter = date('Y'); $counter >= 2001; $counter--) {
             for ($counter2 = 12; $counter2 >= 1; $counter2--) {
-                if (($counter == date('Y')) && ($counter2 > date('m'))) {
-                    # se limiteaza pana la luna curenta
-                } else {
-                    $crtDate        = mktime(0, 0, 0, $counter2, 1, $counter);
+                $crtDate = mktime(0, 0, 0, $counter2, 1, $counter);
+                if ($crtDate <= mktime(0, 0, 0, date('m'), 1, date('Y'))) {
                     $temp[$crtDate] = strftime('%Y, %m (%B)', $crtDate);
                 }
             }
@@ -343,7 +337,7 @@ class Salariu
 
     private function setFormOutput($aryStngs)
     {
-        $overtime  = $this->getOvertimes();
+        $overtime  = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
         $additions = $_REQUEST['pb'] + $overtime['os175'] + $overtime['os200'];
         $brut      = ($_REQUEST['sn'] * (1 + $_REQUEST['sc'] / 100) + $additions) * pow(10, 4);
         $text      = $this->tApp->gettext('i18n_Form_Label_ExchangeRateAtDate');
