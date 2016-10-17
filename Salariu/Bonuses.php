@@ -77,53 +77,65 @@ trait Bonuses
      * */
     protected function setPersonalDeduction($lngDate, $lngBrutto, $sPersons)
     {
-        switch (date('Y', $lngDate)) {
-            case 2001:
-                $mnth = date('n', $lngDate);
-                if ($mnth <= 6) {
-                    $nReturn = 1099000;
-                } elseif ($mnth <= 9) {
-                    $nReturn = 1273000;
-                } else {
-                    $nReturn = 1300000;
-                }
-                break;
-            case 2002:
-                $nReturn = 1600000;
-                break;
-            case 2003:
-                $nReturn = 1800000;
-                break;
-            case 2004:
-                $nReturn = 2000000;
-                break;
-            case 2016:
-                if ($sPersons <= 3) {
-                    $nReturn = 3500000 + ($sPersons * 1000000);
-                } elseif ($sPersons > 3) {
-                    $nReturn = 8000000;
-                }
-                if ($lngBrutto >= 30000000) {
-                    $nReturn = 0;
-                } elseif ($lngBrutto > 15000000) {
-                    $nReturn = $nReturn * (1 - ($lngBrutto - 15000000) / 15000000);
-                }
-                break;
-            default:
-                if ($sPersons <= 3) {
-                    $nReturn = 2500000 + ($sPersons * 1000000);
-                } elseif ($sPersons > 3) {
-                    $nReturn = 6500000;
-                }
-                if ($lngBrutto >= 30000000) {
-                    $nReturn = 0;
-                } elseif ($lngBrutto > 10000000) {
-                    $nReturn = $nReturn * (1 - ($lngBrutto - 10000000) / 10000000);
-                }
-                break;
+        $yrDate  = date('Y', $lngDate);
+        $nReturn = 0;
+        if ($yrDate == 2016) {
+            $nReturn = $this->setPersonalDeductionComplex($sPersons, $lngBrutto, [
+                'Limit persons'        => 3,
+                'Limit basic amount'   => 3500000,
+                'Limit maximum amount' => 8000000,
+                'Limit /person amount' => 1000000,
+                'Limit zero deduction' => 30000000,
+                'Reduced deduction'    => 15000000,
+            ]);
+        } elseif (($yrDate >= 2005) && ($yr <= 2015)) {
+            $nReturn = $this->setPersonalDeductionComplex($sPersons, $lngBrutto, [
+                'Limit persons'        => 3,
+                'Limit basic amount'   => 2500000,
+                'Limit maximum amount' => 6500000,
+                'Limit /person amount' => 1000000,
+                'Limit zero deduction' => 30000000,
+                'Reduced deduction'    => 10000000,
+            ]);
+        } elseif (($yrDate >= 2002) && ($yr <= 2004)) {
+            $valuesYearly = [
+                2002 => 1600000,
+                2003 => 1800000,
+                2004 => 2000000,
+            ];
+            $nReturn      = $valuesYearly[$yrDate];
+        } elseif ($yr == 2001) {
+            $nReturn = $this->setPersonalDeductionSimple2001($lngDate);
         }
         if ($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = round($nReturn, -4);
+        }
+        return $nReturn;
+    }
+
+    private function setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule)
+    {
+        $nDeduction = $inRule['Limit maximum amount'];
+        if ($sPersons <= $inRule['Limit persons']) {
+            $nDeduction = $inRule['Limit basic amount'] + ($sPersons * $inRule['Limit /person amount']);
+        }
+        $nReturn = $nDeduction;
+        if ($lngBrutto >= $inRule['Limit zero deduction']) {
+            $nReturn = 0;
+        } elseif ($lngBrutto > $inRule['Reduced deduction']) {
+            $nReturn = $nDeduction * (1 - ($lngBrutto - $inRule['Reduced deduction']) / $inRule['Reduced deduction']);
+        }
+        return $nReturn;
+    }
+
+    private function setPersonalDeductionSimple2001($lngDate)
+    {
+        $nReturn = 1300000;
+        $mnDate  = date('n', $lngDate);
+        if ($mnDate <= 6) {
+            $nReturn = 1099000;
+        } elseif ($mnDate <= 9) {
+            $nReturn = 1273000;
         }
         return $nReturn;
     }
