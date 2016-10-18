@@ -52,13 +52,11 @@ class Salariu
         $this->handleLocalizationSalariu($interfaceElements['Application']);
         echo $this->setHeaderHtml();
         echo $this->setFormInput();
-        if (isset($_REQUEST['ym'])) {
-            $this->refreshExchangeRatesFile($interfaceElements['Application']);
-            $this->setCurrencyExchangeVariables($interfaceElements['Relevant Currencies']);
-            $this->getExchangeRates($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
-            $aryStngs = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
-            echo $this->setFormOutput($aryStngs);
-        }
+        $this->refreshExchangeRatesFile($interfaceElements['Application']);
+        $this->setCurrencyExchangeVariables($interfaceElements['Relevant Currencies']);
+        $this->getExchangeRates($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
+        $aryStngs          = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
+        echo $this->setFormOutput($aryStngs);
         echo $this->setFooterHtml($interfaceElements['Application']);
     }
 
@@ -109,16 +107,19 @@ class Salariu
     private function getOvertimes($aryStngs)
     {
         $pcToBoolean = [0 => true, 1 => false];
-        $mnth        = $this->setMonthlyAverageWorkingHours($_REQUEST['ym'], $aryStngs, $pcToBoolean[$_REQUEST['pc']]);
+        $pcBoolean   = $pcToBoolean[$this->tCmnSuperGlobals->get('pc')];
+        $ymVal       = $this->tCmnSuperGlobals->get('ym');
+        $snVal       = $this->tCmnSuperGlobals->get('sn');
+        $mnth        = $this->setMonthlyAverageWorkingHours($ymVal, $aryStngs, $pcBoolean);
         return [
-            'os175' => ceil($_REQUEST['os175'] * 1.75 * $_REQUEST['sn'] / $mnth),
-            'os200' => ceil($_REQUEST['os200'] * 2 * $_REQUEST['sn'] / $mnth),
+            'os175' => ceil($this->tCmnSuperGlobals->get('os175') * 1.75 * $snVal / $mnth),
+            'os200' => ceil($this->tCmnSuperGlobals->get('os200') * 2 * $snVal / $mnth),
         ];
     }
 
     private function getValues($lngBase, $aStngs)
     {
-        $inDate           = $_REQUEST['ym'];
+        $inDate           = $this->tCmnSuperGlobals->get('ym');
         $inDT             = new \DateTime(date('Y/m/d', $inDate));
         $wkDay            = $this->setWorkingDaysInMonth($inDT, $_REQUEST['pc']);
         $nMealDays        = ($wkDay - $_REQUEST['zfb']);
@@ -130,7 +131,7 @@ class Salariu
             'MTV'  => 'Meal Ticket Value',
         ];
         $unemploymentBase = $lngBase;
-        if ($_REQUEST['ym'] < mktime(0, 0, 0, 1, 1, 2008)) {
+        if ($this->tCmnSuperGlobals->get('ym') < mktime(0, 0, 0, 1, 1, 2008)) {
             $unemploymentBase = $_REQUEST['sn'];
         }
         $aReturn           = [
@@ -237,31 +238,21 @@ class Salariu
         $hiddenField  = $this->setStringIntoShortTag('input', [
             'type'  => 'hidden',
             'name'  => 'action',
-            'value' => $_SERVER['SERVER_NAME']
+            'value' => $this->tCmnSuperGlobals->server->get['SERVER_NAME'],
         ]);
         $sReturn[]    = $this->setStringIntoTag($this->setStringIntoTag($label . $hiddenField, 'td', [
                     'colspan' => 2,
                     'style'   => 'color: red;'
                 ]), 'tr');
-        $resetBtn     = $this->setStringIntoShortTag('input', [
-            'type'  => 'reset',
-            'id'    => 'reset',
-            'value' => $this->tApp->gettext('i18n_Form_Button_Reset'),
-            'style' => 'color:#000;'
-        ]);
-        $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Calculate');
-        if (isset($_REQUEST['ym'])) {
-            $resetBtn     = '';
-            $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Recalculate');
-        }
-        $sReturn[] = $this->setFormRow($resetBtn, $this->setStringIntoShortTag('input', [
+        $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Recalculate');
+        $sReturn[]    = $this->setFormRow('', $this->setStringIntoShortTag('input', [
                     'type'  => 'submit',
                     'id'    => 'submit',
                     'value' => $submitBtnTxt
                 ]), 1);
-        $frm       = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
+        $frm          = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
             'method' => 'get',
-            'action' => $_SERVER['SCRIPT_NAME']
+            'action' => $this->tCmnSuperGlobals->server->get['SCRIPT_NAME']
         ]);
         return $this->setStringIntoTag(implode('', [
                     $this->setStringIntoTag($this->tApp->gettext('i18n_FieldsetLabel_Inputs'), 'legend'),
@@ -275,7 +266,7 @@ class Salariu
             $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
             $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
         ];
-        return $this->setArrayToSelect($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
+        return $this->setArrayToSelect($choices, $this->tCmnSuperGlobals->get('pc'), 'pc', ['size' => 1]);
     }
 
     private function setFormInputSelectPI()
@@ -284,7 +275,7 @@ class Salariu
         for ($counter = 0; $counter <= 4; $counter++) {
             $temp2[$counter] = $counter . ($counter == 4 ? '+' : '');
         }
-        return $this->setArrayToSelect($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]);
+        return $this->setArrayToSelect($temp2, $this->tCmnSuperGlobals->get('pi'), 'pi', ['size' => 1]);
     }
 
     private function setFormInputSelectYM()
@@ -298,7 +289,7 @@ class Salariu
                 }
             }
         }
-        return $this->setArrayToSelect($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
+        return $this->setArrayToSelect($temp, $this->tCmnSuperGlobals->get('ym'), 'ym', ['size' => 1]);
     }
 
     private function setFormInputText($inName, $inSize, $inAfterLabel)
@@ -306,7 +297,7 @@ class Salariu
         $inputParameters = [
             'type'      => 'text',
             'name'      => $inName,
-            'value'     => $_REQUEST[$inName],
+            'value'     => $this->tCmnSuperGlobals->get($inName),
             'size'      => $inSize,
             'maxlength' => $inSize,
         ];
@@ -363,9 +354,10 @@ class Salariu
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_FoodBonusesValue'), $amount['gbns']);
         $total     = ($net + $amount['ba'] + $amount['gbns'] - $_REQUEST['szamnt'] * 10000);
         $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_Total'), $total);
-        setlocale(LC_TIME, explode('_', $_SESSION['lang'])[0]);
-        $crtMonth  = strftime('%B', $_REQUEST['ym']);
-        $legend    = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results'), $crtMonth, date('Y', $_REQUEST['ym']));
+        setlocale(LC_TIME, explode('_', $this->tCmnSession->get('lang'))[0]);
+        $crtMonth  = strftime('%B', $this->tCmnSuperGlobals->get('ym'));
+        $legend    = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
+                . '', $crtMonth, date('Y', $this->tCmnSuperGlobals->get('ym')));
         return $this->setStringIntoTag(implode('', [
                     $this->setStringIntoTag($legend, 'legend'),
                     $this->setStringIntoTag(implode('', $sReturn), 'table')
@@ -425,7 +417,7 @@ class Salariu
     private function setHeaderHtml()
     {
         $headerParameters = [
-            'lang'  => str_replace('_', '-', $_SESSION['lang']),
+            'lang'  => str_replace('_', '-', $this->tCmnSession->get('lang')),
             'title' => $this->tApp->gettext('i18n_ApplicationName'),
             'css'   => [
                 'vendor/components/flag-icon-css/css/flag-icon.min.css',
