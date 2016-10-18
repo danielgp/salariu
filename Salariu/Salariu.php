@@ -108,6 +108,7 @@ class Salariu
             'HFP'  => 'Health Fund Percentage',
             'HFUL' => 'Health Fund Upper Limit',
             'HTP'  => 'Health Tax Percentage',
+            'IT'   => 'Income Tax',
             'MTV'  => 'Meal Ticket Value',
         ];
         $unemploymentBase = $lngBase;
@@ -142,7 +143,7 @@ class Salariu
             $rest            += round($aReturn['gbns'], -4);
         }
         $rest               += $_REQUEST['afet'] * pow(10, 4);
-        $aReturn['impozit'] = $this->setIncomeTax($inDate, $rest);
+        $aReturn['impozit'] = $this->setIncomeTax($inDate, $rest, $aStngs[$shLbl['IT']]);
         $aReturn['zile']    = $this->setWorkingDaysInMonth($inDate, $_REQUEST['pc']);
         return $aReturn;
     }

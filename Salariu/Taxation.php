@@ -83,24 +83,14 @@ trait Taxation
     /**
      * Impozit pe salariu
      * */
-    protected function setIncomeTax($lngDate, $lngTaxBase)
+    protected function setIncomeTax($lngDate, $lngTaxBase, $nValues)
     {
-        switch (date('Y', $lngDate)) {
-            case 2001:
-                $nReturn = $this->setIncomeTax2001($lngDate, $lngTaxBase);
-                break;
-            case 2002:
-                $nReturn = $this->setIncomeTax2002($lngTaxBase);
-                break;
-            case 2003:
-                $nReturn = $this->setIncomeTax2003($lngTaxBase);
-                break;
-            case 2004:
-                $nReturn = $this->setIncomeTax2004($lngTaxBase);
-                break;
-            default:
-                $nReturn = $lngTaxBase * 16 / 100;
-                break;
+        $nReturn = $lngTaxBase * 16 / 100;
+        $yrDate  = date('Y', $lngDate);
+        if (in_array($yrDate, [2002, 2003, 2004])) {
+            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues[$yrDate]);
+        } elseif ($yrDate == 2001) {
+            $nReturn = $this->setIncomeTax2001($lngDate, $lngTaxBase, $nValues);
         }
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = round($nReturn, -4);
@@ -111,87 +101,33 @@ trait Taxation
     /**
      * Impozit pe salariu
      * */
-    private function setIncomeTax2001($lngDate, $lngTaxBase)
+    private function setIncomeTax2001($lngDate, $lngTaxBase, $nValues)
     {
         $mnth = date('n', $lngDate);
         if ($mnth <= 6) {
-            $nReturn = 1822070 + ($lngTaxBase - 6867000 ) * 40 / 100;
-            if ($lngTaxBase <= 1259000) {
-                $nReturn = $lngTaxBase * 18 / 100;
-            } elseif ($lngTaxBase <= 3090000) {
-                $nReturn = 226620 + ($lngTaxBase - 1259000 ) * 23 / 100;
-            } elseif ($lngTaxBase <= 4921000) {
-                $nReturn = 647750 + ($lngTaxBase - 3090000 ) * 28 / 100;
-            } elseif ($lngTaxBase <= 6867000) {
-                $nReturn = 1160430 + ($lngTaxBase - 4921000 ) * 34 / 100;
-            }
+            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-06"]);
         } elseif ($mnth <= 9) {
-            $nReturn = 2109940 + ($lngTaxBase - 7952000 ) * 40 / 100;
-            if ($lngTaxBase <= 1458000) {
-                $nReturn = $lngTaxBase * 18 / 100;
-            } elseif ($lngTaxBase <= 3578000) {
-                $nReturn = 262440 + ($lngTaxBase - 1458000 ) * 23 / 100;
-            } elseif ($lngTaxBase <= 5699000) {
-                $nReturn = 750040 + ($lngTaxBase - 3578000 ) * 28 / 100;
-            } elseif ($lngTaxBase <= 7952000) {
-                $nReturn = 1343920 + ($lngTaxBase - 5699000 ) * 34 / 100;
-            }
+            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-09"]);
         } elseif ($mnth > 9) {
-            $nReturn = 2231000 + ($lngTaxBase - 8400000 ) * 40 / 100;
-            if ($lngTaxBase <= 1500000) {
-                $nReturn = $lngTaxBase * 18 / 100;
-            } elseif ($lngTaxBase <= 3800000) {
-                $nReturn = 270000 + ($lngTaxBase - 1500000 ) * 23 / 100;
-            } elseif ($lngTaxBase <= 6000000) {
-                $nReturn = 799000 + ($lngTaxBase - 3800000 ) * 28 / 100;
-            } elseif ($lngTaxBase <= 8400000) {
-                $nReturn = 1415000 + ($lngTaxBase - 6000000 ) * 34 / 100;
+            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-12"]);
+        }
+        return $nReturn;
+    }
+
+    private function setIncomeTaxFromJson($lngTaxBase, $nValues)
+    {
+        $nReturn = 0;
+        $howMany = count($nValues);
+        for ($counter = 0; $counter <= $howMany; $counter++) {
+            if (($lngTaxBase <= $nValues[$counter]['Upper Limit Value'])) {
+                $sLbl    = [
+                    'BDP' => $nValues[$counter]['Base Deducted Percentage'],
+                    'BDV' => $nValues[$counter]['Base Deduction Value'],
+                    'TFV' => $nValues[$counter]['Tax Free Value'],
+                ];
+                $nReturn = $sLbl['TFV'] + ($lngTaxBase - $sLbl['BDV']) * $sLbl['BDP'] / 100;
+                $counter = $howMany;
             }
-        }
-        return $nReturn;
-    }
-
-    private function setIncomeTax2002($lngTaxBase)
-    {
-        $nReturn = 2710000 + ($lngTaxBase - 10200000 ) * 40 / 100;
-        if ($lngTaxBase <= 1800000) {
-            $nReturn = $lngTaxBase * 18 / 100;
-        } elseif ($lngTaxBase <= 4600000) {
-            $nReturn = 324000 + ($lngTaxBase - 1800000 ) * 23 / 100;
-        } elseif ($lngTaxBase <= 7300000) {
-            $nReturn = 968000 + ($lngTaxBase - 4600000 ) * 28 / 100;
-        } elseif ($lngTaxBase <= 10200000) {
-            $nReturn = 1724000 + ($lngTaxBase - 7300000 ) * 34 / 100;
-        }
-        return $nReturn;
-    }
-
-    private function setIncomeTax2003($lngTaxBase)
-    {
-        $nReturn = 3081000 + ($lngTaxBase - 11600000 ) * 40 / 100;
-        if ($lngTaxBase <= 2100000) {
-            $nReturn = ($lngTaxBase * 18) / 100;
-        } elseif ($lngTaxBase <= 5200000) {
-            $nReturn = 324000 + ($lngTaxBase - 2100000 ) * 23 / 100;
-        } elseif ($lngTaxBase <= 8300000) {
-            $nReturn = 1091000 + ($lngTaxBase - 5200000 ) * 28 / 100;
-        } elseif ($lngTaxBase <= 11600000) {
-            $nReturn = 1959000 + ($lngTaxBase - 8300000 ) * 34 / 100;
-        }
-        return $nReturn;
-    }
-
-    private function setIncomeTax2004($lngTaxBase)
-    {
-        $nReturn = 3452000 + ($lngTaxBase - 13000000 ) * 40 / 100;
-        if ($lngTaxBase <= 2400000) {
-            $nReturn = ($lngTaxBase * 18) / 100;
-        } elseif ($lngTaxBase <= 5800000) {
-            $nReturn = 432000 + ($lngTaxBase - 2400000 ) * 23 / 100;
-        } elseif ($lngTaxBase <= 9300000) {
-            $nReturn = 1214000 + ($lngTaxBase - 5800000 ) * 28 / 100;
-        } elseif ($lngTaxBase <= 13000000) {
-            $nReturn = 2194000 + ($lngTaxBase - 9300000 ) * 34 / 100;
         }
         return $nReturn;
     }
