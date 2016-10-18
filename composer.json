@@ -13,7 +13,7 @@
     "require": {
         "php": ">=5.5",
         "components/flag-icon-css": "*",
-        "danielgp/bank-holidays": "*",
+        "danielgp/bank-holidays": ">=1.4.4",
         "danielgp/common-lib": "*",
         "danielgp/common-styles": "*",
         "fortawesome/font-awesome": "*",
