@@ -372,7 +372,7 @@ class Salariu
     private function setFormRow($text, $value, $type = 'amount')
     {
         $a                 = '';
-        $defaultCellStyle  = $this->setFormatRow($text);
+        $defaultCellStyle  = $this->setFormatRow($text, $value);
         $defaultCellStyle2 = [];
         switch ($type) {
             case 'amount':
@@ -404,7 +404,7 @@ class Salariu
         return $this->setStringIntoTag($this->setStringIntoTag($text, 'td', $defaultCellStyle) . $value2show, 'tr');
     }
 
-    private function setFormatRow($text)
+    private function setFormatRow($text, $value)
     {
         $defaultCellStyle = [
             'class' => 'labelS',
