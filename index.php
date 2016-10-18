@@ -25,7 +25,6 @@
  * SOFTWARE.
  *
  */
-require_once 'Salariu/config/salariu.config.inc.php';
 require_once 'Salariu/config/default.values.inc.php';
 require_once 'vendor/autoload.php';
 

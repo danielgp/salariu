@@ -41,30 +41,25 @@ class Salariu
 
     public function __construct()
     {
-        $this->appFlags = [
-            'available_languages' => [
-                'en_US' => 'US English',
-                'ro_RO' => 'Română',
-            ],
-            'default_language'    => 'ro_RO'
-        ];
-        $this->handleLocalizationSalariu();
+        $interfaceElements    = $this->readSettingsFromJsonFile('interfaceElements');
+        $this->handleLocalizationSalariu($interfaceElements['Application']);
         echo $this->setHeaderHtml();
+        $this->appFlags['FI'] = $interfaceElements['Form Input'];
         echo $this->setFormInput();
         if (isset($_REQUEST['ym'])) {
-            $this->refreshExchangeRatesFile();
-            $aryStngs = $this->readSettingsFromJsonFile('static');
-            $this->setCurrencyExchangeVariables($aryStngs['Relevant Currencies']);
-            $this->getExchangeRates();
+            $this->refreshExchangeRatesFile($interfaceElements['Application']);
+            $this->setCurrencyExchangeVariables($interfaceElements['Relevant Currencies']);
+            $this->getExchangeRates($interfaceElements['Application']);
+            $aryStngs = $this->readSettingsFromJsonFile('valuesToCompute');
             echo $this->setFormOutput($aryStngs);
         }
-        echo $this->setFooterHtml();
+        echo $this->setFooterHtml($interfaceElements['Application']);
     }
 
-    private function getExchangeRates()
+    private function getExchangeRates($appSettings)
     {
         $xml = new \XMLReader();
-        if ($xml->open(EXCHANGE_RATES_LOCAL, 'UTF-8')) {
+        if ($xml->open($appSettings['Exchange Rate Local'], 'UTF-8')) {
             $krncy = array_keys($this->appFlags['currency_exchanges']);
             while ($xml->read()) {
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
@@ -137,10 +132,10 @@ class Salariu
         $rest              = $lngBase - array_sum($restArrayToDeduct);
         if ($inDate >= mktime(0, 0, 0, 7, 1, 2010)) {
             $rest += round($aReturn['ba'], -4);
-        }
-        if ($inDate >= mktime(0, 0, 0, 10, 1, 2010)) {
-            $aReturn['gbns'] = $_REQUEST['gbns'] * pow(10, 4);
-            $rest            += round($aReturn['gbns'], -4);
+            if ($inDate >= mktime(0, 0, 0, 10, 1, 2010)) {
+                $aReturn['gbns'] = $_REQUEST['gbns'] * pow(10, 4);
+                $rest            += round($aReturn['gbns'], -4);
+            }
         }
         $rest               += $_REQUEST['afet'] * pow(10, 4);
         $aReturn['impozit'] = $this->setIncomeTax($inDate, $rest, $aStngs[$shLbl['IT']]);
@@ -148,16 +143,16 @@ class Salariu
         return $aReturn;
     }
 
-    private function handleLocalizationSalariu()
+    private function handleLocalizationSalariu($appSettings)
     {
         if (isset($_GET['lang'])) {
             $_SESSION['lang'] = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
         } elseif (!isset($_SESSION['lang'])) {
-            $_SESSION['lang'] = $this->appFlags['default_language'];
+            $_SESSION['lang'] = $appSettings['Default Language'];
         }
         /* to avoid potential language injections from other applications that do not applies here */
-        if (!in_array($_SESSION['lang'], array_keys($this->appFlags['available_languages']))) {
-            $_SESSION['lang'] = $this->appFlags['default_language'];
+        if (!in_array($_SESSION['lang'], array_keys($appSettings['Available Languages']))) {
+            $_SESSION['lang'] = $appSettings['Default Language'];
         }
         $localizationFile = 'Salariu/locale/' . $_SESSION['lang'] . '/LC_MESSAGES/salariu.mo';
         $translations     = new \Gettext\Translations;
@@ -166,13 +161,13 @@ class Salariu
         $this->tApp->loadTranslations($translations);
     }
 
-    private function refreshExchangeRatesFile()
+    private function refreshExchangeRatesFile($appSettings)
     {
-        if ((filemtime(EXCHANGE_RATES_LOCAL) + 90 * 24 * 60 * 60) < time()) {
-            $fCntnt = file_get_contents(EXCHANGE_RATES_SOURCE);
+        if ((filemtime($appSettings['Exchange Rate Local']) + 90 * 24 * 60 * 60) < time()) {
+            $fCntnt = file_get_contents($appSettings['Exchange Rate Source']);
             if ($fCntnt !== false) {
-                chmod(EXCHANGE_RATES_LOCAL, 0666);
-                file_put_contents(EXCHANGE_RATES_LOCAL, $fCntnt);
+                file_put_contents($appSettings['Exchange Rate Local'], $fCntnt);
+                chmod($appSettings['Exchange Rate Local'], 0666);
             }
         }
     }
@@ -187,10 +182,11 @@ class Salariu
         }
     }
 
-    private function setFooterHtml()
+    private function setFooterHtml($appSettings)
     {
-        $sReturn = $this->setUpperRightBoxLanguages($this->appFlags['available_languages'])
-                . '<div class="resetOnly author">&copy; 2015 Daniel Popiniuc</div>'
+        $sReturn = $this->setUpperRightBoxLanguages($appSettings['Available Languages'])
+                . '<div class="resetOnly author">&copy; ' . date('Y') . ' '
+                . $appSettings['Copyright Holder'] . '</div>'
                 . '<hr/>'
                 . '<div class="disclaimer">'
                 . $this->tApp->gettext('i18n_Disclaimer')
@@ -200,114 +196,39 @@ class Salariu
 
     private function setFormInput()
     {
-        $label     = $this->tApp->gettext('i18n_Form_Label_CalculationMonth');
-        $sReturn[] = $this->setFormRow($label, $this->setFormInputSelect(), 1);
-        $label     = $this->tApp->gettext('i18n_Form_Label_NegotiatedSalary');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'sn',
-                    'value' => $_REQUEST['sn'],
-                    'size'  => 10
-                ]) . ' RON', 1);
-        $label     = $this->tApp->gettext('i18n_Form_Label_CumulatedAddedValue');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'sc',
-                    'value' => $_REQUEST['sc'],
-                    'size'  => 2
-                ]) . ' %', 1);
-        $label     = $this->tApp->gettext('i18n_Form_Label_AdditionalBruttoAmount');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'pb',
-                    'value' => $_REQUEST['pb'],
-                    'size'  => 10
-                ]) . ' RON', 1);
-        $label     = $this->tApp->gettext('i18n_Form_Label_AdditionalNettoAmount');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'pn',
-                    'value' => $_REQUEST['pn'],
-                    'size'  => 10
-                ]) . ' RON', 1);
-        $pieces    = [
-            $this->tApp->gettext('i18n_Form_Label_OvertimeHours'),
-            $this->tApp->gettext('i18n_Form_Label_OvertimeChoice1'),
-        ];
-        $label     = sprintf($pieces[0], $pieces[1], '175%');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'os175',
-                    'value' => $_REQUEST['os175'],
-                    'size'  => 2
-                ]), 1);
-        $pieces    = [
-            $this->tApp->gettext('i18n_Form_Label_OvertimeHours'),
-            $this->tApp->gettext('i18n_Form_Label_OvertimeChoice2'),
-        ];
-        $label     = sprintf($pieces[0], $pieces[1], '200%');
-        $sReturn[] = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'os200',
-                    'value' => $_REQUEST['os200'],
-                    'size'  => 2
-                ]), 1);
-        $temp2     = [];
-        for ($counter = 0; $counter <= 4; $counter++) {
-            $temp2[] = $counter;
-        }
-        $selectTemp = $this->setArrayToSelect($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]);
-        $sReturn[]  = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PersonsSupported'), $selectTemp, 1);
-        $choices    = [
-            $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
-            $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
-        ];
-        $label      = $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree');
-        $select     = $this->setArrayToSelect($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
-        $sReturn[]  = $this->setFormRow($label, $select, 1);
-        $label      = $this->tApp->gettext('i18n_Form_Label_SeisureAmout');
-        $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'szamnt',
-                    'value' => $_REQUEST['szamnt'],
-                    'size'  => 10
-                ]), 1);
-        $label      = $this->tApp->gettext('i18n_Form_Label_WorkedDaysWithoutFoodBonuses');
-        $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'zfb',
-                    'value' => $_REQUEST['zfb'],
-                    'size'  => 2
-                ]), 1);
-        $label      = $this->tApp->gettext('i18n_Form_Label_FoodBonusesValue');
-        $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'gbns',
-                    'value' => $_REQUEST['gbns'],
-                    'size'  => 2]), 1);
-        $label      = $this->tApp->gettext('i18n_Form_Label_AdvantagesForExciseTax');
-        $sReturn[]  = $this->setFormRow($label, $this->setStringIntoShortTag('input', [
-                    'type'  => 'text',
-                    'name'  => 'afet',
-                    'value' => $_REQUEST['afet'],
-                    'size'  => 2]), 1);
-        $label      = $this->tApp->gettext('i18n_Form_Disclaimer');
-        $sReturn[]  = $this->setStringIntoTag($this->setStringIntoTag($label . $this->setStringIntoShortTag('input', [
-                            'type'  => 'hidden',
-                            'name'  => 'action',
-                            'value' => $_SERVER['SERVER_NAME']
-                        ]), 'td', ['colspan' => 2, 'style' => 'color: red;']), 'tr');
+        $sReturn[]    = $this->setFormRow($this->setLabel('ym'), $this->setFormInputSelectYM(), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('sn'), $this->setFormInputText('sn', 10, 'RON'), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('sc'), $this->setFormInputText('sc', 2, '%'), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('pb'), $this->setFormInputText('pb', 10, 'RON'), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('pn'), $this->setFormInputText('pn', 10, 'RON'), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('os175'), $this->setFormInputText('os175', 2, ''), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('os200'), $this->setFormInputText('os200', 2, ''), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('pi'), $this->setFormInputSelectPI(), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('pc'), $this->setFormInputSelectPC(), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('szamnt'), $this->setFormInputText('szamnt', 2, ''), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('zfb'), $this->setFormInputText('zfb', 2, ''), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('gbns'), $this->setFormInputText('gbns', 2, ''), 1);
+        $sReturn[]    = $this->setFormRow($this->setLabel('afet'), $this->setFormInputText('afet', 2, ''), 1);
+        $label        = $this->tApp->gettext('i18n_Form_Disclaimer');
+        $hiddenField  = $this->setStringIntoShortTag('input', [
+            'type'  => 'hidden',
+            'name'  => 'action',
+            'value' => $_SERVER['SERVER_NAME']
+        ]);
+        $sReturn[]    = $this->setStringIntoTag($this->setStringIntoTag($label . $hiddenField, 'td', [
+                    'colspan' => 2,
+                    'style'   => 'color: red;'
+                ]), 'tr');
+        $resetBtn     = $this->setStringIntoShortTag('input', [
+            'type'  => 'reset',
+            'id'    => 'reset',
+            'value' => $this->tApp->gettext('i18n_Form_Button_Reset'),
+            'style' => 'color:#000;'
+        ]);
+        $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Calculate');
         if (isset($_REQUEST['ym'])) {
             $resetBtn     = '';
             $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Recalculate');
-        } else {
-            $resetBtn     = $this->setStringIntoShortTag('input', [
-                'type'  => 'reset',
-                'id'    => 'reset',
-                'value' => $this->tApp->gettext('i18n_Form_Button_Reset'),
-                'style' => 'color:#000;'
-            ]);
-            $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Calculate');
         }
         $sReturn[] = $this->setFormRow($resetBtn, $this->setStringIntoShortTag('input', [
                     'type'  => 'submit',
@@ -324,7 +245,25 @@ class Salariu
                         ]), 'fieldset', ['style' => 'float: left;']);
     }
 
-    private function setFormInputSelect()
+    private function setFormInputSelectPC()
+    {
+        $choices = [
+            $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
+            $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
+        ];
+        return $this->setArrayToSelect($choices, $_REQUEST['pc'], 'pc', ['size' => 1]);
+    }
+
+    private function setFormInputSelectPI()
+    {
+        $temp2 = [];
+        for ($counter = 0; $counter <= 4; $counter++) {
+            $temp2[$counter] = $counter . ($counter == 4 ? '+' : '');
+        }
+        return $this->setArrayToSelect($temp2, $_REQUEST['pi'], 'pi', ['size' => 1]);
+    }
+
+    private function setFormInputSelectYM()
     {
         $temp = [];
         for ($counter = date('Y'); $counter >= 2001; $counter--) {
@@ -336,6 +275,18 @@ class Salariu
             }
         }
         return $this->setArrayToSelect($temp, $_REQUEST['ym'], 'ym', ['size' => 1]);
+    }
+
+    private function setFormInputText($inName, $inSize, $inAfterLabel)
+    {
+        $inputParameters = [
+            'type'      => 'text',
+            'name'      => $inName,
+            'value'     => $_REQUEST[$inName],
+            'size'      => $inSize,
+            'maxlength' => $inSize,
+        ];
+        return $this->setStringIntoShortTag('input', $inputParameters) . ' ' . $inAfterLabel;
     }
 
     private function setFormOutput($aryStngs)
@@ -465,15 +416,32 @@ class Salariu
 
     private function setHeaderHtml()
     {
-        return $this->setHeaderCommon([
-                    'lang'  => str_replace('_', '-', $_SESSION['lang']),
-                    'title' => $this->tApp->gettext('i18n_ApplicationName'),
-                    'css'   => [
-                        'vendor/components/flag-icon-css/css/flag-icon.min.css',
-                        'Salariu/css/salariu.css',
-                    ],
-                ])
-                . '<h1>' . $this->tApp->gettext('i18n_ApplicationName') . '</h1>'
-        ;
+        $headerParameters = [
+            'lang'  => str_replace('_', '-', $_SESSION['lang']),
+            'title' => $this->tApp->gettext('i18n_ApplicationName'),
+            'css'   => [
+                'vendor/components/flag-icon-css/css/flag-icon.min.css',
+                'Salariu/css/salariu.css',
+            ],
+        ];
+        return $this->setHeaderCommon($headerParameters)
+                . '<h1>' . $this->tApp->gettext('i18n_ApplicationName') . '</h1>';
+    }
+
+    private function setLabel($labelId)
+    {
+        $labelInfo = $this->appFlags['FI'][$labelId]['Label'];
+        if (is_array($labelInfo)) {
+            if (count($labelInfo) == 3) {
+                $pieces  = [
+                    $this->tApp->gettext($labelInfo[0]),
+                    $this->tApp->gettext($labelInfo[1]),
+                ];
+                $sReturn = sprintf($pieces[0], $pieces[1], $labelInfo[2]);
+            }
+        } elseif (is_string($labelInfo)) {
+            $sReturn = $this->tApp->gettext($labelInfo);
+        }
+        return $sReturn;
     }
 }

@@ -1,0 +1,87 @@
+{
+    "Application": {
+        "Available Languages": {
+            "en_US": "US English",
+            "ro_RO": "Română"
+        },
+        "Copyright Holder": "Daniel Popiniuc",
+        "Default Language": "ro_RO",
+        "Exchange Rate Local": "nbrfxrates.min.xml",
+        "Exchange Rate Source": "http://www.bnr.ro/nbrfxrates.xml"
+    },
+    "Form Input": {
+        "afet": {
+            "Label": "i18n_Form_Label_AdvantagesForExciseTax"
+        },
+        "gbns": {
+            "Label": "i18n_Form_Label_FoodBonusesValue"
+        },
+        "os175": {
+            "Label": [
+                "i18n_Form_Label_OvertimeHours",
+                "i18n_Form_Label_OvertimeChoice1",
+                "175%"
+            ]
+        },
+        "os200": {
+            "Label": [
+                "i18n_Form_Label_OvertimeHours",
+                "i18n_Form_Label_OvertimeChoice2",
+                "200%"
+            ]
+        },
+        "pb": {
+            "Label": "i18n_Form_Label_AdditionalBruttoAmount"
+        },
+        "pc": {
+            "Label": "i18n_Form_Label_CatholicEasterFree"
+        },
+        "pi": {
+            "Label": "i18n_Form_Label_PersonsSupported"
+        },
+        "pn": {
+            "Label": "i18n_Form_Label_AdditionalNettoAmount"
+        },
+        "sc": {
+            "Label": "i18n_Form_Label_CumulatedAddedValue"
+        },
+        "sn": {
+            "Label": "i18n_Form_Label_NegotiatedSalary"
+        },
+        "szamnt": {
+            "Label": "i18n_Form_Label_SeisureAmout"
+        },
+        "ym": {
+            "Label": "i18n_Form_Label_CalculationMonth"
+        },
+        "zfb": {
+            "Label": "i18n_Form_Label_WorkedDaysWithoutFoodBonuses"
+        }
+    },
+    "Relevant Currencies": {
+        "RON": {
+            "decimals": 2,
+            "locale": "ro_RO"
+        },
+        "EUR": {
+            "decimals": 2,
+            "locale": "de_DE"
+        },
+        "HUF": {
+            "decimals": 0,
+            "locale": "hu_HU"
+        },
+        "GBP": {
+            "decimals": 2,
+            "locale": "en_UK"
+        },
+        "CHF": {
+            "decimals": 2,
+            "locale": "de_CH"
+        },
+        "USD": {
+            "decimals": 2,
+            "locale": "en_US"
+        }
+    }
+}
