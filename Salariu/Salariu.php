@@ -41,12 +41,14 @@ class Salariu
 
     public function __construct()
     {
-        $interfaceElements = $this->readSettingsFromJsonFile('interfaceElements');
+        $configPath        = 'Salariu' . DIRECTORY_SEPARATOR . 'config';
+        $interfaceElements = $this->readTypeFromJsonFileUniversal($configPath, 'interfaceElements');
         $this->appFlags    = [
             'FI'   => $interfaceElements['Form Input'],
             'TCAS' => $interfaceElements['Table Cell Applied Style'],
             'TCSD' => $interfaceElements['Table Cell Style Definitions'],
         ];
+        $this->initializeSprGlbAndSession();
         $this->handleLocalizationSalariu($interfaceElements['Application']);
         echo $this->setHeaderHtml();
         echo $this->setFormInput();
@@ -54,7 +56,7 @@ class Salariu
             $this->refreshExchangeRatesFile($interfaceElements['Application']);
             $this->setCurrencyExchangeVariables($interfaceElements['Relevant Currencies']);
             $this->getExchangeRates($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
-            $aryStngs = $this->readSettingsFromJsonFile('valuesToCompute');
+            $aryStngs = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
             echo $this->setFormOutput($aryStngs);
         }
         echo $this->setFooterHtml($interfaceElements['Application']);
@@ -117,7 +119,8 @@ class Salariu
     private function getValues($lngBase, $aStngs)
     {
         $inDate           = $_REQUEST['ym'];
-        $wkDay            = $this->setWorkingDaysInMonth($inDate, $_REQUEST['pc']);
+        $inDT             = new \DateTime(date('Y/m/d', $_REQUEST['ym']));
+        $wkDay            = $this->setWorkingDaysInMonth($inDT, $_REQUEST['pc']);
         $nMealDays        = ($wkDay - $_REQUEST['zfb']);
         $shLbl            = [
             'HFP'  => 'Health Fund Percentage',
@@ -159,22 +162,22 @@ class Salariu
         }
         $rest               += $_REQUEST['afet'] * pow(10, 4);
         $aReturn['impozit'] = $this->setIncomeTax($inDate, $rest, $aStngs[$shLbl['IT']]);
-        $aReturn['zile']    = $this->setWorkingDaysInMonth($inDate, $_REQUEST['pc']);
+        $aReturn['zile']    = $wkDay;
         return $aReturn;
     }
 
     private function handleLocalizationSalariu($appSettings)
     {
-        if (isset($_GET['lang'])) {
-            $_SESSION['lang'] = filter_var($_GET['lang'], FILTER_SANITIZE_STRING);
-        } elseif (!isset($_SESSION['lang'])) {
-            $_SESSION['lang'] = $appSettings['Default Language'];
+        if (is_null($this->tCmnSuperGlobals->get('lang')) && is_null($this->tCmnSession->get('lang'))) {
+            $this->tCmnSession->set('lang', $appSettings['Default Language']);
+        } elseif (!is_null($this->tCmnSuperGlobals->get('lang'))) {
+            $this->tCmnSession->set('lang', filter_var($this->tCmnSuperGlobals->get('lang'), FILTER_SANITIZE_STRING));
         }
         /* to avoid potential language injections from other applications that do not applies here */
-        if (!in_array($_SESSION['lang'], array_keys($appSettings['Available Languages']))) {
-            $_SESSION['lang'] = $appSettings['Default Language'];
+        if (!array_key_exists($this->tCmnSession->get('lang'), $appSettings['Available Languages'])) {
+            $this->tCmnSession->set('lang', $appSettings['Default Language']);
         }
-        $localizationFile = 'Salariu/locale/' . $_SESSION['lang'] . '/LC_MESSAGES/salariu.mo';
+        $localizationFile = 'Salariu/locale/' . $this->tCmnSession->get('lang') . '/LC_MESSAGES/salariu.mo';
         $translations     = new \Gettext\Translations;
         $translations->addFromMoFile($localizationFile);
         $this->tApp       = new \Gettext\Translator();

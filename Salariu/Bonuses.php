@@ -37,21 +37,6 @@ trait Bonuses
 {
 
     /**
-     * returns an array with non-standard holidays from a JSON file
-     *
-     * @param string $fileBaseName
-     * @return mixed
-     */
-    protected function readSettingsFromJsonFile($fileBaseName)
-    {
-        $fName       = __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . $fileBaseName . '.min.json';
-        $fJson       = fopen($fName, 'r');
-        $jSonContent = fread($fJson, filesize($fName));
-        fclose($fJson);
-        return json_decode($jSonContent, true);
-    }
-
-    /**
      * Tichete de alimente
      * */
     protected function setFoodTicketsValue($lngDate, $arySettingMealTickets)
