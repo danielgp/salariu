@@ -1,45 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <DataSet xmlns="http://www.bnr.ro/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bnr.ro/xsd nbrfxrates.xsd">
-	<Header>
-		<Publisher>National Bank of Romania</Publisher>
-		<PublishingDate>2016-04-26</PublishingDate>
-		<MessageType>DR</MessageType>
-	</Header>
-	<Body>
-		<Subject>Reference rates</Subject>
-		<OrigCurrency>RON</OrigCurrency>
-		<Cube date="2016-04-26">
-			<Rate currency="AED">1.0809</Rate>
-			<Rate currency="AUD">3.0722</Rate>
-			<Rate currency="BGN">2.2903</Rate>
-			<Rate currency="BRL">1.1169</Rate>
-			<Rate currency="CAD">3.1391</Rate>
-			<Rate currency="CHF">4.0738</Rate>
-			<Rate currency="CNY">0.6113</Rate>
-			<Rate currency="CZK">0.1657</Rate>
-			<Rate currency="DKK">0.6020</Rate>
-			<Rate currency="EGP">0.4471</Rate>
-			<Rate currency="EUR">4.4794</Rate>
-			<Rate currency="GBP">5.7788</Rate>
-			<Rate currency="HRK">0.5990</Rate>
-			<Rate currency="HUF" multiplier="100">1.4331</Rate>
-			<Rate currency="INR">0.0597</Rate>
-			<Rate currency="JPY" multiplier="100">3.5814</Rate>
-			<Rate currency="KRW" multiplier="100">0.3457</Rate>
-			<Rate currency="MDL">0.2013</Rate>
-			<Rate currency="MXN">0.2264</Rate>
-			<Rate currency="NOK">0.4850</Rate>
-			<Rate currency="NZD">2.7339</Rate>
-			<Rate currency="PLN">1.0186</Rate>
-			<Rate currency="RSD">0.0365</Rate>
-			<Rate currency="RUB">0.0598</Rate>
-			<Rate currency="SEK">0.4893</Rate>
-			<Rate currency="TRY">1.4007</Rate>
-			<Rate currency="UAH">0.1568</Rate>
-			<Rate currency="USD">3.9700</Rate>
-			<Rate currency="XAU">157.6147</Rate>
-			<Rate currency="XDR">5.5899</Rate>
-			<Rate currency="ZAR">0.2741</Rate>
-		</Cube>
-	</Body>
+    <Header>
+        <Publisher>National Bank of Romania</Publisher>
+        <PublishingDate>2016-10-18</PublishingDate>
+        <MessageType>DR</MessageType>
+    </Header>
+    <Body>
+        <Subject>Reference rates</Subject>
+        <OrigCurrency>RON</OrigCurrency>
+        <Cube date="2016-10-18">
+            <Rate currency="AED">1.1146</Rate>
+            <Rate currency="AUD">3.1426</Rate>
+            <Rate currency="BGN">2.3052</Rate>
+            <Rate currency="BRL">1.2775</Rate>
+            <Rate currency="CAD">3.1321</Rate>
+            <Rate currency="CHF">4.1418</Rate>
+            <Rate currency="CNY">0.6075</Rate>
+            <Rate currency="CZK">0.1668</Rate>
+            <Rate currency="DKK">0.6059</Rate>
+            <Rate currency="EGP">0.4613</Rate>
+            <Rate currency="EUR">4.5086</Rate>
+            <Rate currency="GBP">5.0098</Rate>
+            <Rate currency="HRK">0.6009</Rate>
+            <Rate currency="HUF" multiplier="100">1.4695</Rate>
+            <Rate currency="INR">0.0614</Rate>
+            <Rate currency="JPY" multiplier="100">3.9356</Rate>
+            <Rate currency="KRW" multiplier="100">0.3630</Rate>
+            <Rate currency="MDL">0.2066</Rate>
+            <Rate currency="MXN">0.2181</Rate>
+            <Rate currency="NOK">0.5029</Rate>
+            <Rate currency="NZD">2.9455</Rate>
+            <Rate currency="PLN">1.0441</Rate>
+            <Rate currency="RSD">0.0366</Rate>
+            <Rate currency="RUB">0.0651</Rate>
+            <Rate currency="SEK">0.4648</Rate>
+            <Rate currency="TRY">1.3224</Rate>
+            <Rate currency="UAH">0.1597</Rate>
+            <Rate currency="USD">4.0941</Rate>
+            <Rate currency="XAU">166.0494</Rate>
+            <Rate currency="XDR">5.6453</Rate>
+            <Rate currency="ZAR">0.2911</Rate>
+        </Cube>
+    </Body>
 </DataSet>
