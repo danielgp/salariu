@@ -431,6 +431,7 @@ class Salariu
     private function setLabel($labelId)
     {
         $labelInfo = $this->appFlags['FI'][$labelId]['Label'];
+        $sReturn   = '';
         if (is_array($labelInfo)) {
             if (count($labelInfo) == 3) {
                 $pieces  = [

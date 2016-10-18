@@ -92,10 +92,7 @@ trait Taxation
         } elseif ($yrDate == 2001) {
             $nReturn = $this->setIncomeTax2001($lngDate, $lngTaxBase, $nValues);
         }
-        if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
-            $nReturn = round($nReturn, -4);
-        }
-        return $nReturn;
+        return (($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
     }
 
     /**
@@ -103,7 +100,8 @@ trait Taxation
      * */
     private function setIncomeTax2001($lngDate, $lngTaxBase, $nValues)
     {
-        $mnth = date('n', $lngDate);
+        $nReturn = 0;
+        $mnth    = date('n', $lngDate);
         if ($mnth <= 6) {
             $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-06"]);
         } elseif ($mnth <= 9) {
@@ -143,10 +141,7 @@ trait Taxation
             $nReturn = 1;
         }
         $nReturn = round($lngBase * $nReturn / 100, 0);
-        if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
-            $nReturn = round($nReturn, -4);
-        }
-        return $nReturn;
+        return (($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
     }
 
     /**

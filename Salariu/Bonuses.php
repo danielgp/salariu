@@ -89,10 +89,7 @@ trait Bonuses
             ];
             $nReturn      = $valuesYearly[$yrDate];
         }
-        if ($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) {
-            $nReturn = round($nReturn, -4);
-        }
-        return $nReturn;
+        return (($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
     }
 
     private function setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule)
