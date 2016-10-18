@@ -41,26 +41,47 @@ class Salariu
 
     public function __construct()
     {
-        $interfaceElements    = $this->readSettingsFromJsonFile('interfaceElements');
+        $interfaceElements = $this->readSettingsFromJsonFile('interfaceElements');
+        $this->appFlags    = [
+            'FI'   => $interfaceElements['Form Input'],
+            'TCAS' => $interfaceElements['Table Cell Applied Style'],
+            'TCSD' => $interfaceElements['Table Cell Style Definitions'],
+        ];
         $this->handleLocalizationSalariu($interfaceElements['Application']);
         echo $this->setHeaderHtml();
-        $this->appFlags['FI'] = $interfaceElements['Form Input'];
         echo $this->setFormInput();
         if (isset($_REQUEST['ym'])) {
             $this->refreshExchangeRatesFile($interfaceElements['Application']);
             $this->setCurrencyExchangeVariables($interfaceElements['Relevant Currencies']);
-            $this->getExchangeRates($interfaceElements['Application']);
+            $this->getExchangeRates($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
             $aryStngs = $this->readSettingsFromJsonFile('valuesToCompute');
             echo $this->setFormOutput($aryStngs);
         }
         echo $this->setFooterHtml($interfaceElements['Application']);
     }
 
-    private function getExchangeRates($appSettings)
+    private function buildArrayOfFieldsStyled()
+    {
+        $sReturn = [];
+        foreach ($this->appFlags['TCAS'] as $key => $value) {
+            $sReturn[$this->tApp->gettext($key)] = $value;
+        }
+        return $sReturn;
+    }
+
+    private function buildStyleForCellFormat($styleId)
+    {
+        $sReturn = [];
+        foreach ($this->appFlags['TCSD'][$styleId] as $key => $value) {
+            $sReturn[] = $key . ':' . $value;
+        }
+        return implode(';', $sReturn) . ';';
+    }
+
+    private function getExchangeRates($appSettings, $aryRelevantCurrencies)
     {
         $xml = new \XMLReader();
         if ($xml->open($appSettings['Exchange Rate Local'], 'UTF-8')) {
-            $krncy = array_keys($this->appFlags['currency_exchanges']);
             while ($xml->read()) {
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
                     switch ($xml->localName) {
@@ -68,13 +89,12 @@ class Salariu
                             $this->appFlags['currency_exchange_rate_date'] = strtotime($xml->getAttribute('date'));
                             break;
                         case 'Rate':
-                            if (in_array($xml->getAttribute('currency'), $krncy)) {
-                                $cncy = $xml->getAttribute('currency');
+                            if (array_key_exists($xml->getAttribute('currency'), $aryRelevantCurrencies)) {
                                 $cVal = $xml->readInnerXml();
                                 if (!is_null($xml->getAttribute('multiplier'))) {
                                     $cVal = $cVal / $xml->getAttribute('multiplier');
                                 }
-                                $this->appFlags['currency_exchange_rate_value'][$cncy] = $cVal;
+                                $this->appFlags['currency_exchange_rate_value'][$xml->getAttribute('currency')] = $cVal;
                             }
                             break;
                     }
@@ -196,6 +216,7 @@ class Salariu
 
     private function setFormInput()
     {
+        $sReturn      = [];
         $sReturn[]    = $this->setFormRow($this->setLabel('ym'), $this->setFormInputSelectYM(), 1);
         $sReturn[]    = $this->setFormRow($this->setLabel('sn'), $this->setFormInputText('sn', 10, 'RON'), 1);
         $sReturn[]    = $this->setFormRow($this->setLabel('sc'), $this->setFormInputText('sc', 2, '%'), 1);
@@ -291,6 +312,7 @@ class Salariu
 
     private function setFormOutput($aryStngs)
     {
+        $sReturn   = [];
         $overtime  = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
         $additions = $_REQUEST['pb'] + $overtime['os175'] + $overtime['os200'];
         $brut      = ($_REQUEST['sn'] * (1 + $_REQUEST['sc'] / 100) + $additions) * pow(10, 4);
@@ -349,41 +371,9 @@ class Salariu
 
     private function setFormRow($text, $value, $type = 'amount')
     {
-        $a                = '';
-        $defaultCellStyle = ['class' => 'labelS'];
-        switch ($text) {
-            case $this->tApp->gettext('i18n_Form_Label_NegotiatedSalary'):
-            case $this->tApp->gettext('i18n_Form_Label_BruttoSalary'):
-            case $this->tApp->gettext('i18n_Form_Label_NettoSalaryCash'):
-                $defaultCellStyle = array_merge($defaultCellStyle, [
-                    'style' => 'color:#000000;font-weight:bold;'
-                ]);
-                break;
-            case $this->tApp->gettext('i18n_Form_Label_SeisureAmout'):
-            case $this->tApp->gettext('i18n_Form_Label_PensionFund'):
-            case $this->tApp->gettext('i18n_Form_Label_HealthTax'):
-            case $this->tApp->gettext('i18n_Form_Label_UnemploymentTax'):
-            case $this->tApp->gettext('i18n_Form_Label_ExciseTax'):
-                $defaultCellStyle = array_merge($defaultCellStyle, [
-                    'style' => 'color:#ff9900;'
-                ]);
-                break;
-            case $this->tApp->gettext('i18n_Form_Label_Total'):
-                $defaultCellStyle = array_merge($defaultCellStyle, [
-                    'style' => 'font-weight:bold;color:#009933;font-size:larger;'
-                ]);
-                break;
-        }
-        $defaultCellStyle['style'] = '';
-        if ((is_numeric($value)) && ($value == 0)) {
-            if (isset($defaultCellStyle['style'])) {
-                $defaultCellStyle['style'] = 'color:#666;';
-            } else {
-                $defaultCellStyle = array_merge($defaultCellStyle, [
-                    'style' => 'color:#666;'
-                ]);
-            }
-        }
+        $a                 = '';
+        $defaultCellStyle  = $this->setFormatRow($text);
+        $defaultCellStyle2 = [];
         switch ($type) {
             case 'amount':
                 $value                      = $value / pow(10, 4);
@@ -412,6 +402,21 @@ class Salariu
             $text .= ':';
         }
         return $this->setStringIntoTag($this->setStringIntoTag($text, 'td', $defaultCellStyle) . $value2show, 'tr');
+    }
+
+    private function setFormatRow($text)
+    {
+        $defaultCellStyle = [
+            'class' => 'labelS',
+        ];
+        $fieldsStyled     = $this->buildArrayOfFieldsStyled();
+        if (array_key_exists($text, $fieldsStyled)) {
+            $defaultCellStyle['style'] = $this->buildStyleForCellFormat($fieldsStyled[$text]);
+        }
+        if ((is_numeric($value)) && ($value == 0)) {
+            $defaultCellStyle['style'] = 'color:#666;';
+        }
+        return $defaultCellStyle;
     }
 
     private function setHeaderHtml()

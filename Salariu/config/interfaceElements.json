@@ -6,7 +6,7 @@
         },
         "Copyright Holder": "Daniel Popiniuc",
         "Default Language": "ro_RO",
-        "Exchange Rate Local": "nbrfxrates.min.xml",
+        "Exchange Rate Local": "nbrfxrates.xml",
         "Exchange Rate Source": "http://www.bnr.ro/nbrfxrates.xml"
     },
     "Form Input": {
@@ -82,6 +82,31 @@
         "USD": {
             "decimals": 2,
             "locale": "en_US"
+        }
+    },
+    "Table Cell Applied Style": {
+        "i18n_Form_Label_BruttoSalary": "1",
+        "i18n_Form_Label_ExciseTax": "2",
+        "i18n_Form_Label_HealthTax": "2",
+        "i18n_Form_Label_NegotiatedSalary": "1",
+        "i18n_Form_Label_NettoSalaryCash": "1",
+        "i18n_Form_Label_PensionFund": "2",
+        "i18n_Form_Label_SeisureAmout": "2",
+        "i18n_Form_Label_Total": "3",
+        "i18n_Form_Label_UnemploymentTax": "2"
+    },
+    "Table Cell Style Definitions": {
+        "1": {
+            "color": "#000000",
+            "font-weight": "bold"
+        },
+        "2": {
+            "color": "#ff9900"
+        },
+        "3": {
+            "color": "#009933",
+            "font-size": "larger",
+            "font-weight": "bold"
         }
     }
 }
