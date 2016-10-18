@@ -119,7 +119,7 @@ class Salariu
     private function getValues($lngBase, $aStngs)
     {
         $inDate           = $_REQUEST['ym'];
-        $inDT             = new \DateTime(date('Y/m/d', $_REQUEST['ym']));
+        $inDT             = new \DateTime(date('Y/m/d', $inDate));
         $wkDay            = $this->setWorkingDaysInMonth($inDT, $_REQUEST['pc']);
         $nMealDays        = ($wkDay - $_REQUEST['zfb']);
         $shLbl            = [
