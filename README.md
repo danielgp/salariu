@@ -11,3 +11,6 @@ Packagist statistics by poser.pugx.org
 Code quality analysis
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/52e1200a-8685-4954-b7b8-5d8197b68a84/big.png)](https://insight.sensiolabs.com/projects/52e1200a-8685-4954-b7b8-5d8197b68a84)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/64699aced39e448fb0203f0a64059aee)](https://www.codacy.com/app/danielpopiniuc/salariu)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/danielgp/salariu/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/danielgp/salariu/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/danielgp/salariu/badges/build.png?b=master)](https://scrutinizer-ci.com/g/danielgp/salariu/build-status/master)
+
