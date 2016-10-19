@@ -247,7 +247,7 @@ class Salariu
         $sReturn[]    = $this->setFormRow('', $this->setStringIntoShortTag('input', $submitParams), 1);
         $frm          = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
             'method' => 'get',
-            'action' => $this->tCmnSuperGlobals->server->get['SCRIPT_NAME']
+            'action' => $this->tCmnSuperGlobals->getScriptName()
         ]);
         $aryFieldSet  = [
             $this->setStringIntoTag($this->tApp->gettext('i18n_FieldsetLabel_Inputs'), 'legend'),
