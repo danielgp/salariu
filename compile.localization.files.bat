@@ -1,2 +1,0 @@
-D:\www\AppForDeveloper\GetText\msgfmt.exe D:\Documents\GitHub\danielgp.GitHub\salariu\Salariu\locale\en_US\LC_MESSAGES\salariu.po --output-file=D:\Documents\GitHub\danielgp.GitHub\salariu\Salariu\locale\en_US\LC_MESSAGES\salariu.mo --statistics --check --verbose
-D:\www\AppForDeveloper\GetText\msgfmt.exe D:\Documents\GitHub\danielgp.GitHub\salariu\Salariu\locale\ro_RO\LC_MESSAGES\salariu.po --output-file=D:\Documents\GitHub\danielgp.GitHub\salariu\Salariu\locale\ro_RO\LC_MESSAGES\salariu.mo --statistics --check --verbose
