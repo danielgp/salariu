@@ -279,58 +279,63 @@ class Salariu
 
     private function setFormOutput($configPath)
     {
-        $aryStngs  = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
-        $sReturn   = [];
-        $overtime  = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
-        $additions = $this->tCmnSuperGlobals->get('pb') + $overtime['os175'] + $overtime['os200'];
-        $brut      = ($this->tCmnSuperGlobals->get('sn') * (1 + $this->tCmnSuperGlobals->get('sc') / 100) + $additions) * pow(10, 4);
-        $text      = $this->tApp->gettext('i18n_Form_Label_ExchangeRateAtDate');
-        $xRate     = str_replace('%1', date('d.m.Y', $this->currencyDetails['CXD']), $text);
-        $sReturn[] = $this->setFormRow($xRate, 1000000);
-        $text      = $this->tApp->gettext('i18n_Form_Label_NegotiatedSalary');
-        $sReturn[] = $this->setFormRow($text, $this->tCmnSuperGlobals->get('sn') * 10000);
-        $prima     = $this->tCmnSuperGlobals->get('sn') * $this->tCmnSuperGlobals->get('sc') * 100;
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_CumulatedAddedValue'), $prima);
-        $text      = $this->tApp->gettext('i18n_Form_Label_AdditionalBruttoAmount');
-        $sReturn[] = $this->setFormRow($text, $this->tCmnSuperGlobals->get('pb') * 10000);
-        $ovTime    = [
-            'main' => $this->tApp->gettext('i18n_Form_Label_OvertimeAmount'),
-            1      => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice1'),
-            2      => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice2'),
+        $aryStngs    = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
+        $sReturn     = [];
+        $ovTimeVal   = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
+        $additions   = $this->tCmnSuperGlobals->get('pb') + $ovTimeVal['os175'] + $ovTimeVal['os200'];
+        $bComponents = [
+            'sc' => $this->tCmnSuperGlobals->get('sc'),
+            'sn' => $this->tCmnSuperGlobals->get('sn'),
         ];
-        $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[1], '175%'), ($overtime['os175'] * pow(10, 4)));
-        $sReturn[] = $this->setFormRow(sprintf($ovTime['main'], $ovTime[2], '200%'), ($overtime['os200'] * pow(10, 4)));
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_BruttoSalary'), $brut);
-        $brut      += $this->tCmnSuperGlobals->get('afet') * pow(10, 4);
-        $amount    = $this->getValues($brut, $aryStngs);
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PensionFund'), $amount['cas']);
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_HealthTax'), $amount['sanatate']);
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PersonalDeduction'), $amount['pd']);
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_ExciseTax'), $amount['impozit']);
-        $retineri  = $amount['cas'] + $amount['somaj'] + $amount['sanatate'] + $amount['impozit'];
-        $net       = $brut - $retineri + $this->tCmnSuperGlobals->get('pn') * 10000;
-        $text      = $this->tApp->gettext('i18n_Form_Label_AdditionalNettoAmount');
-        $sReturn[] = $this->setFormRow($text, $this->tCmnSuperGlobals->get('pn') * 10000);
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_NettoSalary'), $net);
-        $text      = $this->tApp->gettext('i18n_Form_Label_SeisureAmout');
-        $sReturn[] = $this->setFormRow($text, $this->tCmnSuperGlobals->get('szamnt') * 10000);
-        $text      = $this->tApp->gettext('i18n_Form_Label_NettoSalaryCash');
-        $sReturn[] = $this->setFormRow($text, ($net - $this->tCmnSuperGlobals->get('szamnt') * 10000));
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_WorkingDays'), $amount['zile'], 'value');
-        $fBonus    = [
-            'main'  => $this->tApp->gettext('i18n_Form_Label_FoodBonuses'),
-            'no'    => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceNo'),
-            'value' => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceValue')
+        $brut        = ($bComponents['sn'] * (1 + $bComponents['sc'] / 100) + $additions) * pow(10, 4);
+        $text        = $this->tApp->gettext('i18n_Form_Label_ExchangeRateAtDate');
+        $xRate       = str_replace('%1', date('d.m.Y', $this->currencyDetails['CXD']), $text);
+        $sReturn[]   = $this->setFormRow($xRate, 10000000);
+        $text        = $this->tApp->gettext('i18n_Form_Label_NegotiatedSalary');
+        $sReturn[]   = $this->setFormRow($text, $this->tCmnSuperGlobals->get('sn') * 10000);
+        $prima       = $this->tCmnSuperGlobals->get('sn') * $this->tCmnSuperGlobals->get('sc') * 100;
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_CumulatedAddedValue'), $prima);
+        $text        = $this->tApp->gettext('i18n_Form_Label_AdditionalBruttoAmount');
+        $sReturn[]   = $this->setFormRow($text, $this->tCmnSuperGlobals->get('pb') * 10000);
+        $ovTime      = [
+            'm' => $this->tApp->gettext('i18n_Form_Label_OvertimeAmount'),
+            1   => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice1'),
+            2   => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice2'),
         ];
-        $fBonusTxt = sprintf($fBonus['main'], $fBonus['value'], $fBonus['no'], ($amount['zile'] - $this->tCmnSuperGlobals->get('zfb')));
-        $sReturn[] = $this->setFormRow($fBonusTxt, $amount['ba']);
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_FoodBonusesValue'), $amount['gbns']);
-        $total     = ($net + $amount['ba'] + $amount['gbns'] - $this->tCmnSuperGlobals->get('szamnt') * 10000);
-        $sReturn[] = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_Total'), $total);
+        $sReturn[]   = $this->setFormRow(sprintf($ovTime['m'], $ovTime[1], '175%'), ($ovTimeVal['os175'] * pow(10, 4)));
+        $sReturn[]   = $this->setFormRow(sprintf($ovTime['m'], $ovTime[2], '200%'), ($ovTimeVal['os200'] * pow(10, 4)));
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_BruttoSalary'), $brut);
+        $brut        += $this->tCmnSuperGlobals->get('afet') * pow(10, 4);
+        $amount      = $this->getValues($brut, $aryStngs);
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PensionFund'), $amount['cas']);
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_HealthTax'), $amount['sanatate']);
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PersonalDeduction'), $amount['pd']);
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_ExciseTax'), $amount['impozit']);
+        $retineri    = $amount['cas'] + $amount['somaj'] + $amount['sanatate'] + $amount['impozit'];
+        $net         = $brut - $retineri + $this->tCmnSuperGlobals->get('pn') * 10000;
+        $text        = $this->tApp->gettext('i18n_Form_Label_AdditionalNettoAmount');
+        $sReturn[]   = $this->setFormRow($text, $this->tCmnSuperGlobals->get('pn') * 10000);
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_NettoSalary'), $net);
+        $text        = $this->tApp->gettext('i18n_Form_Label_SeisureAmout');
+        $sReturn[]   = $this->setFormRow($text, $this->tCmnSuperGlobals->get('szamnt') * 10000);
+        $text        = $this->tApp->gettext('i18n_Form_Label_NettoSalaryCash');
+        $sReturn[]   = $this->setFormRow($text, ($net - $this->tCmnSuperGlobals->get('szamnt') * 10000));
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_WorkingDays'), $amount['zile'], 'value');
+        $fBonus      = [
+            'main'   => $this->tApp->gettext('i18n_Form_Label_FoodBonuses'),
+            'no'     => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceNo'),
+            'value'  => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceValue'),
+            'mtDays' => ($amount['zile'] - $this->tCmnSuperGlobals->get('zfb'))
+        ];
+        $fBonusTxt   = sprintf($fBonus['main'], $fBonus['value'], $fBonus['no'], $fBonus['mtDays']);
+        $sReturn[]   = $this->setFormRow($fBonusTxt, $amount['ba']);
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_FoodBonusesValue'), $amount['gbns']);
+        $total       = ($net + $amount['ba'] + $amount['gbns'] - $this->tCmnSuperGlobals->get('szamnt') * 10000);
+        $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_Total'), $total);
         setlocale(LC_TIME, explode('_', $this->tCmnSession->get('lang'))[0]);
-        $crtMonth  = strftime('%B', $this->tCmnSuperGlobals->get('ym'));
-        $legend    = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
+        $crtMonth    = strftime('%B', $this->tCmnSuperGlobals->get('ym'));
+        $legend      = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
             . '', $crtMonth, date('Y', $this->tCmnSuperGlobals->get('ym')));
         return $this->setStringIntoTag(implode('', [
                 $this->setStringIntoTag($legend, 'legend'),
@@ -340,32 +345,34 @@ class Salariu
 
     private function setFormRow($text, $value, $type = 'amount')
     {
-        $defaultCellStyle  = $this->setFormatRow($text, $value);
-        $defaultCellStyle2 = [];
+        $defaultCellStyle = $this->setFormatRow($text, $value);
         switch ($type) {
             case 'amount':
-                $value                      = $value / pow(10, 4);
-                $defaultCellStyle2['style'] = $defaultCellStyle['style'] . 'text-align:right;';
-                $cellValue                  = [];
-                foreach ($this->currencyDetails['CX'] as $key2 => $value2) {
-                    $fmt         = new \NumberFormatter($value2['locale'], \NumberFormatter::CURRENCY);
-                    $fmt->setAttribute(\NumberFormatter::FRACTION_DIGITS, $value2['decimals']);
-                    $finalValue  = $fmt->formatCurrency($value / $this->currencyDetails['CXV'][$key2], $key2);
-                    $cellValue[] = $this->setStringIntoTag($finalValue, 'td', $defaultCellStyle2);
-                }
-                $value2show        = implode('', $cellValue);
+                $value2show = $this->setFormRowAmount(($value / pow(10, 4)), $defaultCellStyle);
                 break;
             case 'value':
-                $defaultCellStyle2 = array_merge($defaultCellStyle, [
+                $value2show = $this->setStringIntoTag($value, 'td', array_merge($defaultCellStyle, [
                     'colspan' => count($this->currencyDetails['CX'])
-                ]);
-                $value2show        = $this->setStringIntoTag($value, 'td', $defaultCellStyle2);
+                ]));
                 break;
             default:
-                $value2show        = $this->setStringIntoTag($value, 'td');
+                $value2show = $this->setStringIntoTag($value, 'td');
                 break;
         }
         return $this->setStringIntoTag($this->setStringIntoTag($text, 'td', $defaultCellStyle) . $value2show, 'tr');
+    }
+
+    private function setFormRowAmount($value, $defaultCellStyle)
+    {
+        $cellValue                 = [];
+        $defaultCellStyle['style'] .= 'text-align:right;';
+        foreach ($this->currencyDetails['CX'] as $key2 => $value2) {
+            $fmt         = new \NumberFormatter($value2['locale'], \NumberFormatter::CURRENCY);
+            $fmt->setAttribute(\NumberFormatter::FRACTION_DIGITS, $value2['decimals']);
+            $finalValue  = $fmt->formatCurrency($value / $this->currencyDetails['CXV'][$key2], $key2);
+            $cellValue[] = $this->setStringIntoTag($finalValue, 'td', $defaultCellStyle);
+        }
+        return implode('', $cellValue);
     }
 
     private function setFormatRow($text, $value)
