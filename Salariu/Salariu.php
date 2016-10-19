@@ -92,7 +92,7 @@ class Salariu
             ($lngBase + $aReturn['ba']),
             $this->tCmnSuperGlobals->get('pi'),
         ];
-        $aReturn['pd']      = $this->setPersonalDeduction($inDate, $pdV[1], $pdV[2], $aStngs['Personal Deduction']);
+        $aReturn['pd']      = $this->setPersonalDeduction($inDate, $pdV[0], $pdV[1], $aStngs['Personal Deduction']);
         $aryDeductions      = [
             $aReturn['cas'],
             $aReturn['sanatate'],
