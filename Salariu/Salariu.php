@@ -169,20 +169,32 @@ class Salariu
 
     private function handleLocalizationSalariu($appSettings)
     {
-        if (is_null($this->tCmnSuperGlobals->get('lang')) && is_null($this->tCmnSession->get('lang'))) {
-            $this->tCmnSession->set('lang', $appSettings['Default Language']);
-        } elseif (!is_null($this->tCmnSuperGlobals->get('lang'))) {
-            $this->tCmnSession->set('lang', filter_var($this->tCmnSuperGlobals->get('lang'), FILTER_SANITIZE_STRING));
-        }
-        /* to avoid potential language injections from other applications that do not applies here */
-        if (!array_key_exists($this->tCmnSession->get('lang'), $appSettings['Available Languages'])) {
-            $this->tCmnSession->set('lang', $appSettings['Default Language']);
-        }
+        $this->handleLocalizationSalariuInputsIntoSession($appSettings);
+        $this->handleLocalizationSalariuSafe($appSettings);
         $localizationFile = 'Salariu/locale/' . $this->tCmnSession->get('lang') . '/LC_MESSAGES/salariu.mo';
         $translations     = new \Gettext\Translations;
         $translations->addFromMoFile($localizationFile);
         $this->tApp       = new \Gettext\Translator();
         $this->tApp->loadTranslations($translations);
+    }
+
+    private function handleLocalizationSalariuInputsIntoSession($appSettings)
+    {
+        if (is_null($this->tCmnSuperGlobals->get('lang')) && is_null($this->tCmnSession->get('lang'))) {
+            $this->tCmnSession->set('lang', $appSettings['Default Language']);
+        } elseif (!is_null($this->tCmnSuperGlobals->get('lang'))) {
+            $this->tCmnSession->set('lang', filter_var($this->tCmnSuperGlobals->get('lang'), FILTER_SANITIZE_STRING));
+        }
+    }
+
+    /**
+     * to avoid potential language injections from other applications that do not applies here
+     */
+    private function handleLocalizationSalariuSafe($appSettings)
+    {
+        if (!array_key_exists($this->tCmnSession->get('lang'), $appSettings['Available Languages'])) {
+            $this->tCmnSession->set('lang', $appSettings['Default Language']);
+        }
     }
 
     private function refreshExchangeRatesFile($appSettings)
