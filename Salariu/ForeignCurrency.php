@@ -40,13 +40,11 @@ trait ForeignCurrency
                 $this->currencyDetails['CXD'] = strtotime($xml->getAttribute('date'));
                 break;
             case 'Rate':
-                if (in_array($xml->getAttribute('currency'), $aryRelevantCurrencies)) {
-                    $multiplier = 1;
-                    if (!is_null($xml->getAttribute('multiplier'))) {
-                        $multiplier = $xml->getAttribute('multiplier');
-                    }
-                    $this->currencyDetails['CXV'][$xml->getAttribute('currency')] = $xml->readInnerXml() / $multiplier;
+                $multiplier                   = 1;
+                if (!is_null($xml->getAttribute('multiplier'))) {
+                    $multiplier = $xml->getAttribute('multiplier');
                 }
+                $this->currencyDetails['CXV'][$xml->getAttribute('currency')] = $xml->readInnerXml() / $multiplier;
                 break;
         }
     }
@@ -65,7 +63,7 @@ trait ForeignCurrency
     protected function setExchangeRateValues($appSettings, $aryRelevantCurrencies)
     {
         $this->setCurrencyExchangeVariables($aryRelevantCurrencies);
-        //$this->updateCurrencyExchangeRatesFile($appSettings);
+        $this->updateCurrencyExchangeRatesFile($appSettings);
         $xml = new \XMLReader();
         if ($xml->open($appSettings['Exchange Rate Local'], 'UTF-8')) {
             while ($xml->read()) {
