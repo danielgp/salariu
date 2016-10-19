@@ -36,6 +36,19 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "archive": {
-        "exclude": ["/nbproject", "*.po", "/scss", "/js/tabber.js", "/vendor", "/tests"]
+        "exclude": [
+            ".gitignore",
+            "interfaceElements.json",
+            "valuesToCompute.json",
+            "*.bat",
+            "*.po",
+            "*.vbs",
+            "/.projectKnowledge",
+            "/nbproject",
+            "/Salariu/scss",
+            "/sourceforge.net",
+            "/vendor",
+            "/tests"
+        ]
     }
 }
