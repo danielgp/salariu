@@ -62,13 +62,13 @@ msgid "i18n_Form_Label_CumulatedAddedValue"
 msgstr "Spor cumulat"
 
 msgid "i18n_Form_Label_ExchangeRateAtDate"
-msgstr "Rata de schimb valutar la data %1"
+msgstr "Rata de schimb valutar la data"
 
 msgid "i18n_Form_Label_ExciseTax"
 msgstr "Reținere Impozit"
 
 msgid "i18n_Form_Label_FoodBonuses"
-msgstr "%s bonuri alimente (%s = %d)"
+msgstr "%s bonuri alimente"
 
 msgid "i18n_Form_Label_FoodBonusesChoiceNo"
 msgstr "nr."
@@ -82,6 +82,12 @@ msgstr "Valoare bonuri cadou (impozabile din Oct. 2010)"
 msgid "i18n_Form_Label_HealthTax"
 msgstr "Reținere sănătate"
 
+msgid "i18n_Form_Label_InputElements"
+msgstr "Elemente de intrare"
+
+msgid "i18n_Form_Label_InputValues"
+msgstr "Valori de intrare"
+
 msgid "i18n_Form_Label_NegotiatedSalary"
 msgstr "Salariu negociat"
 
@@ -92,7 +98,7 @@ msgid "i18n_Form_Label_NettoSalaryCash"
 msgstr "Salariu net cash"
 
 msgid "i18n_Form_Label_OvertimeAmount"
-msgstr "Suma aferentă orelor suplimentare %s (%s)"
+msgstr "Suma aferentă orelor suplimentare %s"
 
 msgid "i18n_Form_Label_OvertimeChoice1"
 msgstr "normale"

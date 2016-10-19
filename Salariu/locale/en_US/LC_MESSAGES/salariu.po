@@ -62,13 +62,13 @@ msgid "i18n_Form_Label_CumulatedAddedValue"
 msgstr "Cummulated increase percentage"
 
 msgid "i18n_Form_Label_ExchangeRateAtDate"
-msgstr "Exchange rate at %1"
+msgstr "Currency exchange rate"
 
 msgid "i18n_Form_Label_ExciseTax"
 msgstr "Excise tax"
 
 msgid "i18n_Form_Label_FoodBonuses"
-msgstr "Food bonuses %s (%s = %d)"
+msgstr "Food bonuses %s"
 
 msgid "i18n_Form_Label_FoodBonusesChoiceNo"
 msgstr "no."
@@ -82,6 +82,12 @@ msgstr "Food bonuses value (taxed since Oct. 2010)"
 msgid "i18n_Form_Label_HealthTax"
 msgstr "Health tax"
 
+msgid "i18n_Form_Label_InputElements"
+msgstr "Input elements"
+
+msgid "i18n_Form_Label_InputValues"
+msgstr "Input values"
+
 msgid "i18n_Form_Label_NegotiatedSalary"
 msgstr "Negotiated salary"
 
@@ -92,7 +98,7 @@ msgid "i18n_Form_Label_NettoSalaryCash"
 msgstr "Netto cash salary"
 
 msgid "i18n_Form_Label_OvertimeAmount"
-msgstr "Amount for %s overtime (%s)"
+msgstr "Amount for %s overtime"
 
 msgid "i18n_Form_Label_OvertimeChoice1"
 msgstr "normal"

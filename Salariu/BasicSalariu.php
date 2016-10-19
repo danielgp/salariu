@@ -103,7 +103,8 @@ trait BasicSalariu
             ],
         ];
         return $this->setHeaderCommon($headerParameters)
-            . '<h1>' . $this->tApp->gettext('i18n_ApplicationName') . '</h1>';
+            . '<h1>' . $this->tApp->gettext('i18n_ApplicationName') . '</h1>'
+            . '<p>&nbsp;</p>';
     }
 
     private function setLabel($labelId)

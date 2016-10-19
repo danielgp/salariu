@@ -36,18 +36,20 @@ namespace danielgp\salariu;
 trait Taxation
 {
 
+    private $txLvl;
+
     /**
      * CAS
      *
      * */
-    protected function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues)
+    private function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues)
     {
-        $prcntg  = $this->setValuesFromJson($lngDate, $nPercentages);
-        $nReturn = round($this->setHealthFundTaxBase($lngDate, $lngBrutto, $nValues) * $prcntg / 100, 0);
+        $this->txLvl['casP'] = $this->setValuesFromJson($lngDate, $nPercentages);
+        $nReturn             = $this->setHealthFundTaxBase($lngDate, $lngBrutto, $nValues) * $this->txLvl['casP'] / 100;
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
         }
-        return $nReturn;
+        $this->txLvl['cas'] = round($nReturn, 0);
     }
 
     /**
@@ -72,12 +74,12 @@ trait Taxation
      * */
     protected function setHealthTax($lngDate, $lngBrutto, $nPercentages)
     {
-        $prcntg  = $this->setValuesFromJson($lngDate, $nPercentages);
-        $nReturn = round($lngBrutto * $prcntg / 100, 0);
+        $this->txLvl['sntP'] = $this->setValuesFromJson($lngDate, $nPercentages);
+        $nReturn             = round($lngBrutto * $this->txLvl['sntP'] / 100, 0);
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = round($nReturn, -4);
         }
-        return $nReturn;
+        $this->txLvl['snt'] = $nReturn;
     }
 
     /**
@@ -135,13 +137,16 @@ trait Taxation
      * */
     protected function setUnemploymentTax($lngDate, $lngBase)
     {
-        $yrDate  = date('Y', $lngDate);
-        $nReturn = 0.5;
+        $yrDate              = date('Y', $lngDate);
+        $this->txLvl['smjP'] = 0.5;
         if ($yrDate <= 2007) {
-            $nReturn = 1;
+            $this->txLvl['smjP'] = 1;
         }
-        $nReturn = round($lngBase * $nReturn / 100, 0);
-        return (($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
+        $nReturn            = round($lngBase * $this->txLvl['smjP'] / 100, 0);
+        $this->txLvl['smj'] = $nReturn;
+        if ($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) {
+            $this->txLvl['smj'] = round($nReturn, -4);
+        }
     }
 
     /**

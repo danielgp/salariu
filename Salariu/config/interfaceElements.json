@@ -177,7 +177,8 @@
         "S4": {
             "background-color": "#FF0000",
             "color": "#FFFFFF",
-            "font-weight": "bold"
+            "font-weight": "bold",
+            "text-align": "center"
         }
     }
 }
