@@ -49,26 +49,27 @@ trait ForeignCurrency
         }
     }
 
-    private function setCurrencyExchangeVariables($aryRelevantCurrencies)
+    private function setCurrencyExchangeVariables($aryRelevantCurrencies, $kCX)
     {
         $this->currencyDetails = [
             'CX'  => $aryRelevantCurrencies,
             'CXD' => strtotime('now'),
         ];
-        foreach (array_keys($aryRelevantCurrencies) as $value) {
+        foreach ($kCX as $value) {
             $this->currencyDetails['CXV'][$value] = 1;
         }
     }
 
     protected function setExchangeRateValues($appSettings, $aryRelevantCurrencies)
     {
-        $this->setCurrencyExchangeVariables($aryRelevantCurrencies);
+        $kCX = array_keys($aryRelevantCurrencies);
+        $this->setCurrencyExchangeVariables($aryRelevantCurrencies, $kCX);
         $this->updateCurrencyExchangeRatesFile($appSettings);
         $xml = new \XMLReader();
         if ($xml->open($appSettings['Exchange Rate Local'], 'UTF-8')) {
             while ($xml->read()) {
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
-                    $this->getCurrencyExchangeRates($xml, array_keys($aryRelevantCurrencies));
+                    $this->getCurrencyExchangeRates($xml, $kCX);
                 }
             }
             $xml->close();

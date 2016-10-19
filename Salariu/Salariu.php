@@ -77,6 +77,19 @@ class Salariu
         return implode(';', $sReturn) . ';';
     }
 
+    private function getIncomeTaxValue($inDate, $lngBase, $vBA, $aryDeductions, $arySettings)
+    {
+        $rest = $lngBase - array_sum($aryDeductions);
+        if ($inDate >= mktime(0, 0, 0, 7, 1, 2010)) {
+            $rest += round($vBA, -4);
+            if ($inDate >= mktime(0, 0, 0, 10, 1, 2010)) {
+                $rest += round($this->tCmnSuperGlobals->get('gbns') * pow(10, 4), -4);
+            }
+        }
+        $rest += $this->tCmnSuperGlobals->get('afet') * pow(10, 4);
+        return $this->setIncomeTax($inDate, $rest, $arySettings['Income Tax']);
+    }
+
     private function getOvertimes($aryStngs)
     {
         $pcToBoolean = [0 => true, 1 => false];
@@ -92,31 +105,21 @@ class Salariu
 
     private function getValues($lngBase, $aStngs)
     {
-        $inDate            = $this->tCmnSuperGlobals->get('ym');
-        $aReturn           = $this->getValuesPrimary($inDate, $lngBase, $aStngs);
-        $pdVal             = [
-            $inDate,
+        $inDate             = $this->tCmnSuperGlobals->get('ym');
+        $aReturn            = $this->getValuesPrimary($inDate, $lngBase, $aStngs);
+        $pdVal              = [
             ($lngBase + $aReturn['ba']),
             $this->tCmnSuperGlobals->get('pi'),
             $aStngs['Personal Deduction'],
         ];
-        $aReturn['pd']     = $this->setPersonalDeduction($pdVal[0], $pdVal[1], $pdVal[2], $pdVal[3]);
-        $restArrayToDeduct = [
+        $aReturn['pd']      = $this->setPersonalDeduction($inDate, $pdVal[1], $pdVal[2], $pdVal[3]);
+        $aryDeductions      = [
             $aReturn['cas'],
             $aReturn['sanatate'],
             $aReturn['somaj'],
             $aReturn['pd'],
         ];
-        $rest              = $lngBase - array_sum($restArrayToDeduct);
-        if ($inDate >= mktime(0, 0, 0, 7, 1, 2010)) {
-            $rest += round($aReturn['ba'], -4);
-            if ($inDate >= mktime(0, 0, 0, 10, 1, 2010)) {
-                $aReturn['gbns'] = $this->tCmnSuperGlobals->get('gbns') * pow(10, 4);
-                $rest            += round($aReturn['gbns'], -4);
-            }
-        }
-        $rest               += $this->tCmnSuperGlobals->get('afet') * pow(10, 4);
-        $aReturn['impozit'] = $this->setIncomeTax($inDate, $rest, $aStngs['Income Tax']);
+        $aReturn['impozit'] = $this->getIncomeTaxValue($inDate, $lngBase, $aReturn['ba'], $aryDeductions, $aStngs);
         return $aReturn;
     }
 
@@ -138,6 +141,7 @@ class Salariu
         return [
             'ba'       => $this->setFoodTicketsValue($inDate, $aStngs[$shLbl['MTV']]) * $nMealDays,
             'cas'      => $this->setHealthFundTax($inDate, $lngBase, $aStngs[$shLbl['HFP']], $aStngs[$shLbl['HFUL']]),
+            'gbns'     => $this->tCmnSuperGlobals->get('gbns') * pow(10, 4),
             'sanatate' => $this->setHealthTax($inDate, $lngBase, $aStngs[$shLbl['HTP']]),
             'somaj'    => $this->setUnemploymentTax($inDate, $unemploymentBase),
             'zile'     => $wkDay,
