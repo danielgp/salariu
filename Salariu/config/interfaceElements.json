@@ -104,6 +104,12 @@
             "locale": "en_US"
         }
     },
+    "Short Labels": {
+        "HFP": "Health Fund Percentage",
+        "HFUL": "Health Fund Upper Limit",
+        "HTP": "Health Tax Percentage",
+        "MTV": "Meal Ticket Value"
+    },
     "Table Cell Applied Style": {
         "i18n_Form_Disclaimer": "S4",
         "i18n_Form_Label_BruttoSalary": "S1",

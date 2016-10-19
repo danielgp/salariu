@@ -55,7 +55,7 @@ class Salariu
         $this->processFormInputDefaults($interfaceElements['Default Values']);
         echo $this->setFormInput();
         $this->setExchangeRateValues($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
-        echo $this->setFormOutput($configPath);
+        echo $this->setFormOutput($configPath, $interfaceElements['Short Labels']);
         echo $this->setFooterHtml($interfaceElements['Application']);
     }
 
@@ -103,16 +103,17 @@ class Salariu
         ];
     }
 
-    private function getValues($lngBase, $aStngs)
+    private function getValues($lngBase, $aStngs, $shLabels)
     {
         $inDate             = $this->tCmnSuperGlobals->get('ym');
-        $aReturn            = $this->getValuesPrimary($inDate, $lngBase, $aStngs);
-        $pdVal              = [
+        $inDT               = new \DateTime(date('Y/m/d', $inDate));
+        $wkDay              = $this->setWorkingDaysInMonth($inDT, $this->tCmnSuperGlobals->get('pc'));
+        $aReturn            = $this->getValuesPrimary($inDate, $wkDay, $lngBase, $aStngs, $shLabels);
+        $pdV                = [
             ($lngBase + $aReturn['ba']),
             $this->tCmnSuperGlobals->get('pi'),
-            $aStngs['Personal Deduction'],
         ];
-        $aReturn['pd']      = $this->setPersonalDeduction($inDate, $pdVal[1], $pdVal[2], $pdVal[3]);
+        $aReturn['pd']      = $this->setPersonalDeduction($inDate, $pdV[1], $pdV[2], $aStngs['Personal Deduction']);
         $aryDeductions      = [
             $aReturn['cas'],
             $aReturn['sanatate'],
@@ -123,17 +124,9 @@ class Salariu
         return $aReturn;
     }
 
-    private function getValuesPrimary($inDate, $lngBase, $aStngs)
+    private function getValuesPrimary($inDate, $wkDay, $lngBase, $aStngs, $shLbl)
     {
-        $inDT             = new \DateTime(date('Y/m/d', $inDate));
-        $wkDay            = $this->setWorkingDaysInMonth($inDT, $this->tCmnSuperGlobals->get('pc'));
         $nMealDays        = ($wkDay - $this->tCmnSuperGlobals->get('zfb'));
-        $shLbl            = [
-            'HFP'  => 'Health Fund Percentage',
-            'HFUL' => 'Health Fund Upper Limit',
-            'HTP'  => 'Health Tax Percentage',
-            'MTV'  => 'Meal Ticket Value',
-        ];
         $unemploymentBase = $lngBase;
         if ($this->tCmnSuperGlobals->get('ym') < mktime(0, 0, 0, 1, 1, 2008)) {
             $unemploymentBase = $this->tCmnSuperGlobals->get('sn');
@@ -285,7 +278,7 @@ class Salariu
         return $this->setStringIntoShortTag('input', $inputParameters) . ' ' . $inAfterLabel;
     }
 
-    private function setFormOutput($configPath)
+    private function setFormOutput($configPath, $shLabels)
     {
         $aryStngs    = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
         $sReturn     = [];
@@ -314,7 +307,7 @@ class Salariu
         $sReturn[]   = $this->setFormRow(sprintf($ovTime['m'], $ovTime[2], '200%'), ($ovTimeVal['os200'] * pow(10, 4)));
         $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_BruttoSalary'), $brut);
         $brut        += $this->tCmnSuperGlobals->get('afet') * pow(10, 4);
-        $amount      = $this->getValues($brut, $aryStngs);
+        $amount      = $this->getValues($brut, $aryStngs, $shLabels);
         $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_PensionFund'), $amount['cas']);
         $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_UnemploymentTax'), $amount['somaj']);
         $sReturn[]   = $this->setFormRow($this->tApp->gettext('i18n_Form_Label_HealthTax'), $amount['sanatate']);

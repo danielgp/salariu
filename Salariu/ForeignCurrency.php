@@ -69,7 +69,7 @@ trait ForeignCurrency
         if ($xml->open($appSettings['Exchange Rate Local'], 'UTF-8')) {
             while ($xml->read()) {
                 if ($xml->nodeType == \XMLReader::ELEMENT) {
-                    $this->getCurrencyExchangeRates($xml, $kCX);
+                    $this->getCurrencyExchangeRates($xml);
                 }
             }
             $xml->close();
