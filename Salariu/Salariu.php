@@ -92,27 +92,8 @@ class Salariu
 
     private function getValues($lngBase, $aStngs)
     {
-        $inDate           = $this->tCmnSuperGlobals->get('ym');
-        $inDT             = new \DateTime(date('Y/m/d', $inDate));
-        $wkDay            = $this->setWorkingDaysInMonth($inDT, $this->tCmnSuperGlobals->get('pc'));
-        $nMealDays        = ($wkDay - $this->tCmnSuperGlobals->get('zfb'));
-        $shLbl            = [
-            'HFP'  => 'Health Fund Percentage',
-            'HFUL' => 'Health Fund Upper Limit',
-            'HTP'  => 'Health Tax Percentage',
-            'IT'   => 'Income Tax',
-            'MTV'  => 'Meal Ticket Value',
-        ];
-        $unemploymentBase = $lngBase;
-        if ($this->tCmnSuperGlobals->get('ym') < mktime(0, 0, 0, 1, 1, 2008)) {
-            $unemploymentBase = $this->tCmnSuperGlobals->get('sn');
-        }
-        $aReturn           = [
-            'ba'       => $this->setFoodTicketsValue($inDate, $aStngs[$shLbl['MTV']]) * $nMealDays,
-            'cas'      => $this->setHealthFundTax($inDate, $lngBase, $aStngs[$shLbl['HFP']], $aStngs[$shLbl['HFUL']]),
-            'sanatate' => $this->setHealthTax($inDate, $lngBase, $aStngs[$shLbl['HTP']]),
-            'somaj'    => $this->setUnemploymentTax($inDate, $unemploymentBase),
-        ];
+        $inDate            = $this->tCmnSuperGlobals->get('ym');
+        $aReturn           = $this->getValuesPrimary($inDate, $lngBase, $aStngs);
         $pdVal             = [
             $inDate,
             ($lngBase + $aReturn['ba']),
@@ -135,9 +116,32 @@ class Salariu
             }
         }
         $rest               += $this->tCmnSuperGlobals->get('afet') * pow(10, 4);
-        $aReturn['impozit'] = $this->setIncomeTax($inDate, $rest, $aStngs[$shLbl['IT']]);
-        $aReturn['zile']    = $wkDay;
+        $aReturn['impozit'] = $this->setIncomeTax($inDate, $rest, $aStngs['Income Tax']);
         return $aReturn;
+    }
+
+    private function getValuesPrimary($inDate, $lngBase, $aStngs)
+    {
+        $inDT             = new \DateTime(date('Y/m/d', $inDate));
+        $wkDay            = $this->setWorkingDaysInMonth($inDT, $this->tCmnSuperGlobals->get('pc'));
+        $nMealDays        = ($wkDay - $this->tCmnSuperGlobals->get('zfb'));
+        $shLbl            = [
+            'HFP'  => 'Health Fund Percentage',
+            'HFUL' => 'Health Fund Upper Limit',
+            'HTP'  => 'Health Tax Percentage',
+            'MTV'  => 'Meal Ticket Value',
+        ];
+        $unemploymentBase = $lngBase;
+        if ($this->tCmnSuperGlobals->get('ym') < mktime(0, 0, 0, 1, 1, 2008)) {
+            $unemploymentBase = $this->tCmnSuperGlobals->get('sn');
+        }
+        return [
+            'ba'       => $this->setFoodTicketsValue($inDate, $aStngs[$shLbl['MTV']]) * $nMealDays,
+            'cas'      => $this->setHealthFundTax($inDate, $lngBase, $aStngs[$shLbl['HFP']], $aStngs[$shLbl['HFUL']]),
+            'sanatate' => $this->setHealthTax($inDate, $lngBase, $aStngs[$shLbl['HTP']]),
+            'somaj'    => $this->setUnemploymentTax($inDate, $unemploymentBase),
+            'zile'     => $wkDay,
+        ];
     }
 
     private function handleLocalizationSalariu($appSettings)
