@@ -33,7 +33,7 @@ trait ForeignCurrency
 
     protected $currencyDetails;
 
-    private function getCurrencyExchangeRates($xml, $aryRelevantCurrencies)
+    private function getCurrencyExchangeRates($xml)
     {
         switch ($xml->localName) {
             case 'Cube':
