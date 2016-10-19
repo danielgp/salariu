@@ -1,1 +1,1 @@
-d:\www\AppForDeveloper\Composer\composer.bat update --profile
+D:\www\AppForDeveloper\Composer\composer.bat update --profile --verbose
