@@ -30,11 +30,26 @@
         "bc": {
             "Label": "i18n_Form_Button_Recalculate"
         },
+        "cas": {
+            "Label": "i18n_Form_Label_PensionFund"
+        },
         "fd": {
             "Label": "i18n_Form_Disclaimer"
         },
+        "gb": {
+            "Label": "i18n_Form_Label_FoodBonuses"
+        },
         "gbns": {
             "Label": "i18n_Form_Label_FoodBonusesValue"
+        },
+        "impozit": {
+            "Label": "i18n_Form_Label_ExciseTax"
+        },
+        "ns": {
+            "Label": "i18n_Form_Label_NettoSalary"
+        },
+        "nsc": {
+            "Label": "i18n_Form_Label_NettoSalaryCash"
         },
         "os175": {
             "Label": [
@@ -50,11 +65,17 @@
                 "200%"
             ]
         },
+        "ovAmount": {
+            "Label": "i18n_Form_Label_OvertimeAmount"
+        },
         "pb": {
             "Label": "i18n_Form_Label_AdditionalBruttoAmount"
         },
         "pc": {
             "Label": "i18n_Form_Label_CatholicEasterFree"
+        },
+        "pd": {
+            "Label": "i18n_Form_Label_PersonalDeduction"
         },
         "pi": {
             "Label": "i18n_Form_Label_PersonsSupported"
@@ -62,14 +83,32 @@
         "pn": {
             "Label": "i18n_Form_Label_AdditionalNettoAmount"
         },
+        "sanatate": {
+            "Label": "i18n_Form_Label_HealthTax"
+        },
+        "sb": {
+            "Label": "i18n_Form_Label_BruttoSalary"
+        },
         "sc": {
             "Label": "i18n_Form_Label_CumulatedAddedValue"
         },
         "sn": {
             "Label": "i18n_Form_Label_NegotiatedSalary"
         },
+        "somaj": {
+            "Label": "i18n_Form_Label_UnemploymentTax"
+        },
         "szamnt": {
             "Label": "i18n_Form_Label_SeisureAmout"
+        },
+        "total": {
+            "Label": "i18n_Form_Label_Total"
+        },
+        "wkDays": {
+            "Label": "i18n_Form_Label_WorkingDays"
+        },
+        "xrate@Date": {
+            "Label": "i18n_Form_Label_ExchangeRateAtDate"
         },
         "ym": {
             "Label": "i18n_Form_Label_CalculationMonth"
