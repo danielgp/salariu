@@ -9,6 +9,20 @@
         "Exchange Rate Local": "nbrfxrates.xml",
         "Exchange Rate Source": "http://www.bnr.ro/nbrfxrates.xml"
     },
+    "Default Values": {
+        "afet": 0,
+        "gbns": 0,
+        "pb": 0,
+        "pc": 0,
+        "pi": 0,
+        "pn": 0,
+        "os175": 0,
+        "os200": 0,
+        "sc": 0,
+        "sn": 1250,
+        "zfb": 0,
+        "szamnt": 0
+    },
     "Form Input": {
         "afet": {
             "Label": "i18n_Form_Label_AdvantagesForExciseTax"
@@ -91,27 +105,33 @@
         }
     },
     "Table Cell Applied Style": {
-        "i18n_Form_Label_BruttoSalary": "1",
-        "i18n_Form_Label_ExciseTax": "2",
-        "i18n_Form_Label_HealthTax": "2",
-        "i18n_Form_Label_NegotiatedSalary": "1",
-        "i18n_Form_Label_NettoSalaryCash": "1",
-        "i18n_Form_Label_PensionFund": "2",
-        "i18n_Form_Label_SeisureAmout": "2",
-        "i18n_Form_Label_Total": "3",
-        "i18n_Form_Label_UnemploymentTax": "2"
+        "i18n_Form_Disclaimer": "S4",
+        "i18n_Form_Label_BruttoSalary": "S1",
+        "i18n_Form_Label_ExciseTax": "S2",
+        "i18n_Form_Label_HealthTax": "S2",
+        "i18n_Form_Label_NegotiatedSalary": "S1",
+        "i18n_Form_Label_NettoSalaryCash": "S1",
+        "i18n_Form_Label_PensionFund": "S2",
+        "i18n_Form_Label_SeisureAmout": "S2",
+        "i18n_Form_Label_Total": "S3",
+        "i18n_Form_Label_UnemploymentTax": "S2"
     },
     "Table Cell Style Definitions": {
-        "1": {
+        "S1": {
             "color": "#000000",
             "font-weight": "bold"
         },
-        "2": {
-            "color": "#ff9900"
+        "S2": {
+            "color": "#FF0000"
         },
-        "3": {
+        "S3": {
             "color": "#009933",
             "font-size": "larger",
+            "font-weight": "bold"
+        },
+        "S4": {
+            "background-color": "#FF0000",
+            "color": "#FFFFFF",
             "font-weight": "bold"
         }
     }

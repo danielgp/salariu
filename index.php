@@ -25,7 +25,6 @@
  * SOFTWARE.
  *
  */
-require_once 'Salariu/config/default.values.inc.php';
 require_once 'vendor/autoload.php';
 
 $app = new \danielgp\salariu\Salariu();
