@@ -32,7 +32,7 @@ class Salariu
 {
 
     use \danielgp\bank_holidays\Romanian,
-        \danielgp\salariu\BasicSalariu,
+        \danielgp\salariu\FormattingSalariu,
         \danielgp\salariu\Bonuses,
         \danielgp\salariu\ForeignCurrency,
         \danielgp\salariu\Taxation;

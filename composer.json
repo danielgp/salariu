@@ -29,6 +29,7 @@
             "Salariu/ForeignCurrency.php",
             "Salariu/Taxation.php",
             "Salariu/BasicSalariu.php",
+            "Salariu/FormattingSalariu.php",
             "Salariu/Salariu.php"
         ]
     },

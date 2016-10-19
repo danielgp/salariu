@@ -36,25 +36,6 @@ trait BasicSalariu
     protected $appFlags;
     protected $tApp = null;
 
-    private function buildArrayOfFieldsStyled()
-    {
-        $sReturn = [];
-        foreach ($this->appFlags['TCAS'] as $key => $value) {
-            $sReturn[$this->tApp->gettext($key)]       = $value;
-            $sReturn[$this->tApp->gettext($key) . ':'] = $value;
-        }
-        return $sReturn;
-    }
-
-    private function buildStyleForCellFormat($styleId)
-    {
-        $sReturn = [];
-        foreach ($this->appFlags['TCSD'][$styleId] as $key => $value) {
-            $sReturn[] = $key . ':' . $value;
-        }
-        return implode(';', $sReturn) . ';';
-    }
-
     private function handleLocalizationSalariu($appSettings)
     {
         $this->handleLocalizationSalariuInputsIntoSession($appSettings);
@@ -109,54 +90,6 @@ trait BasicSalariu
             . $this->tApp->gettext('i18n_Disclaimer')
             . '</div>';
         return $this->setFooterCommon($sReturn);
-    }
-
-    private function setFormInputSelectPC()
-    {
-        $choices = [
-            $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceNo'),
-            $this->tApp->gettext('i18n_Form_Label_CatholicEasterFree_ChoiceYes'),
-        ];
-        return $this->setArrayToSelect($choices, $this->tCmnSuperGlobals->get('pc'), 'pc', ['size' => 1]);
-    }
-
-    private function setFormInputSelectPI()
-    {
-        $temp2 = [];
-        for ($counter = 0; $counter <= 4; $counter++) {
-            $temp2[$counter] = $counter . ($counter == 4 ? '+' : '');
-        }
-        return $this->setArrayToSelect($temp2, $this->tCmnSuperGlobals->get('pi'), 'pi', ['size' => 1]);
-    }
-
-    private function setFormInputSelectYM()
-    {
-        $temp = [];
-        for ($counter = date('Y'); $counter >= 2001; $counter--) {
-            for ($counter2 = 12; $counter2 >= 1; $counter2--) {
-                $crtDate = mktime(0, 0, 0, $counter2, 1, $counter);
-                if ($crtDate <= mktime(0, 0, 0, date('m'), 1, date('Y'))) {
-                    $temp[$crtDate] = strftime('%Y, %m (%B)', $crtDate);
-                }
-            }
-        }
-        return $this->setArrayToSelect($temp, $this->tCmnSuperGlobals->get('ym'), 'ym', ['size' => 1]);
-    }
-
-    private function setFormatRow($text, $value)
-    {
-        $defaultCellStyle = [
-            'class' => 'labelS',
-            'style' => 'color:#000;',
-        ];
-        $fieldsStyled     = $this->buildArrayOfFieldsStyled();
-        if (array_key_exists($text, $fieldsStyled)) {
-            $defaultCellStyle['style'] = $this->buildStyleForCellFormat($fieldsStyled[$text]);
-        }
-        if ((is_numeric($value)) && ($value == 0)) {
-            $defaultCellStyle['style'] = 'color:#666;';
-        }
-        return $defaultCellStyle;
     }
 
     private function setHeaderHtml()

@@ -33,7 +33,7 @@ trait ForeignCurrency
 
     protected $currencyDetails;
 
-    private function getCurrencyExchangeRates($xml)
+    private function getCurrencyExchangeRates(\XMLReader $xml)
     {
         switch ($xml->localName) {
             case 'Cube':
