@@ -234,30 +234,26 @@ class Salariu
         $sReturn[]    = $this->setFormRow($this->setLabel('zfb'), $this->setFormInputText('zfb', 2, ''), 1);
         $sReturn[]    = $this->setFormRow($this->setLabel('gbns'), $this->setFormInputText('gbns', 2, ''), 1);
         $sReturn[]    = $this->setFormRow($this->setLabel('afet'), $this->setFormInputText('afet', 2, ''), 1);
-        $label        = $this->tApp->gettext('i18n_Form_Disclaimer');
-        $hiddenField  = $this->setStringIntoShortTag('input', [
-            'type'  => 'hidden',
-            'name'  => 'action',
-            'value' => $this->tCmnSuperGlobals->server->get['SERVER_NAME'],
-        ]);
-        $sReturn[]    = $this->setStringIntoTag($this->setStringIntoTag($label . $hiddenField, 'td', [
-                    'colspan' => 2,
-                    'style'   => 'color: red;'
-                ]), 'tr');
-        $submitBtnTxt = $this->tApp->gettext('i18n_Form_Button_Recalculate');
-        $sReturn[]    = $this->setFormRow('', $this->setStringIntoShortTag('input', [
-                    'type'  => 'submit',
-                    'id'    => 'submit',
-                    'value' => $submitBtnTxt
-                ]), 1);
+        $fdVal        = [
+            'colspan' => 2,
+            'style'   => 'color: red;'
+        ];
+        $sReturn[]    = $this->setStringIntoTag($this->setStringIntoTag($this->setLabel('fd'), 'td', $fdVal), 'tr');
+        $submitParams = [
+            'type'  => 'submit',
+            'id'    => 'submit',
+            'value' => $this->setLabel('bc')
+        ];
+        $sReturn[]    = $this->setFormRow('', $this->setStringIntoShortTag('input', $submitParams), 1);
         $frm          = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
             'method' => 'get',
             'action' => $this->tCmnSuperGlobals->server->get['SCRIPT_NAME']
         ]);
-        return $this->setStringIntoTag(implode('', [
-                    $this->setStringIntoTag($this->tApp->gettext('i18n_FieldsetLabel_Inputs'), 'legend'),
-                    $frm
-                        ]), 'fieldset', ['style' => 'float: left;']);
+        $aryFieldSet  = [
+            $this->setStringIntoTag($this->tApp->gettext('i18n_FieldsetLabel_Inputs'), 'legend'),
+            $frm
+        ];
+        return $this->setStringIntoTag(implode('', $aryFieldSet), 'fieldset', ['style' => 'float: left;']);
     }
 
     private function setFormInputSelectPC()

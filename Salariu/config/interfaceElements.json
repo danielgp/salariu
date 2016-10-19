@@ -13,6 +13,12 @@
         "afet": {
             "Label": "i18n_Form_Label_AdvantagesForExciseTax"
         },
+        "bc": {
+            "Label": "i18n_Form_Button_Recalculate"
+        },
+        "fd": {
+            "Label": "i18n_Form_Disclaimer"
+        },
         "gbns": {
             "Label": "i18n_Form_Label_FoodBonusesValue"
         },
