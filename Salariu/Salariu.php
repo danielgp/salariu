@@ -177,6 +177,7 @@ class Salariu
     {
         $aryStngs    = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
         $sReturn     = [];
+        $sReturn[]   = $this->setFormOutputHeader();
         $ovTimeVal   = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
         $additions   = $this->tCmnSuperGlobals->get('pb') + $ovTimeVal['os175'] + $ovTimeVal['os200'];
         $bComponents = [
@@ -224,7 +225,6 @@ class Salariu
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('nsc'), '&nbsp;', $nsc);
         $fBonus      = [
             'main'   => $this->setLabel('gb'),
-            //'no'     => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceNo'),
             'value'  => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceValue'),
             'mtDays' => ($amount['zile'] - $this->tCmnSuperGlobals->get('zfb')) . '/' . $amount['zile']
         ];
@@ -233,6 +233,7 @@ class Salariu
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('gbns'), '&nbsp;', $amount['gbns']);
         $total       = ($net + $amount['ba'] + $amount['gbns'] - $this->tCmnSuperGlobals->get('szamnt') * 10000);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('total'), '&nbsp;', $total);
+        $sReturn[]   = '</tbody>';
         setlocale(LC_TIME, explode('_', $this->tCmnSession->get('lang'))[0]);
         $crtMonth    = strftime('%B', $this->tCmnSuperGlobals->get('ym'));
         $legentText  = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
@@ -241,6 +242,19 @@ class Salariu
         return $this->setStringIntoTag($legend . $this->setStringIntoTag(implode('', $sReturn), 'table'), 'fieldset', [
                 'style' => 'float: left;'
         ]);
+    }
+
+    private function setFormOutputHeader()
+    {
+        $sReturn   = [];
+        $sReturn[] = '<thead><tr><th>' . $this->tApp->gettext('i18n_Form_Label_ResultedElements') . '</th>';
+        $sReturn[] = '<th><i class="fa fa-map-signs floatRight" style="font-size:2em;">&nbsp;</i></th>';
+        foreach ($this->currencyDetails['CX'] as $value) {
+            $sReturn[] = '<th style="text-align:center;"><span class="flag-icon flag-icon-' . $value['country']
+                . '" style="font-size:2em;" title="'
+                . $this->tApp->gettext('i18n_CountryName_' . strtoupper($value['country'])) . '">&nbsp;</span></th>';
+        }
+        return implode('', $sReturn) . '</tr></thead></tbody>';
     }
 
     private function setFormRow($text, $value, $type = 'amount')

@@ -119,26 +119,32 @@
     },
     "Relevant Currencies": {
         "RON": {
+            "country": "ro",
             "decimals": 2,
             "locale": "ro_RO"
         },
         "EUR": {
+            "country": "eu",
             "decimals": 2,
             "locale": "de_DE"
         },
         "HUF": {
+            "country": "hu",
             "decimals": 0,
             "locale": "hu_HU"
         },
         "GBP": {
+            "country": "gb",
             "decimals": 2,
             "locale": "en_UK"
         },
         "CHF": {
+            "country": "ch",
             "decimals": 2,
             "locale": "de_CH"
         },
         "USD": {
+            "country": "us",
             "decimals": 2,
             "locale": "en_US"
         }

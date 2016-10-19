@@ -19,6 +19,24 @@ msgstr ""
 msgid "i18n_ApplicationName"
 msgstr "Salariu conform legilor din Romania"
 
+msgid "i18n_CountryName_CH"
+msgstr "Elveția"
+
+msgid "i18n_CountryName_EU"
+msgstr "Uniunea Europeană"
+
+msgid "i18n_CountryName_GB"
+msgstr "Marea Britanie"
+
+msgid "i18n_CountryName_HU"
+msgstr "Ungaria"
+
+msgid "i18n_CountryName_RO"
+msgstr "România"
+
+msgid "i18n_CountryName_US"
+msgstr "Statele Unite ale Americii"
+
 msgid "i18n_Disclaimer"
 msgstr "Programatorul nu își asumă nici un fel de răspundere privitoare atât la datele introduse cat nici la rezultatele calculate, inclusiv implicațiile acestora (oriunde și oricare ar putea fi acestea)!"
 
@@ -117,6 +135,9 @@ msgstr "Deducere personală"
 
 msgid "i18n_Form_Label_PersonsSupported"
 msgstr "Persoane aflate în întreținere"
+
+msgid "i18n_Form_Label_ResultedElements"
+msgstr "Elemente rezultate"
 
 msgid "i18n_Form_Label_SeisureAmout"
 msgstr "Suma popriri"

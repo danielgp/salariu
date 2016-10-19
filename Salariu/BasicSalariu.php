@@ -99,6 +99,7 @@ trait BasicSalariu
             'title' => $this->tApp->gettext('i18n_ApplicationName'),
             'css'   => [
                 'vendor/components/flag-icon-css/css/flag-icon.min.css',
+                'vendor/fortawesome/font-awesome/css/font-awesome.min.css',
                 'Salariu/css/salariu.css',
             ],
         ];

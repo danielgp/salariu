@@ -76,10 +76,7 @@ trait Taxation
     {
         $this->txLvl['sntP'] = $this->setValuesFromJson($lngDate, $nPercentages);
         $nReturn             = round($lngBrutto * $this->txLvl['sntP'] / 100, 0);
-        if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
-            $nReturn = round($nReturn, -4);
-        }
-        $this->txLvl['snt'] = $nReturn;
+        $this->txLvl['snt']  = (($lngDate > mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
     }
 
     /**
@@ -143,10 +140,7 @@ trait Taxation
             $this->txLvl['smjP'] = 1;
         }
         $nReturn            = round($lngBase * $this->txLvl['smjP'] / 100, 0);
-        $this->txLvl['smj'] = $nReturn;
-        if ($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) {
-            $this->txLvl['smj'] = round($nReturn, -4);
-        }
+        $this->txLvl['smj'] = (($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
     }
 
     /**

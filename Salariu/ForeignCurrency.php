@@ -31,7 +31,7 @@ namespace danielgp\salariu;
 trait ForeignCurrency
 {
 
-    protected $currencyDetails;
+    private $currencyDetails;
 
     private function getCurrencyExchangeRates(\XMLReader $xml)
     {
@@ -60,7 +60,7 @@ trait ForeignCurrency
         }
     }
 
-    protected function setExchangeRateValues($appSettings, $aryRelevantCurrencies)
+    private function setExchangeRateValues($appSettings, $aryRelevantCurrencies)
     {
         $kCX = array_keys($aryRelevantCurrencies);
         $this->setCurrencyExchangeVariables($aryRelevantCurrencies, $kCX);

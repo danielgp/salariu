@@ -19,6 +19,24 @@ msgstr ""
 msgid "i18n_ApplicationName"
 msgstr "Salary according to Romanian legislation"
 
+msgid "i18n_CountryName_CH"
+msgstr "Switzerland"
+
+msgid "i18n_CountryName_EU"
+msgstr "Europe Union"
+
+msgid "i18n_CountryName_GB"
+msgstr "Great Britain"
+
+msgid "i18n_CountryName_HU"
+msgstr "Hungary"
+
+msgid "i18n_CountryName_RO"
+msgstr "Romania"
+
+msgid "i18n_CountryName_US"
+msgstr "United States of America"
+
 msgid "i18n_Disclaimer"
 msgstr "The developer cannot be liable of any data input or results, included but not limited to any implication of these (anywhere and whomever there might be these)!"
 
@@ -117,6 +135,9 @@ msgstr "Personal deduction"
 
 msgid "i18n_Form_Label_PersonsSupported"
 msgstr "Persons under-care"
+
+msgid "i18n_Form_Label_ResultedElements"
+msgstr "Resulted elements"
 
 msgid "i18n_Form_Label_SeisureAmout"
 msgstr "Seisure amount"
