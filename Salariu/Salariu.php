@@ -226,7 +226,8 @@ class Salariu
         $sntValue    = $this->txLvl['snt'];
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sanatate'), $this->txLvl['sntP'] . '%', $sntValue);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pd'), '&nbsp;', $amount['pd']);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('impozit'), '&nbsp;', $amount['impozit']);
+        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('impozit'), $this->txLvl['inTaxP']
+            . '%', $amount['impozit']);
         $pnValue     = $this->tCmnSuperGlobals->request->get('pn') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pn'), '&nbsp;', $pnValue);
         $retineri    = $casValue + $smjValue + $sntValue + $amount['impozit'];

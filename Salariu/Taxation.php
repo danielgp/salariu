@@ -84,8 +84,9 @@ trait Taxation
      * */
     protected function setIncomeTax($lngDate, $lngTaxBase, $nValues)
     {
-        $nReturn = $lngTaxBase * 16 / 100;
-        $yrDate  = date('Y', $lngDate);
+        $this->txLvl['inTaxP'] = '16';
+        $nReturn               = $lngTaxBase * 16 / 100;
+        $yrDate                = date('Y', $lngDate);
         if (in_array($yrDate, [2002, 2003, 2004])) {
             $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues[$yrDate]);
         } elseif ($yrDate == 2001) {
@@ -117,13 +118,14 @@ trait Taxation
         $howMany = count($nValues);
         for ($counter = 0; $counter <= $howMany; $counter++) {
             if (($lngTaxBase <= $nValues[$counter]['Upper Limit Value'])) {
-                $sLbl    = [
+                $sLbl                  = [
                     'BDP' => $nValues[$counter]['Base Deducted Percentage'],
                     'BDV' => $nValues[$counter]['Base Deduction Value'],
                     'TFV' => $nValues[$counter]['Tax Free Value'],
                 ];
-                $nReturn = $sLbl['TFV'] + ($lngTaxBase - $sLbl['BDV']) * $sLbl['BDP'] / 100;
-                $counter = $howMany;
+                $nReturn               = $sLbl['TFV'] + ($lngTaxBase - $sLbl['BDV']) * $sLbl['BDP'] / 100;
+                $this->txLvl['inTaxP'] = 'fx+' . $sLbl['BDP'];
+                $counter               = $howMany;
             }
         }
         return $nReturn;
