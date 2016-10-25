@@ -51,8 +51,19 @@
                 "200%"
             ]
         },
-        "ovAmount": {
-            "Label": "i18n_Form_Label_OvertimeAmount"
+        "ovAmount1": {
+            "Label": [
+                "i18n_Form_Label_OvertimeAmount",
+                "i18n_Form_Label_OvertimeChoice1",
+                ""
+            ]
+        },
+        "ovAmount2": {
+            "Label": [
+                "i18n_Form_Label_OvertimeAmount",
+                "i18n_Form_Label_OvertimeChoice2",
+                ""
+            ]
         },
         "pb": {
             "Label": "i18n_Form_Label_AdditionalBruttoAmount"

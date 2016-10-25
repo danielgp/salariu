@@ -208,21 +208,18 @@ class Salariu
         $pbValue     = $this->tCmnSuperGlobals->request->get('pb') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pb'), '&nbsp;', $pbValue);
         $ovTime      = [
-            'm'  => $this->setLabel('ovAmount'),
-            1    => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice1'),
-            2    => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice2'),
             11   => $ovTimeVal['os175'] * pow(10, 4),
             22   => $ovTimeVal['os200'] * pow(10, 4),
             'o1' => $this->tCmnSuperGlobals->request->get('os175'),
             'o2' => $this->tCmnSuperGlobals->request->get('os200'),
         ];
-        $sReturn[]   = $this->setFormRowTwoLabels(sprintf($ovTime['m'], $ovTime[1]), '<span style="font-size:smaller;">'
-            . $ovTime['o1'] . 'h&nbsp;x&nbsp;175%</span>', $ovTime[11]);
-        $sReturn[]   = $this->setFormRowTwoLabels(sprintf($ovTime['m'], $ovTime[2]), '<span style="font-size:smaller;">'
-            . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTime[22]);
+        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ovAmount1'), ''
+            . '<span style="font-size:smaller;">' . $ovTime['o1'] . 'h&nbsp;x&nbsp;175%</span>', $ovTime[11]);
+        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ovAmount2'), ''
+            . '<span style="font-size:smaller;">' . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTime[22]);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sb'), '&nbsp;', $brut);
         $brut        += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
-        $amount      = $this->getValues($brut, $aryStngs, $shLabels);
+        $amnt      = $this->getValues($brut, $aryStngs, $shLabels);
         $casValue    = $this->txLvl['cas'];
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('cas'), $this->txLvl['casP'] . '%', $casValue);
         $smjValue    = $this->txLvl['smj'];
@@ -230,12 +227,12 @@ class Salariu
             . '%', $this->txLvl['smj']);
         $sntValue    = $this->txLvl['snt'];
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sanatate'), $this->txLvl['sntP'] . '%', $sntValue);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pd'), '&nbsp;', $amount['pd']);
+        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pd'), '&nbsp;', $amnt['pd']);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('impozit'), $this->txLvl['inTaxP']
-            . '%', $amount['impozit']);
+            . '%', $amnt['impozit']);
         $pnValue     = $this->tCmnSuperGlobals->request->get('pn') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pn'), '&nbsp;', $pnValue);
-        $retineri    = $casValue + $smjValue + $sntValue + $amount['impozit'];
+        $retineri    = $casValue + $smjValue + $sntValue + $amnt['impozit'];
         $net         = $brut - $retineri + $this->tCmnSuperGlobals->request->get('pn') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ns'), '&nbsp;', $net);
         $szamntValue = $this->tCmnSuperGlobals->request->get('szamnt') * 10000;
@@ -245,12 +242,12 @@ class Salariu
         $fBonus      = [
             'main'   => $this->setLabel('gb'),
             'value'  => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceValue'),
-            'mtDays' => $this->tCmnSuperGlobals->request->get('nDays') . '&nbsp;/&nbsp;' . $amount['zile']
+            'mtDays' => $this->tCmnSuperGlobals->request->get('nDays') . '&nbsp;/&nbsp;' . $amnt['zile']
         ];
         $fBonusTxt   = sprintf($fBonus['main'], $fBonus['value']);
-        $sReturn[]   = $this->setFormRowTwoLabels($fBonusTxt, $fBonus['mtDays'], $amount['ba']);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('gbns'), '&nbsp;', $amount['gbns']);
-        $total       = ($net + $amount['ba'] + $amount['gbns'] - $this->tCmnSuperGlobals->request->get('szamnt') * 10000);
+        $sReturn[]   = $this->setFormRowTwoLabels($fBonusTxt, $fBonus['mtDays'], $amnt['ba']);
+        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('gbns'), '&nbsp;', $amnt['gbns']);
+        $total       = ($net + $amnt['ba'] + $amnt['gbns'] - $this->tCmnSuperGlobals->request->get('szamnt') * 10000);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('total'), '&nbsp;', $total);
         $sReturn[]   = '</tbody>';
         setlocale(LC_TIME, explode('_', $this->tCmnSession->get('lang'))[0]);
