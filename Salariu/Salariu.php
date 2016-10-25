@@ -50,7 +50,7 @@ class Salariu
         $this->initializeSprGlbAndSession();
         $this->handleLocalizationSalariu($interfaceElements['Application']);
         echo $this->setHeaderHtml();
-        $this->processFormInputDefaults($interfaceElements['Values Filter Rules']);
+        $this->processFormInputDefaults($this->tCmnSuperGlobals, $interfaceElements['Values Filter Rules']);
         echo $this->setFormInput();
         $this->setExchangeRateValues($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
         echo $this->setFormOutput($configPath, $interfaceElements['Short Labels']);

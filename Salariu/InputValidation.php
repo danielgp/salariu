@@ -31,7 +31,7 @@ namespace danielgp\salariu;
 trait InputValidation
 {
 
-    private function applyYMvalidations()
+    private function applyYMvalidations(\Symfony\Component\HttpFoundation\Request $tCSG)
     {
         $validOpt = [
             'options' => [
@@ -40,17 +40,18 @@ trait InputValidation
                 'min_range' => mktime(0, 0, 0, 1, 1, 2001),
             ]
         ];
-        $validYM  = filter_var($this->tCmnSuperGlobals->request->get('ym'), FILTER_VALIDATE_INT, $validOpt);
-        $this->tCmnSuperGlobals->request->set('ym', $validYM);
+        $validYM  = filter_var($tCSG->request->get('ym'), FILTER_VALIDATE_INT, $validOpt);
+        $tCSG->request->set('ym', $validYM);
     }
 
-    private function establishValidValue($key, $value, $inValuesFilterRules)
+    private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $value, $inVlsFltrRls)
     {
+        $validation                      = FILTER_DEFAULT;
         $validOpts                       = [];
         $validOpts['options']['default'] = $value;
-        switch ($inValuesFilterRules['validation_filter']) {
+        switch ($inVlsFltrRls['validation_filter']) {
             case "int":
-                $inVFR                             = $inValuesFilterRules['validation_options'];
+                $inVFR                             = $inVlsFltrRls['validation_options'];
                 $validOpts['options']['max_range'] = $this->getValidOption($value, $inVFR, 'max_range');
                 $validOpts['options']['min_range'] = $this->getValidOption($value, $inVFR, 'min_range');
                 $validation                        = FILTER_VALIDATE_INT;
@@ -60,7 +61,7 @@ trait InputValidation
                 $validation                        = FILTER_VALIDATE_FLOAT;
                 break;
         }
-        $validValue = filter_var($this->tCmnSuperGlobals->get($key), $validation, $validOpts);
+        $validValue = filter_var($tCSG->get($key), $validation, $validOpts);
         return $validValue;
     }
 
@@ -73,15 +74,15 @@ trait InputValidation
         return $valReturn;
     }
 
-    private function processFormInputDefaults($inValuesFilterRules)
+    protected function processFormInputDefaults(\Symfony\Component\HttpFoundation\Request $tCSG, $inValuesFilterRules)
     {
-        $this->applyYMvalidations();
+        $this->applyYMvalidations($tCSG);
         foreach ($inValuesFilterRules as $key => $value) {
-            $validValue = trim($this->tCmnSuperGlobals->get($key));
+            $validValue = trim($tCSG->get($key));
             if (array_key_exists('validation_options', $value)) {
-                $validValue = $this->establishValidValue($key, $value['default'], $value);
+                $validValue = $this->establishValidValue($tCSG, $key, $value['default'], $value);
             }
-            $this->tCmnSuperGlobals->request->set($key, $validValue);
+            $tCSG->request->set($key, $validValue);
         }
     }
 }
