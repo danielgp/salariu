@@ -32,6 +32,7 @@ class Salariu
 {
 
     use \danielgp\bank_holidays\Romanian,
+        \danielgp\salariu\InputValidation,
         \danielgp\salariu\FormattingSalariu,
         \danielgp\salariu\Bonuses,
         \danielgp\salariu\ForeignCurrency,
@@ -49,7 +50,7 @@ class Salariu
         $this->initializeSprGlbAndSession();
         $this->handleLocalizationSalariu($interfaceElements['Application']);
         echo $this->setHeaderHtml();
-        $this->processFormInputDefaults($interfaceElements['Default Values']);
+        $this->processFormInputDefaults($interfaceElements['Values Filter Rules']);
         echo $this->setFormInput();
         $this->setExchangeRateValues($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
         echo $this->setFormOutput($configPath, $interfaceElements['Short Labels']);
@@ -62,35 +63,34 @@ class Salariu
         if ($inDate >= mktime(0, 0, 0, 7, 1, 2010)) {
             $rest += round($vBA, -4);
             if ($inDate >= mktime(0, 0, 0, 10, 1, 2010)) {
-                $rest += round($this->tCmnSuperGlobals->get('gbns') * pow(10, 4), -4);
+                $rest += round($this->tCmnSuperGlobals->request->get('gbns') * pow(10, 4), -4);
             }
         }
-        $rest += $this->tCmnSuperGlobals->get('afet') * pow(10, 4);
+        $rest += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
         return $this->setIncomeTax($inDate, $rest, $arySettings['Income Tax']);
     }
 
     private function getOvertimes($aryStngs)
     {
         $pcToBoolean = [0 => true, 1 => false];
-        $pcBoolean   = $pcToBoolean[$this->tCmnSuperGlobals->get('pc')];
-        $ymVal       = $this->tCmnSuperGlobals->get('ym');
-        $snVal       = $this->tCmnSuperGlobals->get('sn');
+        $pcBoolean   = $pcToBoolean[$this->tCmnSuperGlobals->request->get('pc')];
+        $ymVal       = $this->tCmnSuperGlobals->request->get('ym');
+        $snVal       = $this->tCmnSuperGlobals->request->get('sn');
         $mnth        = $this->setMonthlyAverageWorkingHours($ymVal, $aryStngs, $pcBoolean);
         return [
-            'os175' => ceil($this->tCmnSuperGlobals->get('os175') * 1.75 * $snVal / $mnth),
-            'os200' => ceil($this->tCmnSuperGlobals->get('os200') * 2 * $snVal / $mnth),
+            'os175' => ceil($this->tCmnSuperGlobals->request->get('os175') * 1.75 * $snVal / $mnth),
+            'os200' => ceil($this->tCmnSuperGlobals->request->get('os200') * 2 * $snVal / $mnth),
         ];
     }
 
     private function getValues($lngBase, $aStngs, $shLabels)
     {
-        $inDate             = $this->tCmnSuperGlobals->get('ym');
-        $inDT               = new \DateTime(date('Y/m/d', $inDate));
-        $wkDay              = $this->setWorkingDaysInMonth($inDT, $this->tCmnSuperGlobals->get('pc'));
-        $aReturn            = $this->getValuesPrimary($inDate, $wkDay, $lngBase, $aStngs, $shLabels);
+        $inDate             = $this->tCmnSuperGlobals->request->get('ym');
+        $this->getWorkingDays();
+        $aReturn            = $this->getValuesPrimary($inDate, $lngBase, $aStngs, $shLabels);
         $pdV                = [
             ($lngBase + $aReturn['ba']),
-            $this->tCmnSuperGlobals->get('pi'),
+            $this->tCmnSuperGlobals->request->get('pi'),
         ];
         $aReturn['pd']      = $this->setPersonalDeduction($inDate, $pdV[0], $pdV[1], $aStngs['Personal Deduction']);
         $aryDeductions      = [
@@ -103,21 +103,33 @@ class Salariu
         return $aReturn;
     }
 
-    private function getValuesPrimary($inDate, $wkDay, $lngBase, $aStngs, $shLbl)
+    private function getValuesPrimary($inDate, $lngBase, $aStngs, $shLbl)
     {
         $this->setHealthFundTax($inDate, $lngBase, $aStngs[$shLbl['HFP']], $aStngs[$shLbl['HFUL']]);
         $this->setHealthTax($inDate, $lngBase, $aStngs[$shLbl['HTP']]);
-        $nMealDays        = ($wkDay - $this->tCmnSuperGlobals->get('zfb'));
+        $nMealDays        = $this->tCmnSuperGlobals->request->get('nDays');
         $unemploymentBase = $lngBase;
-        if ($this->tCmnSuperGlobals->get('ym') < mktime(0, 0, 0, 1, 1, 2008)) {
-            $unemploymentBase = $this->tCmnSuperGlobals->get('sn');
+        if ($this->tCmnSuperGlobals->request->get('ym') < mktime(0, 0, 0, 1, 1, 2008)) {
+            $unemploymentBase = $this->tCmnSuperGlobals->request->get('sn');
         }
         $this->setUnemploymentTax($inDate, $unemploymentBase);
         return [
+            'b1'   => $this->setFoodTicketsValue($inDate, $aStngs[$shLbl['MTV']]),
             'ba'   => $this->setFoodTicketsValue($inDate, $aStngs[$shLbl['MTV']]) * $nMealDays,
-            'gbns' => $this->tCmnSuperGlobals->get('gbns') * pow(10, 4),
-            'zile' => $wkDay,
+            'gbns' => $this->tCmnSuperGlobals->request->get('gbns') * pow(10, 4),
+            'zile' => $this->tCmnSuperGlobals->request->get('wkDays'),
         ];
+    }
+
+    private function getWorkingDays()
+    {
+        $components = [
+            new \DateTime(date('Y/m/d', $this->tCmnSuperGlobals->request->get('ym'))),
+            $this->tCmnSuperGlobals->request->get('pc'),
+        ];
+        $this->tCmnSuperGlobals->request->set('wkDays', $this->setWorkingDaysInMonth($components[0], $components[1]));
+        $vDays      = $this->tCmnSuperGlobals->request->get('wkDays') - $this->tCmnSuperGlobals->request->get('zfb');
+        $this->tCmnSuperGlobals->request->set('nDays', max($vDays, 0));
     }
 
     private function setFormInput()
@@ -147,7 +159,7 @@ class Salariu
             . '</th><th>' . $this->tApp->gettext('i18n_Form_Label_InputValues') . '</th></tr></thead><tbody>';
         $sReturn[] = $this->setFormRow($this->setLabel('ym'), $this->setFormInputSelectYM(), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('sn'), $this->setFormInputText('sn', 10, 'RON'), 1);
-        $sReturn[] = $this->setFormRow($this->setLabel('sc'), $this->setFormInputText('sc', 2, '%'), 1);
+        $sReturn[] = $this->setFormRow($this->setLabel('sc'), $this->setFormInputText('sc', 7, '%'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('pb'), $this->setFormInputText('pb', 10, 'RON'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('pn'), $this->setFormInputText('pn', 10, 'RON'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('os175'), $this->setFormInputText('os175', 2, 'ore'), 1);
@@ -166,7 +178,7 @@ class Salariu
         $inputParameters = [
             'type'      => 'text',
             'name'      => $inName,
-            'value'     => $this->tCmnSuperGlobals->get($inName),
+            'value'     => $this->tCmnSuperGlobals->request->get($inName),
             'size'      => $inSize,
             'maxlength' => $inSize,
         ];
@@ -179,20 +191,20 @@ class Salariu
         $sReturn     = [];
         $sReturn[]   = $this->setFormOutputHeader();
         $ovTimeVal   = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
-        $additions   = $this->tCmnSuperGlobals->get('pb') + $ovTimeVal['os175'] + $ovTimeVal['os200'];
+        $additions   = $this->tCmnSuperGlobals->request->get('pb') + $ovTimeVal['os175'] + $ovTimeVal['os200'];
         $bComponents = [
-            'sc' => $this->tCmnSuperGlobals->get('sc'),
-            'sn' => $this->tCmnSuperGlobals->get('sn'),
+            'sc' => $this->tCmnSuperGlobals->request->get('sc'),
+            'sn' => $this->tCmnSuperGlobals->request->get('sn'),
         ];
         $brut        = ($bComponents['sn'] * (1 + $bComponents['sc'] / 100) + $additions) * pow(10, 4);
         $xDate       = '<span style="font-size:smaller;">' . date('d.m.Y', $this->currencyDetails['CXD']) . '</span>';
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('xrate@Date'), $xDate, 10000000);
-        $snValue     = $this->tCmnSuperGlobals->get('sn') * 10000;
+        $snValue     = $this->tCmnSuperGlobals->request->get('sn') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sn'), '&nbsp;', $snValue);
-        $scValue     = $this->tCmnSuperGlobals->get('sc');
-        $prima       = $this->tCmnSuperGlobals->get('sn') * $scValue * 100;
+        $scValue     = $this->tCmnSuperGlobals->request->get('sc');
+        $prima       = $this->tCmnSuperGlobals->request->get('sn') * $scValue * 100;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sc'), $scValue . '%', $prima);
-        $pbValue     = $this->tCmnSuperGlobals->get('pb') * 10000;
+        $pbValue     = $this->tCmnSuperGlobals->request->get('pb') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pb'), '&nbsp;', $pbValue);
         $ovTime      = [
             'm' => $this->setLabel('ovAmount'),
@@ -204,40 +216,41 @@ class Salariu
         $sReturn[]   = $this->setFormRowTwoLabels(sprintf($ovTime['m'], $ovTime[1]), '175%', $ovTime[11]);
         $sReturn[]   = $this->setFormRowTwoLabels(sprintf($ovTime['m'], $ovTime[2]), '200%', $ovTime[22]);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sb'), '&nbsp;', $brut);
-        $brut        += $this->tCmnSuperGlobals->get('afet') * pow(10, 4);
+        $brut        += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
         $amount      = $this->getValues($brut, $aryStngs, $shLabels);
         $casValue    = $this->txLvl['cas'];
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('cas'), $this->txLvl['casP'] . '%', $casValue);
         $smjValue    = $this->txLvl['smj'];
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('somaj'), $this->txLvl['smjP'] . '%', $this->txLvl['smj']);
+        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('somaj'), $this->txLvl['smjP']
+            . '%', $this->txLvl['smj']);
         $sntValue    = $this->txLvl['snt'];
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sanatate'), $this->txLvl['sntP'] . '%', $sntValue);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pd'), '&nbsp;', $amount['pd']);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('impozit'), '&nbsp;', $amount['impozit']);
-        $pnValue     = $this->tCmnSuperGlobals->get('pn') * 10000;
+        $pnValue     = $this->tCmnSuperGlobals->request->get('pn') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pn'), '&nbsp;', $pnValue);
         $retineri    = $casValue + $smjValue + $sntValue + $amount['impozit'];
-        $net         = $brut - $retineri + $this->tCmnSuperGlobals->get('pn') * 10000;
+        $net         = $brut - $retineri + $this->tCmnSuperGlobals->request->get('pn') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ns'), '&nbsp;', $net);
-        $szamntValue = $this->tCmnSuperGlobals->get('szamnt') * 10000;
+        $szamntValue = $this->tCmnSuperGlobals->request->get('szamnt') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('szamnt'), '&nbsp;', $szamntValue);
-        $nsc         = $net - $this->tCmnSuperGlobals->get('szamnt') * 10000;
+        $nsc         = $net - $this->tCmnSuperGlobals->request->get('szamnt') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('nsc'), '&nbsp;', $nsc);
         $fBonus      = [
             'main'   => $this->setLabel('gb'),
             'value'  => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceValue'),
-            'mtDays' => ($amount['zile'] - $this->tCmnSuperGlobals->get('zfb')) . '/' . $amount['zile']
+            'mtDays' => $this->tCmnSuperGlobals->request->get('nDays') . '&nbsp;/&nbsp;' . $amount['zile']
         ];
         $fBonusTxt   = sprintf($fBonus['main'], $fBonus['value']);
         $sReturn[]   = $this->setFormRowTwoLabels($fBonusTxt, $fBonus['mtDays'], $amount['ba']);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('gbns'), '&nbsp;', $amount['gbns']);
-        $total       = ($net + $amount['ba'] + $amount['gbns'] - $this->tCmnSuperGlobals->get('szamnt') * 10000);
+        $total       = ($net + $amount['ba'] + $amount['gbns'] - $this->tCmnSuperGlobals->request->get('szamnt') * 10000);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('total'), '&nbsp;', $total);
         $sReturn[]   = '</tbody>';
         setlocale(LC_TIME, explode('_', $this->tCmnSession->get('lang'))[0]);
-        $crtMonth    = strftime('%B', $this->tCmnSuperGlobals->get('ym'));
+        $crtMonth    = strftime('%B', $this->tCmnSuperGlobals->request->get('ym'));
         $legentText  = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
-            . '', $crtMonth, date('Y', $this->tCmnSuperGlobals->get('ym')));
+            . '', $crtMonth, date('Y', $this->tCmnSuperGlobals->request->get('ym')));
         $legend      = $this->setStringIntoTag($legentText, 'legend');
         return $this->setStringIntoTag($legend . $this->setStringIntoTag(implode('', $sReturn), 'table'), 'fieldset', [
                 'style' => 'float: left;'

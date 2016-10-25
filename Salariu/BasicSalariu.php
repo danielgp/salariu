@@ -68,18 +68,6 @@ trait BasicSalariu
         }
     }
 
-    private function processFormInputDefaults($inDefaultValues)
-    {
-        if (is_null($this->tCmnSuperGlobals->get('ym'))) {
-            $this->tCmnSuperGlobals->request->set('ym', mktime(0, 0, 0, date('m'), 1, date('Y')));
-        }
-        foreach ($inDefaultValues as $key => $value) {
-            if (is_null($this->tCmnSuperGlobals->get($key))) {
-                $this->tCmnSuperGlobals->request->set($key, $value);
-            }
-        }
-    }
-
     private function setFooterHtml($appSettings)
     {
         $sReturn = $this->setUpperRightBoxLanguages($appSettings['Available Languages'])

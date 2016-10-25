@@ -9,20 +9,6 @@
         "Exchange Rate Local": "nbrfxrates.xml",
         "Exchange Rate Source": "http://www.bnr.ro/nbrfxrates.xml"
     },
-    "Default Values": {
-        "afet": 0,
-        "gbns": 0,
-        "pb": 0,
-        "pc": 0,
-        "pi": 0,
-        "pn": 0,
-        "os175": 0,
-        "os200": 0,
-        "sc": 0,
-        "sn": 1250,
-        "zfb": 0,
-        "szamnt": 0
-    },
     "Form Input": {
         "afet": {
             "Label": "i18n_Form_Label_AdvantagesForExciseTax"
@@ -185,6 +171,103 @@
             "color": "#FFFFFF",
             "font-weight": "bold",
             "text-align": "center"
+        }
+    },
+    "Values Filter Rules": {
+        "afet": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 999999
+            }
+        },
+        "gbns": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 9999
+            }
+        },
+        "pb": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 999999
+            }
+        },
+        "pc": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": 0,
+                "max_range": 1
+            }
+        },
+        "pi": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": 0,
+                "max_range": 4
+            }
+        },
+        "pn": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 999999
+            }
+        },
+        "os175": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 44
+            }
+        },
+        "os200": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 44
+            }
+        },
+        "sc": {
+            "default": 0,
+            "validation_filter": "float",
+            "validation_options": {
+                "decimals": 2
+            }
+        },
+        "sn": {
+            "default": 1250,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 999999
+            }
+        },
+        "szamnt": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 999999
+            }
+        },
+        "zfb": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": 0,
+                "max_range": 23
+            }
         }
     }
 }
