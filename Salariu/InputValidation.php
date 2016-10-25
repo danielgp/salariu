@@ -31,7 +31,7 @@ namespace danielgp\salariu;
 trait InputValidation
 {
 
-    private function applyYMvalidations(\Symfony\Component\HttpFoundation\Request $tCSG)
+    private function applyYMvalidations(\Symfony\Component\HttpFoundation\Request $tCSG, $ymValues)
     {
         $validOpt = [
             'options' => [
@@ -40,8 +40,25 @@ trait InputValidation
                 'min_range' => mktime(0, 0, 0, 1, 1, 2001),
             ]
         ];
-        $validYM  = filter_var($tCSG->request->get('ym'), FILTER_VALIDATE_INT, $validOpt);
+        $validYM  = filter_var($tCSG->get('ym'), FILTER_VALIDATE_INT, $validOpt);
+        if (!array_key_exists($validYM, $ymValues)) {
+            $validYM = mktime(0, 0, 0, date('m'), 1, date('Y'));
+        }
         $tCSG->request->set('ym', $validYM);
+    }
+
+    private function buildYMvalues()
+    {
+        $temp = [];
+        for ($counter = date('Y'); $counter >= 2001; $counter--) {
+            for ($counter2 = 12; $counter2 >= 1; $counter2--) {
+                $crtDate = mktime(0, 0, 0, $counter2, 1, $counter);
+                if ($crtDate <= mktime(0, 0, 0, date('m'), 1, date('Y'))) {
+                    $temp[$crtDate] = strftime('%Y, %m (%B)', $crtDate);
+                }
+            }
+        }
+        return $temp;
     }
 
     private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $value, $inVlsFltrRls)
@@ -74,10 +91,10 @@ trait InputValidation
         return $valReturn;
     }
 
-    protected function processFormInputDefaults(\Symfony\Component\HttpFoundation\Request $tCSG, $inValuesFilterRules)
+    protected function processFormInputDefaults(\Symfony\Component\HttpFoundation\Request $tCSG, $inVFR, $ymValues)
     {
-        $this->applyYMvalidations($tCSG);
-        foreach ($inValuesFilterRules as $key => $value) {
+        $this->applyYMvalidations($tCSG, $ymValues);
+        foreach ($inVFR as $key => $value) {
             $validValue = trim($tCSG->get($key));
             if (array_key_exists('validation_options', $value)) {
                 $validValue = $this->establishValidValue($tCSG, $key, $value['default'], $value);

@@ -31,7 +31,6 @@ namespace danielgp\salariu;
 /**
  * Description of Bonuses
  *
- * @author E303778
  */
 trait Bonuses
 {

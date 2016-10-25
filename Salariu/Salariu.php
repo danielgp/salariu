@@ -50,8 +50,9 @@ class Salariu
         $this->initializeSprGlbAndSession();
         $this->handleLocalizationSalariu($interfaceElements['Application']);
         echo $this->setHeaderHtml();
-        $this->processFormInputDefaults($this->tCmnSuperGlobals, $interfaceElements['Values Filter Rules']);
-        echo $this->setFormInput();
+        $ymValues          = $this->buildYMvalues();
+        $this->processFormInputDefaults($this->tCmnSuperGlobals, $interfaceElements['Values Filter Rules'], $ymValues);
+        echo $this->setFormInput($ymValues);
         $this->setExchangeRateValues($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
         echo $this->setFormOutput($configPath, $interfaceElements['Short Labels']);
         echo $this->setFooterHtml($interfaceElements['Application']);
@@ -132,9 +133,9 @@ class Salariu
         $this->tCmnSuperGlobals->request->set('nDays', max($vDays, 0));
     }
 
-    private function setFormInput()
+    private function setFormInput($ymValues)
     {
-        $sReturn     = $this->setFormInputElements();
+        $sReturn     = $this->setFormInputElements($ymValues);
         $btn         = $this->setStringIntoShortTag('input', [
             'type'  => 'submit',
             'id'    => 'submit',
@@ -152,12 +153,12 @@ class Salariu
         return $this->setStringIntoTag(implode('', $aryFieldSet), 'fieldset', ['style' => 'float: left;']);
     }
 
-    private function setFormInputElements()
+    private function setFormInputElements($ymValues)
     {
         $sReturn   = [];
         $sReturn[] = '<thead><tr><th>' . $this->tApp->gettext('i18n_Form_Label_InputElements')
             . '</th><th>' . $this->tApp->gettext('i18n_Form_Label_InputValues') . '</th></tr></thead><tbody>';
-        $sReturn[] = $this->setFormRow($this->setLabel('ym'), $this->setFormInputSelectYM(), 1);
+        $sReturn[] = $this->setFormRow($this->setLabel('ym'), $this->setFormInputSelectYM($ymValues), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('sn'), $this->setFormInputText('sn', 10, 'RON'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('sc'), $this->setFormInputText('sc', 7, '%'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('pb'), $this->setFormInputText('pb', 10, 'RON'), 1);
@@ -207,14 +208,18 @@ class Salariu
         $pbValue     = $this->tCmnSuperGlobals->request->get('pb') * 10000;
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pb'), '&nbsp;', $pbValue);
         $ovTime      = [
-            'm' => $this->setLabel('ovAmount'),
-            1   => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice1'),
-            2   => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice2'),
-            11  => $ovTimeVal['os175'] * pow(10, 4),
-            22  => $ovTimeVal['os200'] * pow(10, 4),
+            'm'  => $this->setLabel('ovAmount'),
+            1    => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice1'),
+            2    => $this->tApp->gettext('i18n_Form_Label_OvertimeChoice2'),
+            11   => $ovTimeVal['os175'] * pow(10, 4),
+            22   => $ovTimeVal['os200'] * pow(10, 4),
+            'o1' => $this->tCmnSuperGlobals->request->get('os175'),
+            'o2' => $this->tCmnSuperGlobals->request->get('os200'),
         ];
-        $sReturn[]   = $this->setFormRowTwoLabels(sprintf($ovTime['m'], $ovTime[1]), '175%', $ovTime[11]);
-        $sReturn[]   = $this->setFormRowTwoLabels(sprintf($ovTime['m'], $ovTime[2]), '200%', $ovTime[22]);
+        $sReturn[]   = $this->setFormRowTwoLabels(sprintf($ovTime['m'], $ovTime[1]), '<span style="font-size:smaller;">'
+            . $ovTime['o1'] . 'h&nbsp;x&nbsp;175%</span>', $ovTime[11]);
+        $sReturn[]   = $this->setFormRowTwoLabels(sprintf($ovTime['m'], $ovTime[2]), '<span style="font-size:smaller;">'
+            . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTime[22]);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sb'), '&nbsp;', $brut);
         $brut        += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
         $amount      = $this->getValues($brut, $aryStngs, $shLabels);

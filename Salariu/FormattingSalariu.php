@@ -70,18 +70,9 @@ trait FormattingSalariu
         return $this->setArrayToSelect($temp2, $this->tCmnSuperGlobals->get('pi'), 'pi', ['size' => 1]);
     }
 
-    private function setFormInputSelectYM()
+    private function setFormInputSelectYM($ymValues)
     {
-        $temp = [];
-        for ($counter = date('Y'); $counter >= 2001; $counter--) {
-            for ($counter2 = 12; $counter2 >= 1; $counter2--) {
-                $crtDate = mktime(0, 0, 0, $counter2, 1, $counter);
-                if ($crtDate <= mktime(0, 0, 0, date('m'), 1, date('Y'))) {
-                    $temp[$crtDate] = strftime('%Y, %m (%B)', $crtDate);
-                }
-            }
-        }
-        return $this->setArrayToSelect($temp, $this->tCmnSuperGlobals->get('ym'), 'ym', ['size' => 1]);
+        return $this->setArrayToSelect($ymValues, $this->tCmnSuperGlobals->get('ym'), 'ym', ['size' => 1]);
     }
 
     private function setFormatRow($text, $value)
