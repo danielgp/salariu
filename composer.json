@@ -19,6 +19,11 @@
         "fortawesome/font-awesome": ">=4.6.3",
         "gettext/gettext": ">=4.1.0"
     },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "frenck/php-compatibility": "*"
+    },
     "autoload": {
         "psr-4": {
             "danielgp\\bank_holidays\\": "vendor/danielgp/bank-holidays/",
