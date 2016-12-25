@@ -4,7 +4,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 Daniel Popiniuc
+ * Copyright (c) 2016 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,12 +44,12 @@ trait Bonuses
         $indexArrayValues  = 0;
         $crtUpperLimitDate = mktime(0, 0, 0, date('n'), 1, date('Y'));
         while (($valueMealTicket === 0)) {
-            $crtVal                = $aryStngMealTickets[$indexArrayValues];
-            $currentLowerLimitDate = mktime(0, 0, 0, $crtVal['Month'], 1, $crtVal['Year']);
-            if (($lngDate <= $crtUpperLimitDate) && ($lngDate >= $currentLowerLimitDate)) {
+            $crtVal            = $aryStngMealTickets[$indexArrayValues];
+            $crtLowerLimitDate = mktime(0, 0, 0, $crtVal['Month'], 1, $crtVal['Year']);
+            if (($lngDate <= $crtUpperLimitDate) && ($lngDate >= $crtLowerLimitDate)) {
                 $valueMealTicket = $crtVal['Value'];
             }
-            $crtUpperLimitDate = $currentLowerLimitDate;
+            $crtUpperLimitDate = $crtLowerLimitDate;
             $indexArrayValues++;
         }
         return $valueMealTicket;
