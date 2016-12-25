@@ -51,6 +51,9 @@
         },
         "2016": {
             "Value": 10.5
+        },
+        "2017": {
+            "Value": 10.5
         }
     },
     "Health Fund Upper Limit": {
@@ -119,6 +122,10 @@
         "2016": {
             "Multiplier": 5,
             "Monthly Average Salary": 26810000
+        },
+        "2017": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 29000000
         }
     },
     "Health Tax Percentage": {
@@ -170,6 +177,9 @@
             "Value": 5.5
         },
         "2016": {
+            "Value": 5.5
+        },
+        "2017": {
             "Value": 5.5
         }
     },
@@ -495,7 +505,8 @@
         "2013": 168,
         "2014": 168,
         "2015": 168.66,
-        "2016": 169.33
+        "2016": 169.33,
+        "2017": 166.66
     },
     "Personal Deduction": {
         "2016": {

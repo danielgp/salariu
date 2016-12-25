@@ -45,7 +45,7 @@ trait Taxation
     private function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues)
     {
         $this->txLvl['casP'] = $this->setValuesFromJson($lngDate, $nPercentages);
-        $nReturn             = $this->setHealthFundTaxBase($lngDate, $lngBrutto, $nValues) * $this->txLvl['casP'] / 100;
+        $nReturn             = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues) * $this->txLvl['casP'] / 100;
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
         }
@@ -57,7 +57,7 @@ trait Taxation
      *
      * http://www.lapensie.com/forum/salariul-mediu-brut.php
      * */
-    private function setHealthFundTaxBase($lngDate, $lngBrutto, $nValues)
+    private function setHealthFndTxBs($lngDate, $lngBrutto, $nValues)
     {
         $crtValues = $nValues[date('Y', $lngDate)];
         $base      = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary']);
@@ -72,11 +72,14 @@ trait Taxation
     /**
      * Sanatate
      * */
-    protected function setHealthTax($lngDate, $lngBrutto, $nPercentages)
+    protected function setHealthTax($lngDate, $lngBrutto, $nPercentages, $nValues)
     {
         $this->txLvl['sntP'] = $this->setValuesFromJson($lngDate, $nPercentages);
         $nReturn             = round($lngBrutto * $this->txLvl['sntP'] / 100, 0);
-        $this->txLvl['snt']  = (($lngDate > mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
+        if ($lngDate > mktime(0, 0, 0, 1, 1, 2017)) {
+            $nReturn = round($this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues) * $this->txLvl['sntP'] / 100, 0);
+        }
+        $this->txLvl['snt'] = (($lngDate > mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
     }
 
     /**

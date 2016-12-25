@@ -107,7 +107,7 @@ class Salariu
     private function getValuesPrimary($inDate, $lngBase, $aStngs, $shLbl)
     {
         $this->setHealthFundTax($inDate, $lngBase, $aStngs[$shLbl['HFP']], $aStngs[$shLbl['HFUL']]);
-        $this->setHealthTax($inDate, $lngBase, $aStngs[$shLbl['HTP']]);
+        $this->setHealthTax($inDate, $lngBase, $aStngs[$shLbl['HTP']], $aStngs[$shLbl['HFUL']]);
         $nMealDays        = $this->tCmnSuperGlobals->request->get('nDays');
         $unemploymentBase = $lngBase;
         if ($this->tCmnSuperGlobals->request->get('ym') < mktime(0, 0, 0, 1, 1, 2008)) {
@@ -219,7 +219,7 @@ class Salariu
             . '<span style="font-size:smaller;">' . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTime[22]);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sb'), '&nbsp;', $brut);
         $brut        += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
-        $amnt      = $this->getValues($brut, $aryStngs, $shLabels);
+        $amnt        = $this->getValues($brut, $aryStngs, $shLabels);
         $casValue    = $this->txLvl['cas'];
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('cas'), $this->txLvl['casP'] . '%', $casValue);
         $smjValue    = $this->txLvl['smj'];
