@@ -49,10 +49,10 @@ trait ForeignCurrency
         }
     }
 
-    private function setCurrencyExchangeVariables($aryRelevantCurrencies, $kCX)
+    private function setCurrencyExchangeVariables($aryRelevantCrncy, $kCX)
     {
         $this->currencyDetails = [
-            'CX'  => $aryRelevantCurrencies,
+            'CX'  => $aryRelevantCrncy,
             'CXD' => strtotime('now'),
         ];
         foreach ($kCX as $value) {
@@ -60,10 +60,10 @@ trait ForeignCurrency
         }
     }
 
-    private function setExchangeRateValues($appSettings, $aryRelevantCurrencies)
+    private function setExchangeRateValues($appSettings, $aryRelevantCrncy)
     {
-        $kCX = array_keys($aryRelevantCurrencies);
-        $this->setCurrencyExchangeVariables($aryRelevantCurrencies, $kCX);
+        $kCX = array_keys($aryRelevantCrncy);
+        $this->setCurrencyExchangeVariables($aryRelevantCrncy, $kCX);
         $this->updateCurrencyExchangeRatesFile($appSettings);
         $xml = new \XMLReader();
         if ($xml->open($appSettings['Exchange Rate Local'], 'UTF-8')) {

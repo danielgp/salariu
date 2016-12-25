@@ -38,18 +38,18 @@ trait Bonuses
     /**
      * Tichete de alimente
      * */
-    protected function setFoodTicketsValue($lngDate, $arySettingMealTickets)
+    protected function setFoodTicketsValue($lngDate, $aryStngMealTickets)
     {
-        $valueMealTicket       = 0;
-        $indexArrayValues      = 0;
-        $currentUpperLimitDate = mktime(0, 0, 0, date('n'), 1, date('Y'));
+        $valueMealTicket   = 0;
+        $indexArrayValues  = 0;
+        $crtUpperLimitDate = mktime(0, 0, 0, date('n'), 1, date('Y'));
         while (($valueMealTicket === 0)) {
-            $crtVal                = $arySettingMealTickets[$indexArrayValues];
+            $crtVal                = $aryStngMealTickets[$indexArrayValues];
             $currentLowerLimitDate = mktime(0, 0, 0, $crtVal['Month'], 1, $crtVal['Year']);
-            if (($lngDate <= $currentUpperLimitDate) && ($lngDate >= $currentLowerLimitDate)) {
+            if (($lngDate <= $crtUpperLimitDate) && ($lngDate >= $currentLowerLimitDate)) {
                 $valueMealTicket = $crtVal['Value'];
             }
-            $currentUpperLimitDate = $currentLowerLimitDate;
+            $crtUpperLimitDate = $currentLowerLimitDate;
             $indexArrayValues++;
         }
         return $valueMealTicket;
