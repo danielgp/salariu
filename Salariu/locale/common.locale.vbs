@@ -9,7 +9,7 @@ Sub ShowSubFolders(Folder, Action, TargetFolder, RootFolder)
             If objFSO.GetExtensionName(objFile.Name) = "po" Then
                 Select Case Action
                     Case "Compile"
-                        WshShell.Run "D:\www\AppForDeveloper\GetText\msgfmt.exe " & objFile.Path & _ 
+                        WshShell.Run "C:\www\AppForDeveloper\GetText\msgfmt.exe " & objFile.Path & _ 
                             " --output-file=" & objFolder.Path & "\" & objFSO.GetBaseName(objFile.Name) & ".mo " & _
                             "--statistics --check --verbose", 0, True
                     Case "CopyToServerForDaniel"
