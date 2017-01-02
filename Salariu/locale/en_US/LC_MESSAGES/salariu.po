@@ -100,6 +100,9 @@ msgstr "Food bonuses value (taxed since Oct. 2010)"
 msgid "i18n_Form_Label_HealthTax"
 msgstr "Health tax"
 
+msgid "i18n_Form_Label_HealthTaxBase"
+msgstr "Calculation base for health tax"
+
 msgid "i18n_Form_Label_InputElements"
 msgstr "Input elements"
 
@@ -129,6 +132,9 @@ msgstr "Overtime hours %s (%s)"
 
 msgid "i18n_Form_Label_PensionFund"
 msgstr "Pension fund"
+
+msgid "i18n_Form_Label_PensionFundBase"
+msgstr "Calculation base for pension fund"
 
 msgid "i18n_Form_Label_PersonalDeduction"
 msgstr "Personal deduction"

@@ -100,6 +100,9 @@ msgstr "Valoare bonuri cadou (impozabile din Oct. 2010)"
 msgid "i18n_Form_Label_HealthTax"
 msgstr "Reținere sănătate"
 
+msgid "i18n_Form_Label_HealthTaxBase"
+msgstr "Baza de calcult pt. reținere sănătate"
+
 msgid "i18n_Form_Label_InputElements"
 msgstr "Elemente de intrare"
 
@@ -129,6 +132,9 @@ msgstr "Ore suplimentare %s (%s)"
 
 msgid "i18n_Form_Label_PensionFund"
 msgstr "Reținere CAS"
+
+msgid "i18n_Form_Label_PensionFundBase"
+msgstr "Baza de calcul pt. reținere CAS"
 
 msgid "i18n_Form_Label_PersonalDeduction"
 msgstr "Deducere personală"

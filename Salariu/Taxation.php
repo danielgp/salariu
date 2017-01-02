@@ -44,8 +44,9 @@ trait Taxation
      * */
     private function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues)
     {
-        $this->txLvl['casP'] = $this->setValuesFromJson($lngDate, $nPercentages);
-        $nReturn             = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues) * $this->txLvl['casP'] / 100;
+        $this->txLvl['casP']      = $this->setValuesFromJson($lngDate, $nPercentages);
+        $this->txLvl['base_casP'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
+        $nReturn                  = $this->txLvl['base_casP'] * $this->txLvl['casP'] / 100;
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
         }
@@ -76,8 +77,9 @@ trait Taxation
     {
         $this->txLvl['sntP'] = $this->setValuesFromJson($lngDate, $nPercentages);
         $nReturn             = round($lngBrutto * $this->txLvl['sntP'] / 100, 0);
-        if ($lngDate > mktime(0, 0, 0, 1, 1, 2017)) {
-            $nReturn = round($this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues) * $this->txLvl['sntP'] / 100, 0);
+        if ($lngDate >= mktime(0, 0, 0, 1, 1, 2017)) {
+            $this->txLvl['sntP_base'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
+            $nReturn                  = round($this->txLvl['sntP_base'] * $this->txLvl['sntP'] / 100, 0);
         }
         $this->txLvl['snt'] = (($lngDate > mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
     }

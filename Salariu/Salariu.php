@@ -188,43 +188,51 @@ class Salariu
 
     private function setFormOutput($configPath, $shLabels)
     {
-        $aryStngs    = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
-        $sReturn     = [];
-        $sReturn[]   = $this->setFormOutputHeader();
-        $ovTimeVal   = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
-        $additions   = $this->tCmnSuperGlobals->request->get('pb') + $ovTimeVal['os175'] + $ovTimeVal['os200'];
-        $bComponents = [
+        $aryStngs         = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
+        $sReturn          = [];
+        $sReturn[]        = $this->setFormOutputHeader();
+        $ovTimeVal        = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
+        $additions        = $this->tCmnSuperGlobals->request->get('pb') + $ovTimeVal['os175'] + $ovTimeVal['os200'];
+        $bComponents      = [
             'sc' => $this->tCmnSuperGlobals->request->get('sc'),
             'sn' => $this->tCmnSuperGlobals->request->get('sn'),
         ];
-        $brut        = ($bComponents['sn'] * (1 + $bComponents['sc'] / 100) + $additions) * pow(10, 4);
-        $xDate       = '<span style="font-size:smaller;">' . date('d.m.Y', $this->currencyDetails['CXD']) . '</span>';
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('xrate@Date'), $xDate, 10000000);
-        $snValue     = $this->tCmnSuperGlobals->request->get('sn') * 10000;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sn'), '&nbsp;', $snValue);
-        $scValue     = $this->tCmnSuperGlobals->request->get('sc');
-        $prima       = $this->tCmnSuperGlobals->request->get('sn') * $scValue * 100;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sc'), $scValue . '%', $prima);
-        $pbValue     = $this->tCmnSuperGlobals->request->get('pb') * 10000;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pb'), '&nbsp;', $pbValue);
-        $ovTime      = [
+        $brut             = ($bComponents['sn'] * (1 + $bComponents['sc'] / 100) + $additions) * pow(10, 4);
+        $xDate            = '<span style="font-size:smaller;">' . date('d.m.Y', $this->currencyDetails['CXD']) . '</span>';
+        $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('xrate@Date'), $xDate, 10000000);
+        $snValue          = $this->tCmnSuperGlobals->request->get('sn') * 10000;
+        $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('sn'), '&nbsp;', $snValue);
+        $scValue          = $this->tCmnSuperGlobals->request->get('sc');
+        $prima            = $this->tCmnSuperGlobals->request->get('sn') * $scValue * 100;
+        $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('sc'), $scValue . '%', $prima);
+        $pbValue          = $this->tCmnSuperGlobals->request->get('pb') * 10000;
+        $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('pb'), '&nbsp;', $pbValue);
+        $ovTime           = [
             11   => $ovTimeVal['os175'] * pow(10, 4),
             22   => $ovTimeVal['os200'] * pow(10, 4),
             'o1' => $this->tCmnSuperGlobals->request->get('os175'),
             'o2' => $this->tCmnSuperGlobals->request->get('os200'),
         ];
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ovAmount1'), ''
+        $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('ovAmount1'), ''
             . '<span style="font-size:smaller;">' . $ovTime['o1'] . 'h&nbsp;x&nbsp;175%</span>', $ovTime[11]);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ovAmount2'), ''
+        $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('ovAmount2'), ''
             . '<span style="font-size:smaller;">' . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTime[22]);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sb'), '&nbsp;', $brut);
-        $brut        += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
-        $amnt        = $this->getValues($brut, $aryStngs, $shLabels);
-        $casValue    = $this->txLvl['cas'];
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('cas'), $this->txLvl['casP'] . '%', $casValue);
-        $smjValue    = $this->txLvl['smj'];
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('somaj'), $this->txLvl['smjP']
+        $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('sb'), '&nbsp;', $brut);
+        $brut             += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
+        $amnt             = $this->getValues($brut, $aryStngs, $shLabels);
+        $limitDisplayBase = false;
+        if ($brut > $this->txLvl['base_casP']) {
+            $limitDisplayBase = true;
+            $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('cas_base'), '', $this->txLvl['base_casP']);
+        }
+        $casValue  = $this->txLvl['cas'];
+        $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('cas'), $this->txLvl['casP'] . '%', $casValue);
+        $smjValue  = $this->txLvl['smj'];
+        $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('somaj'), $this->txLvl['smjP']
             . '%', $this->txLvl['smj']);
+        if (array_key_exists('sntP_base', $this->txLvl) && $limitDisplayBase) {
+            $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('sntP_base'), '&nbsp;', $this->txLvl['sntP_base']);
+        }
         $sntValue    = $this->txLvl['snt'];
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sanatate'), $this->txLvl['sntP'] . '%', $sntValue);
         $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pd'), '&nbsp;', $amnt['pd']);

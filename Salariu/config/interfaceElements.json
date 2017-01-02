@@ -19,6 +19,9 @@
         "cas": {
             "Label": "i18n_Form_Label_PensionFund"
         },
+        "cas_base": {
+            "Label": "i18n_Form_Label_PensionFundBase"
+        },
         "fd": {
             "Label": "i18n_Form_Disclaimer"
         },
@@ -92,6 +95,9 @@
         "sn": {
             "Label": "i18n_Form_Label_NegotiatedSalary"
         },
+        "sntP_base": {
+            "Label": "i18n_Form_Label_HealthTaxBase"
+        },
         "somaj": {
             "Label": "i18n_Form_Label_UnemploymentTax"
         },
@@ -154,22 +160,25 @@
     },
     "Table Cell Applied Style": {
         "i18n_Form_Disclaimer": "S4",
-        "i18n_Form_Label_BruttoSalary": "S1",
-        "i18n_Form_Label_ExciseTax": "S2",
-        "i18n_Form_Label_HealthTax": "S2",
-        "i18n_Form_Label_NegotiatedSalary": "S1",
-        "i18n_Form_Label_NettoSalaryCash": "S1",
-        "i18n_Form_Label_PensionFund": "S2",
-        "i18n_Form_Label_SeisureAmout": "S2",
+        "i18n_Form_Label_BruttoSalary": "SblackBold",
+        "i18n_Form_Label_ExciseTax": "Sred",
+        "i18n_Form_Label_HealthTax": "Sred",
+        "i18n_Form_Label_HealthTaxBase": "Sgrey",
+        "i18n_Form_Label_NegotiatedSalary": "SblackBold",
+        "i18n_Form_Label_NettoSalaryCash": "SblackBold",
+        "i18n_Form_Label_PensionFund": "Sred",
+        "i18n_Form_Label_PensionFundBase": "Sgrey",
+        "i18n_Form_Label_PersonalDeduction": "Sgrey",
+        "i18n_Form_Label_SeisureAmout": "Sred",
         "i18n_Form_Label_Total": "S3",
-        "i18n_Form_Label_UnemploymentTax": "S2"
+        "i18n_Form_Label_UnemploymentTax": "Sred"
     },
     "Table Cell Style Definitions": {
-        "S1": {
+        "SblackBold": {
             "color": "#000000",
             "font-weight": "bold"
         },
-        "S2": {
+        "Sred": {
             "color": "#FF0000"
         },
         "S3": {
@@ -182,6 +191,10 @@
             "color": "#FFFFFF",
             "font-weight": "bold",
             "text-align": "center"
+        },
+        "Sgrey": {
+            "color": "#666",
+            "font-style": "italic"
         }
     },
     "Values Filter Rules": {
