@@ -45,8 +45,8 @@ trait Taxation
     private function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues)
     {
         $this->txLvl['casP']      = $this->setValuesFromJson($lngDate, $nPercentages);
-        $this->txLvl['base_casP'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
-        $nReturn                  = $this->txLvl['base_casP'] * $this->txLvl['casP'] / 100;
+        $this->txLvl['casP_base'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
+        $nReturn                  = $this->txLvl['casP_base'] * $this->txLvl['casP'] / 100;
         if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
             $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
         }

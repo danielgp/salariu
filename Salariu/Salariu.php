@@ -199,55 +199,55 @@ class Salariu
         ];
         $brut        = ($bComponents['sn'] * (1 + $bComponents['sc'] / 100) + $additions) * pow(10, 4);
         $xDate       = '<span style="font-size:smaller;">' . date('d.m.Y', $this->currencyDetails['CXD']) . '</span>';
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('xrate@Date'), $xDate, 10000000);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('xrate@Date'), $xDate, 10000000);
         $snValue     = $this->tCmnSuperGlobals->request->get('sn') * 10000;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sn'), '&nbsp;', $snValue);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('sn'), '&nbsp;', $snValue);
         $scValue     = $this->tCmnSuperGlobals->request->get('sc');
         $prima       = $this->tCmnSuperGlobals->request->get('sn') * $scValue * 100;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sc'), $scValue . '%', $prima);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('sc'), $scValue . '%', $prima);
         $pbValue     = $this->tCmnSuperGlobals->request->get('pb') * 10000;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pb'), '&nbsp;', $pbValue);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('pb'), '&nbsp;', $pbValue);
         $ovTime      = [
             11   => $ovTimeVal['os175'] * pow(10, 4),
             22   => $ovTimeVal['os200'] * pow(10, 4),
             'o1' => $this->tCmnSuperGlobals->request->get('os175'),
             'o2' => $this->tCmnSuperGlobals->request->get('os200'),
         ];
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ovAmount1'), ''
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('ovAmount1'), ''
             . '<span style="font-size:smaller;">' . $ovTime['o1'] . 'h&nbsp;x&nbsp;175%</span>', $ovTime[11]);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ovAmount2'), ''
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('ovAmount2'), ''
             . '<span style="font-size:smaller;">' . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTime[22]);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('sb'), '&nbsp;', $brut);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('sb'), '&nbsp;', $brut);
         $brut        += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
         $amnt        = $this->getValues($brut, $aryStngs, $shLabels);
         $sReturn[]   = $this->setFormOutputTaxations($brut, $amnt);
         $pnValue     = $this->tCmnSuperGlobals->request->get('pn') * 10000;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('pn'), '&nbsp;', $pnValue);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('pn'), '&nbsp;', $pnValue);
         $retineri    = $this->txLvl['cas'] + $this->txLvl['smj'] + $this->txLvl['snt'] + $amnt['impozit'];
         $net         = $brut - $retineri + $this->tCmnSuperGlobals->request->get('pn') * 10000;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('ns'), '&nbsp;', $net);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('ns'), '&nbsp;', $net);
         $szamntValue = $this->tCmnSuperGlobals->request->get('szamnt') * 10000;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('szamnt'), '&nbsp;', $szamntValue);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('szamnt'), '&nbsp;', $szamntValue);
         $nsc         = $net - $this->tCmnSuperGlobals->request->get('szamnt') * 10000;
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('nsc'), '&nbsp;', $nsc);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('nsc'), '&nbsp;', $nsc);
         $fBonus      = [
             'main'   => $this->setLabel('gb'),
             'value'  => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceValue'),
             'mtDays' => $this->tCmnSuperGlobals->request->get('nDays') . '&nbsp;/&nbsp;' . $amnt['zile']
         ];
         $fBonusTxt   = sprintf($fBonus['main'], $fBonus['value']);
-        $sReturn[]   = $this->setFormRowTwoLabels($fBonusTxt, $fBonus['mtDays'], $amnt['ba']);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('gbns'), '&nbsp;', $amnt['gbns']);
+        $sReturn[]   = $this->setFrmRowTwoLbls($fBonusTxt, $fBonus['mtDays'], $amnt['ba']);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('gbns'), '&nbsp;', $amnt['gbns']);
         $total       = ($net + $amnt['ba'] + $amnt['gbns'] - $this->tCmnSuperGlobals->request->get('szamnt') * 10000);
-        $sReturn[]   = $this->setFormRowTwoLabels($this->setLabel('total'), '&nbsp;', $total);
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('total'), '&nbsp;', $total);
         $sReturn[]   = '</tbody>';
         setlocale(LC_TIME, explode('_', $this->tCmnSession->get('lang'))[0]);
         $crtMonth    = strftime('%B', $this->tCmnSuperGlobals->request->get('ym'));
         $legentText  = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
             . '', $crtMonth, date('Y', $this->tCmnSuperGlobals->request->get('ym')));
-        $legend      = $this->setStringIntoTag($legentText, 'legend');
-        return $this->setStringIntoTag($legend
-                . $this->setStringIntoTag(implode('', $sReturn), 'table'), 'fieldset', [
+        $fieldsetC   = $this->setStringIntoTag($legentText, 'legend')
+            . $this->setStringIntoTag(implode('', $sReturn), 'table');
+        return $this->setStringIntoTag($fieldsetC, 'fieldset', [
                 'style' => 'float: left;'
         ]);
     }
@@ -267,26 +267,21 @@ class Salariu
 
     private function setFormOutputTaxations($brut, $amnt)
     {
-        $sReturn          = [];
+        $sRn          = [];
         $limitDisplayBase = false;
-        if ($brut > $this->txLvl['base_casP']) {
+        if ($brut > $this->txLvl['casP_base']) {
             $limitDisplayBase = true;
-            $sReturn[]        = $this->setFormRowTwoLabels($this->setLabel('cas_base')
-                . '', '&nbsp;', $this->txLvl['base_casP']);
+            $sRn[]        = $this->setFrmRowTwoLbls($this->setLabel('cas_base'), '', $this->txLvl['casP_base']);
         }
-        $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('cas'), ''
-            . $this->txLvl['casP'] . '%', $this->txLvl['cas']);
-        $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('somaj'), $this->txLvl['smjP']
-            . '%', $this->txLvl['smj']);
-        if (array_key_exists('sntP_base', $this->txLvl) && $limitDisplayBase) {
-            $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('sntP_base'), '', $this->txLvl['sntP_base']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('cas'), $this->txLvl['casP'] . '%', $this->txLvl['cas']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('somaj'), $this->txLvl['smjP'] . '%', $this->txLvl['smj']);
+        if ($limitDisplayBase && array_key_exists('sntP_base', $this->txLvl)) {
+            $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('sntP_base'), '', $this->txLvl['sntP_base']);
         }
-        $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('sanatate'), $this->txLvl['sntP'] . '%', ''
-            . $this->txLvl['snt']);
-        $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('pd'), '&nbsp;', $amnt['pd']);
-        $sReturn[] = $this->setFormRowTwoLabels($this->setLabel('impozit'), $this->txLvl['inTaxP']
-            . '%', $amnt['impozit']);
-        return implode('', $sReturn);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('sanatate'), $this->txLvl['sntP'] . '%', $this->txLvl['snt']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('pd'), '&nbsp;', $amnt['pd']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('impozit'), $this->txLvl['inTaxP'] . '%', $amnt['impozit']);
+        return implode('', $sRn);
     }
 
     private function setFormRow($text, $value, $type = 'amount')
@@ -321,7 +316,7 @@ class Salariu
         return implode('', $cellValue);
     }
 
-    private function setFormRowTwoLabels($text1, $text2, $value)
+    private function setFrmRowTwoLbls($text1, $text2, $value)
     {
         return str_replace(':</td>', ':</td><td class="labelS" style="text-align:right;">'
             . $text2 . '</td>', $this->setFormRow($text1, $value, 'amount'));
