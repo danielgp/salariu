@@ -2,7 +2,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Daniel Popiniuc
+ * Copyright 2017 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,13 +23,13 @@
  * THE SOFTWARE.
  */
 
-header('Location: http://www.pgd.ro/salariu/Salariu/');
+header('Location: https://danielgp.000webhostapp.com/apps/salariu/');
 ?>
 <html>
     <head>
         <title>Salariu</title>
     </head>
     <body>
-        <meta http-equiv="refresh" content="1; url=http://www.pgd.ro/salariu/Salariu/" />
+        <meta http-equiv="refresh" content="1; url=https://danielgp.000webhostapp.com/apps/salariu/" />
     </body>
 </html>
