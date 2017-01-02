@@ -2,12 +2,11 @@
 # - run testsuite for every PHP version
 language: php
 php:
-  - '7.1RC5'
+  - '7.1'
   - '7.0'
   - '5.6'
   - hhvm
 install:
-  - composer self-update
-  - composer update --profile --no-progress
+  - composer update --profile --verbose
 after_success:
   - bash <(curl -s https://codecov.io/bash)
