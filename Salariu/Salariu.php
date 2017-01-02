@@ -267,6 +267,7 @@ class Salariu
 
     private function setFormOutputTaxations($brut, $amnt)
     {
+        $sReturn          = [];
         $limitDisplayBase = false;
         if ($brut > $this->txLvl['base_casP']) {
             $limitDisplayBase = true;
