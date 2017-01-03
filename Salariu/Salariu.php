@@ -249,22 +249,15 @@ class Salariu
         $pbValue  = $this->tCmnSuperGlobals->request->get('pb') * pow(10, 4);
         $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('pb'), '&nbsp;', $pbValue);
         $ovTime   = [
-            11   => $ovTimeVal['os175'] * pow(10, 4),
-            22   => $ovTimeVal['os200'] * pow(10, 4),
             'o1' => $this->tCmnSuperGlobals->request->get('os175'),
             'o2' => $this->tCmnSuperGlobals->request->get('os200'),
         ];
-        $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('ovAmount1'), ''
-            . '<span style="font-size:smaller;">' . $ovTime['o1'] . 'h&nbsp;x&nbsp;175%</span>', $ovTime[11]);
-        $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('ovAmount2'), ''
-            . '<span style="font-size:smaller;">' . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTime[22]);
-        $fLeaveAA = [
-            'main'  => $this->setLabel('zfsa'),
-            'value' => $this->tApp->gettext('i18n_Form_Label_LeaveOfAbsenceAmount'),
-            'mDays' => $this->tCmnSuperGlobals->request->get('zfs') . '&nbsp;/&nbsp;' . $wkDays
-        ];
-        $fLAA     = sprintf($fLeaveAA['main'], $fLeaveAA['value']);
-        $sRt[]    = $this->setFrmRowTwoLbls($fLAA, $fLeaveAA['mDays'], $amntLAA);
+        $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('ovAmount1'), '<span style="font-size:smaller;">'
+            . $ovTime['o1'] . 'h&nbsp;x&nbsp;175%</span>', $ovTimeVal['os175'] * pow(10, 4));
+        $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('ovAmount2'), '<span style="font-size:smaller;">'
+            . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTimeVal['os200'] * pow(10, 4));
+        $fLeaveAA = $this->tCmnSuperGlobals->request->get('zfs') . '&nbsp;/&nbsp;' . $wkDays;
+        $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('zfsa'), $fLeaveAA, $amntLAA);
         return implode('', $sRt);
     }
 
