@@ -109,6 +109,12 @@ msgstr "Input elements"
 msgid "i18n_Form_Label_InputValues"
 msgstr "Input values"
 
+msgid "i18n_Form_Label_LeaveOfAbsenceDays"
+msgstr "Leave of absence days"
+
+msgid "i18n_Form_Label_LeaveOfAbsenceAmount"
+msgstr "Leave of absence amount"
+
 msgid "i18n_Form_Label_NegotiatedSalary"
 msgstr "Negotiated salary"
 

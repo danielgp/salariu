@@ -118,6 +118,12 @@
         },
         "zfb": {
             "Label": "i18n_Form_Label_WorkedDaysWithoutFoodBonuses"
+        },
+        "zfs": {
+            "Label": "i18n_Form_Label_LeaveOfAbsenceDays"
+        },
+        "zfsa": {
+            "Label": "i18n_Form_Label_LeaveOfAbsenceAmount"
         }
     },
     "Relevant Currencies": {
@@ -164,7 +170,8 @@
         "i18n_Form_Label_ExciseTax": "Sred",
         "i18n_Form_Label_HealthTax": "Sred",
         "i18n_Form_Label_HealthTaxBase": "Sgrey",
-        "i18n_Form_Label_NegotiatedSalary": "SblackBold",
+        "i18n_Form_Label_LeaveOfAbsenceAmount": "Sred",
+        "i18n_Form_Label_LeaveOfAbsenceDays": "Sred",
         "i18n_Form_Label_NettoSalaryCash": "SblackBold",
         "i18n_Form_Label_PensionFund": "Sred",
         "i18n_Form_Label_PensionFundBase": "Sgrey",
@@ -286,6 +293,14 @@
             }
         },
         "zfb": {
+            "default": 0,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": 0,
+                "max_range": 23
+            }
+        },
+        "zfs": {
             "default": 0,
             "validation_filter": "int",
             "validation_options": {

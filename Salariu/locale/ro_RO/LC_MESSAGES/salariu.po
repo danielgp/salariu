@@ -109,6 +109,12 @@ msgstr "Elemente de intrare"
 msgid "i18n_Form_Label_InputValues"
 msgstr "Valori de intrare"
 
+msgid "i18n_Form_Label_LeaveOfAbsenceDays"
+msgstr "Zile fără salariu"
+
+msgid "i18n_Form_Label_LeaveOfAbsenceAmount"
+msgstr "Suma aferentă zilelor fără salariu"
+
 msgid "i18n_Form_Label_NegotiatedSalary"
 msgstr "Salariu negociat"
 
