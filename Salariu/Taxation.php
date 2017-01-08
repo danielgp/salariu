@@ -4,7 +4,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Daniel Popiniuc
+ * Copyright (c) 2017 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,24 @@ trait Taxation
 {
 
     private $txLvl;
+
+    private function getIncomeTaxValue($inDate, $lngBase, $vBA, $aryDeductions, $arySettings)
+    {
+        $rest = $lngBase - array_sum($aryDeductions);
+        if ($inDate >= 20100701) {
+            $rest         += round($vBA, -4); // food tickets are taxable
+            $val          = $this->tCmnSuperGlobals->request->get('gbns');
+            $taxMinAmount = 0;
+            if ($inDate >= 20160101) {
+                $taxMinAmount = 150 * ($val || 0);
+            }
+            if ($inDate >= 20101001) {
+                $rest += round(min($val, $val - $taxMinAmount) * pow(10, 4), -4);
+            }
+        }
+        $rest += round($this->tCmnSuperGlobals->request->get('afet') * pow(10, 4), -4);
+        return $this->setIncomeTax($inDate, $rest, $arySettings['Income Tax']);
+    }
 
     /**
      * CAS
@@ -92,9 +110,10 @@ trait Taxation
      * */
     protected function setIncomeTax($lngDate, $lngTaxBase, $nValues)
     {
-        $this->txLvl['inTaxP'] = '16';
-        $nReturn               = $lngTaxBase * 16 / 100;
-        $yrDate                = (int) substr($lngDate, 0, 4);
+        $this->txLvl['inTaxP']      = '16';
+        $this->txLvl['inTaxP_base'] = $lngTaxBase;
+        $nReturn                    = $lngTaxBase * 16 / 100;
+        $yrDate                     = (int) substr($lngDate, 0, 4);
         if (in_array($yrDate, [2002, 2003, 2004])) {
             $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues[$yrDate]);
         } elseif ($yrDate == 2001) {

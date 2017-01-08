@@ -85,6 +85,9 @@ msgstr "Currency exchange rate"
 msgid "i18n_Form_Label_ExciseTax"
 msgstr "Excise tax"
 
+msgid "i18n_Form_Label_ExciseTaxBase"
+msgstr "Excise tax base"
+
 msgid "i18n_Form_Label_FoodBonuses"
 msgstr "Food bonuses %s"
 
@@ -95,7 +98,7 @@ msgid "i18n_Form_Label_FoodBonusesChoiceValue"
 msgstr "Value"
 
 msgid "i18n_Form_Label_FoodBonusesValue"
-msgstr "Food bonuses value (taxed since Oct. 2010)"
+msgstr "Food bonuses value"
 
 msgid "i18n_Form_Label_HealthTax"
 msgstr "Health tax"

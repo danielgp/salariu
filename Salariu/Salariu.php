@@ -4,7 +4,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Daniel Popiniuc
+ * Copyright (c) 2017 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,19 +56,6 @@ class Salariu
         echo $this->setFormInput($dtR, $ymValues, $arySts['Minimum Wage'], $inElmnts['Values Filter Rules']);
         echo $this->setFormOutput($dtR, $arySts, $inElmnts);
         echo $this->setFooterHtml($inElmnts['Application']);
-    }
-
-    private function getIncomeTaxValue($inDate, $lngBase, $vBA, $aryDeductions, $arySettings)
-    {
-        $rest = $lngBase - array_sum($aryDeductions);
-        if ($inDate >= 20100701) {
-            $rest += round($vBA, -4);
-            if ($inDate >= 20101001) {
-                $rest += round($this->tCmnSuperGlobals->request->get('gbns') * pow(10, 4), -4);
-            }
-        }
-        $rest += $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
-        return $this->setIncomeTax($inDate, $rest, $arySettings['Income Tax']);
     }
 
     private function getOvertimes($aryStngs)
@@ -317,6 +304,7 @@ class Salariu
         }
         $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('sanatate'), $this->txLvl['sntP'] . '%', $this->txLvl['snt']);
         $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('pd'), '&nbsp;', $amnt['pd']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('impozit_base'), '&nbsp;', $this->txLvl['inTaxP_base']);
         $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('impozit'), $this->txLvl['inTaxP'] . '%', $amnt['impozit']);
         return implode('', $sRn);
     }

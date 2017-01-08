@@ -4,7 +4,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Daniel Popiniuc
+ * Copyright (c) 2017 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -65,10 +65,10 @@ trait InputValidation
         $defaultDate = new \DateTime('first day of this month');
         $maxDate     = new \DateTime('first day of next month');
         $maxDateYM   = new \DateTime('first day of next month');
-        if (date('d') <= 7) {
-            $defaultDate = new \DateTime('first day of previous month');
-            $maxDate     = new \DateTime('first day of this month');
-            $maxDateYM   = new \DateTime('first day of this month');
+        if (date('d') <= 15) {
+            $defaultDate->sub(new \DateInterval('P1M'));
+            $maxDate->sub(new \DateInterval('P1M'));
+            $maxDateYM->sub(new \DateInterval('P1M'));
         }
         return [
             'default'    => $defaultDate,

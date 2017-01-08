@@ -85,6 +85,9 @@ msgstr "Rata de schimb valutar la data"
 msgid "i18n_Form_Label_ExciseTax"
 msgstr "Reținere Impozit"
 
+msgid "i18n_Form_Label_ExciseTaxBase"
+msgstr "Baza de Impozitare"
+
 msgid "i18n_Form_Label_FoodBonuses"
 msgstr "%s bonuri alimente"
 
@@ -95,7 +98,7 @@ msgid "i18n_Form_Label_FoodBonusesChoiceValue"
 msgstr "Valoare"
 
 msgid "i18n_Form_Label_FoodBonusesValue"
-msgstr "Valoare bonuri cadou (impozabile din Oct. 2010)"
+msgstr "Valoare bonuri cadou"
 
 msgid "i18n_Form_Label_HealthTax"
 msgstr "Reținere sănătate"

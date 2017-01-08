@@ -34,6 +34,9 @@
         "impozit": {
             "Label": "i18n_Form_Label_ExciseTax"
         },
+        "impozit_base": {
+            "Label": "i18n_Form_Label_ExciseTaxBase"
+        },
         "ns": {
             "Label": "i18n_Form_Label_NettoSalary"
         },
@@ -171,6 +174,7 @@
         "i18n_Form_Disclaimer": "S4",
         "i18n_Form_Label_BruttoSalary": "SblackBold",
         "i18n_Form_Label_ExciseTax": "Sred",
+        "i18n_Form_Label_ExciseTaxBase": "Sgrey",
         "i18n_Form_Label_HealthTax": "Sred",
         "i18n_Form_Label_HealthTaxBase": "Sgrey",
         "i18n_Form_Label_LeaveOfAbsenceAmount": "Sred",
