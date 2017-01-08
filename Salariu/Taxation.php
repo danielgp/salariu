@@ -1,5 +1,7 @@
 <?php
 
+//
+
 /**
  *
  * The MIT License (MIT)
@@ -38,21 +40,26 @@ trait Taxation
 
     private $txLvl;
 
+    private function getIncomeTaxBaseAdjustments(\Symfony\Component\HttpFoundation\Request $tCSG, $rest, $inMny)
+    {
+        $restFinal    = $rest + round($inMny['Food Tickets Value'], -4);
+        $val          = $tCSG->get('gbns');
+        $taxMinAmount = 0;
+        if ($inMny['inDate'] >= 20160101) {
+            $taxMinAmount = 150 * ($val || 0);
+        }
+        if ($inMny['inDate'] >= 20101001) {
+            $restFinal += round(min($val, $val - $taxMinAmount) * pow(10, 4), -4);
+        }
+        return $restFinal;
+    }
+
     private function getIncomeTaxValue(\Symfony\Component\HttpFoundation\Request $tCSG, $inMny)
     {
-        $rest = $inMny['lngBase'] - array_sum($inMny['Deductions']);
+        $rest = $inMny['lngBase'] - array_sum($inMny['Deductions']) + round($tCSG->get('afet') * pow(10, 4), -4);
         if ($inMny['inDate'] >= 20100701) {
-            $rest         += round($inMny['Food Tickets Value'], -4);
-            $val          = $tCSG->get('gbns');
-            $taxMinAmount = 0;
-            if ($inMny['inDate'] >= 20160101) {
-                $taxMinAmount = 150 * ($val || 0);
-            }
-            if ($inMny['inDate'] >= 20101001) {
-                $rest += round(min($val, $val - $taxMinAmount) * pow(10, 4), -4);
-            }
+            $rest = $this->getIncomeTaxBaseAdjustments($tCSG, $rest, $inMny);
         }
-        $rest += round($tCSG->get('afet') * pow(10, 4), -4);
         return $this->setIncomeTax($inMny['inDate'], $rest, $inMny['Income Tax']);
     }
 
