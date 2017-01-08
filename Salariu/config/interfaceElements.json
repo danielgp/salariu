@@ -92,6 +92,9 @@
         "sc": {
             "Label": "i18n_Form_Label_CumulatedAddedValue"
         },
+        "sm": {
+            "Label": "i18n_Form_Label_MinimumWage"
+        },
         "sn": {
             "Label": "i18n_Form_Label_NegotiatedSalary"
         },
@@ -172,6 +175,7 @@
         "i18n_Form_Label_HealthTaxBase": "Sgrey",
         "i18n_Form_Label_LeaveOfAbsenceAmount": "Sred",
         "i18n_Form_Label_LeaveOfAbsenceDays": "Sred",
+        "i18n_Form_Label_MinimumWage": "Sgrey",
         "i18n_Form_Label_NettoSalaryCash": "SblackBold",
         "i18n_Form_Label_PensionFund": "Sred",
         "i18n_Form_Label_PensionFundBase": "Sgrey",
@@ -274,6 +278,14 @@
             "validation_filter": "float",
             "validation_options": {
                 "decimals": 2
+            }
+        },
+        "sm": {
+            "default": 1250,
+            "validation_filter": "int",
+            "validation_options": {
+                "min_range": "default",
+                "max_range": 999999
             }
         },
         "sn": {

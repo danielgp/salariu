@@ -31,50 +31,85 @@ namespace danielgp\salariu;
 trait InputValidation
 {
 
-    private function applyYMvalidations(\Symfony\Component\HttpFoundation\Request $tCSG, $ymValues)
+    private function applyYMvalidations(\Symfony\Component\HttpFoundation\Request $tCSG, $ymValues, $dtR)
     {
         $validOpt = [
             'options' => [
-                'default'   => mktime(0, 0, 0, date('m'), 1, date('Y')),
-                'max_range' => mktime(0, 0, 0, date('m'), 1, date('Y')),
-                'min_range' => mktime(0, 0, 0, 1, 1, 2001),
+                'default'   => $dtR['default']->format('Ymd'),
+                'max_range' => $dtR['maximum']->format('Ymd'),
+                'min_range' => $dtR['minimum']->format('Ymd'),
             ]
         ];
         $validYM  = filter_var($tCSG->get('ym'), FILTER_VALIDATE_INT, $validOpt);
         if (!array_key_exists($validYM, $ymValues)) {
-            $validYM = mktime(0, 0, 0, date('m'), 1, date('Y'));
+            $validYM = $validOpt['options']['default'];
         }
         $tCSG->request->set('ym', $validYM);
     }
 
-    private function buildYMvalues()
+    private function buildYMvalues($dtR)
     {
-        $temp = [];
-        for ($counter = date('Y'); $counter >= 2001; $counter--) {
-            for ($counter2 = 12; $counter2 >= 1; $counter2--) {
-                $crtDate = mktime(0, 0, 0, $counter2, 1, $counter);
-                if ($crtDate <= mktime(0, 0, 0, date('m'), 1, date('Y'))) {
-                    $temp[$crtDate] = strftime('%Y, %m (%B)', $crtDate);
-                }
-            }
+        $startDate = $dtR['minimum'];
+        $endDate   = $dtR['maximumYM'];
+        $temp      = [];
+        while ($endDate >= $startDate) {
+            $temp[$endDate->format('Ymd')] = $endDate->format('Y, m (')
+                . strftime('%B', mktime(0, 0, 0, $endDate->format('n'), 1, $endDate->format('Y'))) . ')';
+            $endDate->sub(new \DateInterval('P1M'));
         }
         return $temp;
     }
 
-    private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $value, $inVlsFltrRls)
+    private function dateRangesInScope()
+    {
+        $defaultDate = new \DateTime('first day of this month');
+        $maxDate     = new \DateTime('first day of next month');
+        $maxDateYM   = new \DateTime('first day of next month');
+        if (date('d') <= 7) {
+            $defaultDate = new \DateTime('first day of previous month');
+            $maxDate     = new \DateTime('first day of this month');
+            $maxDateYM   = new \DateTime('first day of this month');
+        }
+        return [
+            'default'    => $defaultDate,
+            'maximum'    => $maxDate,
+            'maximumInt' => $maxDate->format('Ymd'),
+            'maximumYM'  => $maxDateYM,
+            'minimum'    => new \DateTime('2001-01-01'),
+        ];
+    }
+
+    private function determineCrtMinWage($inMny)
+    {
+        $lngDate          = $this->tCmnSuperGlobals->request->get('ym');
+        $indexArrayValues = 0;
+        $intValue         = 0;
+        $maxCounter       = count($inMny['EMW']) - 1;
+        while (($intValue === 0) && ($indexArrayValues <= $maxCounter)) {
+            $crtVal         = $inMny['EMW'][$indexArrayValues];
+            $crtDateOfValue = (int) $crtVal['Year'] . ($crtVal['Month'] < 10 ? 0 : '') . $crtVal['Month'] . '01';
+            if (($lngDate <= $inMny['YM range']['maximumInt']) && ($lngDate >= $crtDateOfValue)) {
+                $intValue = $crtVal['Value'];
+            }
+            $indexArrayValues++;
+        }
+        return $intValue;
+    }
+
+    private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $inMny)
     {
         $validation                      = FILTER_DEFAULT;
         $validOpts                       = [];
-        $validOpts['options']['default'] = $value;
-        switch ($inVlsFltrRls['validation_filter']) {
+        $validOpts['options']['default'] = (in_array($key, ['sm', 'sn']) ? $inMny['MW'] : $inMny['value']);
+        switch ($inMny['VFR']['validation_filter']) {
             case "int":
-                $inVFR                             = $inVlsFltrRls['validation_options'];
-                $validOpts['options']['max_range'] = $this->getValidOption($value, $inVFR, 'max_range');
-                $validOpts['options']['min_range'] = $this->getValidOption($value, $inVFR, 'min_range');
+                $inVFR                             = $inMny['VFR']['validation_options'];
+                $validOpts['options']['max_range'] = $this->getValidOption($inMny['value'], $inVFR, 'max_range');
+                $validOpts['options']['min_range'] = $this->getValidOption($inMny['value'], $inVFR, 'min_range');
                 $validation                        = FILTER_VALIDATE_INT;
                 break;
             case "float":
-                $validOpts['options']['decimal']   = 2;
+                $validOpts['options']['decimal']   = $inMny['VFR']['validation_options']['decimals'];
                 $validation                        = FILTER_VALIDATE_FLOAT;
                 break;
         }
@@ -91,13 +126,17 @@ trait InputValidation
         return $valReturn;
     }
 
-    protected function processFormInputDefaults(\Symfony\Component\HttpFoundation\Request $tCSG, $inVFR, $ymValues)
+    protected function processFormInputDefaults(\Symfony\Component\HttpFoundation\Request $tCSG, $aMultiple)
     {
-        $this->applyYMvalidations($tCSG, $ymValues);
-        foreach ($inVFR as $key => $value) {
+        foreach ($aMultiple['VFR'] as $key => $value) {
             $validValue = trim($tCSG->get($key));
             if (array_key_exists('validation_options', $value)) {
-                $validValue = $this->establishValidValue($tCSG, $key, $value['default'], $value);
+                $validValue = $this->establishValidValue($tCSG, $key, [
+                    'value'    => $aMultiple['VFR'][$key]['default'],
+                    'MW'       => $aMultiple['MW'],
+                    'VFR'      => $aMultiple['VFR'][$key],
+                    'YM range' => $aMultiple['YM range'],
+                ]);
             }
             $tCSG->request->set($key, $validValue);
         }

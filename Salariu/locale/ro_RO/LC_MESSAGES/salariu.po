@@ -101,7 +101,7 @@ msgid "i18n_Form_Label_HealthTax"
 msgstr "Reținere sănătate"
 
 msgid "i18n_Form_Label_HealthTaxBase"
-msgstr "Baza de calcult pt. reținere sănătate"
+msgstr "Baza de calcul pt. reținere sănătate"
 
 msgid "i18n_Form_Label_InputElements"
 msgstr "Elemente de intrare"
@@ -114,6 +114,9 @@ msgstr "Zile fără salariu"
 
 msgid "i18n_Form_Label_LeaveOfAbsenceAmount"
 msgstr "Suma aferentă zilelor fără salariu"
+
+msgid "i18n_Form_Label_MinimumWage"
+msgstr "Salariu minim pe economie"
 
 msgid "i18n_Form_Label_NegotiatedSalary"
 msgstr "Salariu negociat"

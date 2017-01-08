@@ -489,6 +489,113 @@
             "Value": 28800
         }
     ],
+    "Minimum Wage": [
+        {
+            "Month": 2,
+            "Year": 2017,
+            "Value": 1450
+        },
+        {
+            "Month": 5,
+            "Year": 2016,
+            "Value": 1250
+        },
+        {
+            "Month": 7,
+            "Year": 2015,
+            "Value": 1050
+        },
+        {
+            "Month": 1,
+            "Year": 2015,
+            "Value": 975
+        },
+        {
+            "Month": 7,
+            "Year": 2014,
+            "Value": 900
+        },
+        {
+            "Month": 1,
+            "Year": 2014,
+            "Value": 850
+        },
+        {
+            "Month": 7,
+            "Year": 2013,
+            "Value": 800
+        },
+        {
+            "Month": 1,
+            "Year": 2013,
+            "Value": 750
+        },
+        {
+            "Month": 2,
+            "Year": 2013,
+            "Value": 750
+        },
+        {
+            "Month": 1,
+            "Year": 2012,
+            "Value": 700
+        },
+        {
+            "Month": 1,
+            "Year": 2011,
+            "Value": 670
+        },
+        {
+            "Month": 1,
+            "Year": 2009,
+            "Value": 600
+        },
+        {
+            "Month": 10,
+            "Year": 2008,
+            "Value": 540
+        },
+        {
+            "Month": 1,
+            "Year": 2008,
+            "Value": 500
+        },
+        {
+            "Month": 1,
+            "Year": 2007,
+            "Value": 390
+        },
+        {
+            "Month": 1,
+            "Year": 2006,
+            "Value": 330
+        },
+        {
+            "Month": 1,
+            "Year": 2005,
+            "Value": 310
+        },
+        {
+            "Month": 1,
+            "Year": 2004,
+            "Value": 280
+        },
+        {
+            "Month": 1,
+            "Year": 2003,
+            "Value": 250
+        },
+        {
+            "Month": 1,
+            "Year": 2002,
+            "Value": 175
+        },
+        {
+            "Month": 1,
+            "Year": 2001,
+            "Value": 140
+        }
+    ],
     "Monthly Average Working Hours": {
         "2001": 170,
         "2002": 170,

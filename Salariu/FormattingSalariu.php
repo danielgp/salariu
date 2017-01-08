@@ -52,6 +52,15 @@ trait FormattingSalariu
         return implode(';', $sReturn) . ';';
     }
 
+    private function establishLocalizationToDisplay()
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+            setlocale(LC_TIME, explode('_', $this->tCmnSession->get('lang'))[0]);
+        } else {
+            setlocale(LC_TIME, $this->tCmnSession->get('lang') . '.UTF8');
+        }
+    }
+
     private function setFormInputSelectPC()
     {
         $choices = [

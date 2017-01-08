@@ -35,17 +35,20 @@ namespace danielgp\salariu;
 trait Bonuses
 {
 
+    use InputValidation;
+
     /**
      * Tichete de alimente
      * */
     protected function setFoodTicketsValue($lngDate, $aryStngMealTickets)
     {
+        $dtR               = $this->dateRangesInScope();
         $valueMealTicket   = 0;
         $indexArrayValues  = 0;
-        $crtUpperLimitDate = mktime(0, 0, 0, date('n'), 1, date('Y'));
+        $crtUpperLimitDate = (int) $dtR['maximum']->format('Ymd');
         while (($valueMealTicket === 0)) {
             $crtVal            = $aryStngMealTickets[$indexArrayValues];
-            $crtLowerLimitDate = mktime(0, 0, 0, $crtVal['Month'], 1, $crtVal['Year']);
+            $crtLowerLimitDate = (int) $crtVal['Year'] . ($crtVal['Month'] < 10 ? 0 : '') . $crtVal['Month'] . '01';
             if (($lngDate <= $crtUpperLimitDate) && ($lngDate >= $crtLowerLimitDate)) {
                 $valueMealTicket = $crtVal['Value'];
             }
@@ -60,7 +63,7 @@ trait Bonuses
      * */
     protected function setPersonalDeduction($lngDate, $lngBrutto, $sPersons, $cValues)
     {
-        $yrDate  = date('Y', $lngDate);
+        $yrDate  = substr($lngDate, 0, 4);
         $nReturn = 0;
         if ($yrDate >= 2005) {
             $nReturn = $this->setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate, $cValues);
@@ -73,7 +76,7 @@ trait Bonuses
             ];
             $nReturn      = $valuesYearly[$yrDate];
         }
-        return (($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
+        return (($lngDate >= 20060701) ? round($nReturn, -4) : $nReturn);
     }
 
     private function setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule)
@@ -94,7 +97,7 @@ trait Bonuses
     private function setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate, $cValues)
     {
         $inRule = $cValues[2005];
-        if ($yrDate == 2016) {
+        if ($yrDate >= 2016) {
             $inRule = $cValues[2016];
         }
         return $this->setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule);
@@ -103,7 +106,7 @@ trait Bonuses
     private function setPersonalDeductionSimple2001($lngDate)
     {
         $nReturn = 1300000;
-        $mnDate  = date('n', $lngDate);
+        $mnDate  = substr($lngDate, 4, 2);
         if ($mnDate <= 6) {
             $nReturn = 1099000;
         } elseif ($mnDate <= 9) {

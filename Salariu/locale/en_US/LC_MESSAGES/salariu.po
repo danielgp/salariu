@@ -115,6 +115,9 @@ msgstr "Leave of absence days"
 msgid "i18n_Form_Label_LeaveOfAbsenceAmount"
 msgstr "Leave of absence amount"
 
+msgid "i18n_Form_Label_MinimumWage"
+msgstr "Minimum wage"
+
 msgid "i18n_Form_Label_NegotiatedSalary"
 msgstr "Negotiated salary"
 

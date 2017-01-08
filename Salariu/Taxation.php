@@ -47,7 +47,7 @@ trait Taxation
         $this->txLvl['casP']      = $this->setValuesFromJson($lngDate, $nPercentages);
         $this->txLvl['casP_base'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
         $nReturn                  = $this->txLvl['casP_base'] * $this->txLvl['casP'] / 100;
-        if ($lngDate > mktime(0, 0, 0, 7, 1, 2006)) {
+        if ($lngDate > 20060701) {
             $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
         }
         $this->txLvl['cas'] = round($nReturn, 0);
@@ -60,10 +60,13 @@ trait Taxation
      * */
     private function setHealthFndTxBs($lngDate, $lngBrutto, $nValues)
     {
-        $crtValues = $nValues[date('Y', $lngDate)];
+        $crtValues = $nValues[substr($lngDate, 0, 4)];
         $base      = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary']);
+        if ($lngDate >= 20170201) {
+            $base = $lngBrutto;
+        }
         if (array_key_exists('Month Secondary Value', $crtValues)) {
-            if (date('n', $lngDate) >= $crtValues['Month Secondary Value']) {
+            if (substr($lngDate, 4, 2) >= $crtValues['Month Secondary Value']) {
                 $base = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary Secondary']);
             }
         }
@@ -77,11 +80,11 @@ trait Taxation
     {
         $this->txLvl['sntP'] = $this->setValuesFromJson($lngDate, $nPercentages);
         $nReturn             = round($lngBrutto * $this->txLvl['sntP'] / 100, 0);
-        if ($lngDate >= mktime(0, 0, 0, 1, 1, 2017)) {
+        if ($lngDate >= 20170101) {
             $this->txLvl['sntP_base'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
             $nReturn                  = round($this->txLvl['sntP_base'] * $this->txLvl['sntP'] / 100, 0);
         }
-        $this->txLvl['snt'] = (($lngDate > mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
+        $this->txLvl['snt'] = (($lngDate > 20060701) ? round($nReturn, -4) : $nReturn);
     }
 
     /**
@@ -91,13 +94,13 @@ trait Taxation
     {
         $this->txLvl['inTaxP'] = '16';
         $nReturn               = $lngTaxBase * 16 / 100;
-        $yrDate                = date('Y', $lngDate);
+        $yrDate                = (int) substr($lngDate, 0, 4);
         if (in_array($yrDate, [2002, 2003, 2004])) {
             $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues[$yrDate]);
         } elseif ($yrDate == 2001) {
             $nReturn = $this->setIncomeTax2001($lngDate, $lngTaxBase, $nValues);
         }
-        return (($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
+        return (($lngDate >= 20060701) ? round($nReturn, -4) : $nReturn);
     }
 
     /**
@@ -106,7 +109,7 @@ trait Taxation
     private function setIncomeTax2001($lngDate, $lngTaxBase, $nValues)
     {
         $nReturn = 0;
-        $mnth    = date('n', $lngDate);
+        $mnth    = substr($lngDate, 4, 2);
         if ($mnth <= 6) {
             $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-06"]);
         } elseif ($mnth <= 9) {
@@ -141,13 +144,13 @@ trait Taxation
      * */
     protected function setUnemploymentTax($lngDate, $lngBase)
     {
-        $yrDate              = date('Y', $lngDate);
+        $yrDate              = substr($lngDate, 0, 4);
         $this->txLvl['smjP'] = 0.5;
         if ($yrDate <= 2007) {
             $this->txLvl['smjP'] = 1;
         }
         $nReturn            = round($lngBase * $this->txLvl['smjP'] / 100, 0);
-        $this->txLvl['smj'] = (($lngDate >= mktime(0, 0, 0, 7, 1, 2006)) ? round($nReturn, -4) : $nReturn);
+        $this->txLvl['smj'] = (($lngDate >= 20060701) ? round($nReturn, -4) : $nReturn);
     }
 
     /**
@@ -160,7 +163,7 @@ trait Taxation
      */
     protected function setMonthlyAverageWorkingHours($lngDate, $stdAvgWrkngHrs, $bCEaster = false)
     {
-        $nReturn = $stdAvgWrkngHrs[date('Y', $lngDate)];
+        $nReturn = $stdAvgWrkngHrs[substr($lngDate, 0, 4)];
         if ($bCEaster) {
             $nReturn = ($nReturn * 12 - 8) / 12;
         }
@@ -169,7 +172,7 @@ trait Taxation
 
     private function setValuesFromJson($lngDate, $nValues)
     {
-        $crtValues = $nValues[date('Y', $lngDate)];
+        $crtValues = $nValues[substr($lngDate, 0, 4)];
         $nReturn   = $crtValues['Value'];
         if (array_key_exists('Month Secondary Value', $crtValues)) {
             if (date('n', $lngDate) >= $crtValues['Month Secondary Value']) {

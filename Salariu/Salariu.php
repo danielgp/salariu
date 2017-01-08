@@ -32,7 +32,6 @@ class Salariu
 {
 
     use \danielgp\bank_holidays\Romanian,
-        \danielgp\salariu\InputValidation,
         \danielgp\salariu\FormattingSalariu,
         \danielgp\salariu\Bonuses,
         \danielgp\salariu\ForeignCurrency,
@@ -40,30 +39,33 @@ class Salariu
 
     public function __construct()
     {
-        $configPath        = 'Salariu' . DIRECTORY_SEPARATOR . 'config';
-        $interfaceElements = $this->readTypeFromJsonFileUniversal($configPath, 'interfaceElements');
-        $this->appFlags    = [
-            'FI'   => $interfaceElements['Form Input'],
-            'TCAS' => $interfaceElements['Table Cell Applied Style'],
-            'TCSD' => $interfaceElements['Table Cell Style Definitions'],
+        $configPath     = 'Salariu' . DIRECTORY_SEPARATOR . 'config';
+        $inElmnts       = $this->readTypeFromJsonFileUniversal($configPath, 'interfaceElements');
+        $this->appFlags = [
+            'FI'   => $inElmnts['Form Input'],
+            'TCAS' => $inElmnts['Table Cell Applied Style'],
+            'TCSD' => $inElmnts['Table Cell Style Definitions'],
         ];
         $this->initializeSprGlbAndSession();
-        $this->handleLocalizationSalariu($interfaceElements['Application']);
+        $this->handleLocalizationSalariu($inElmnts['Application']);
         echo $this->setHeaderHtml();
-        $ymValues          = $this->buildYMvalues();
-        $this->processFormInputDefaults($this->tCmnSuperGlobals, $interfaceElements['Values Filter Rules'], $ymValues);
-        echo $this->setFormInput($ymValues);
-        $this->setExchangeRateValues($interfaceElements['Application'], $interfaceElements['Relevant Currencies']);
-        echo $this->setFormOutput($configPath, $interfaceElements['Short Labels']);
-        echo $this->setFooterHtml($interfaceElements['Application']);
+        $this->establishLocalizationToDisplay();
+        $dtR            = $this->dateRangesInScope();
+        $ymVals         = $this->buildYMvalues($dtR);
+        $arySts         = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
+        $this->applyYMvalidations($this->tCmnSuperGlobals, $ymVals, $dtR);
+        $minWage        = $this->determineCrtMinWage(['EMW' => $arySts['Minimum Wage'], 'YM range' => $dtR]);
+        echo $this->setFormInput($dtR, $ymVals, $inElmnts['Values Filter Rules'], $minWage);
+        echo $this->setFormOutput($arySts, $inElmnts);
+        echo $this->setFooterHtml($inElmnts['Application']);
     }
 
     private function getIncomeTaxValue($inDate, $lngBase, $vBA, $aryDeductions, $arySettings)
     {
         $rest = $lngBase - array_sum($aryDeductions);
-        if ($inDate >= mktime(0, 0, 0, 7, 1, 2010)) {
+        if ($inDate >= 20100701) {
             $rest += round($vBA, -4);
-            if ($inDate >= mktime(0, 0, 0, 10, 1, 2010)) {
+            if ($inDate >= 20101001) {
                 $rest += round($this->tCmnSuperGlobals->request->get('gbns') * pow(10, 4), -4);
             }
         }
@@ -75,7 +77,7 @@ class Salariu
     {
         $pcToBoolean = [0 => true, 1 => false];
         $pcBoolean   = $pcToBoolean[$this->tCmnSuperGlobals->request->get('pc')];
-        $ymVal       = $this->tCmnSuperGlobals->request->get('ym');
+        $ymVal       = (string) $this->tCmnSuperGlobals->request->get('ym');
         $snVal       = $this->tCmnSuperGlobals->request->get('sn');
         $mnth        = $this->setMonthlyAverageWorkingHours($ymVal, $aryStngs, $pcBoolean);
         return [
@@ -109,7 +111,7 @@ class Salariu
         $this->setHealthTax($inDate, $lngBase, $aStngs[$shLbl['HTP']], $aStngs[$shLbl['HFUL']]);
         $nMealDays        = $this->tCmnSuperGlobals->request->get('nDays');
         $unemploymentBase = $lngBase;
-        if ($this->tCmnSuperGlobals->request->get('ym') < mktime(0, 0, 0, 1, 1, 2008)) {
+        if ($this->tCmnSuperGlobals->request->get('ym') < 20080101) {
             $unemploymentBase = $this->tCmnSuperGlobals->request->get('sn');
         }
         $this->setUnemploymentTax($inDate, $unemploymentBase);
@@ -123,7 +125,7 @@ class Salariu
     private function getWorkingDays()
     {
         $components = [
-            new \DateTime(date('Y/m/d', $this->tCmnSuperGlobals->request->get('ym'))),
+            \DateTime::createFromFormat('Ymd', $this->tCmnSuperGlobals->request->get('ym')),
             $this->tCmnSuperGlobals->request->get('pc'),
         ];
         $this->tCmnSuperGlobals->request->set('wkDays', $this->setWorkingDaysInMonth($components[0], $components[1]));
@@ -131,9 +133,15 @@ class Salariu
         $this->tCmnSuperGlobals->request->set('nDays', max($vDays, 0));
     }
 
-    private function setFormInput($ymValues)
+    private function setFormInput($dtR, $ymValues, $inVFR, $minWage)
     {
-        $sReturn     = $this->setFormInputElements($ymValues);
+        $this->processFormInputDefaults($this->tCmnSuperGlobals, [
+            'VFR'               => $inVFR,
+            'Year Month Values' => $ymValues,
+            'MW'                => $minWage,
+            'YM range'          => $dtR,
+        ]);
+        $sReturn     = $this->setFormInputElements($ymValues, $minWage);
         $btn         = $this->setStringIntoShortTag('input', [
             'type'  => 'submit',
             'id'    => 'submit',
@@ -151,12 +159,13 @@ class Salariu
         return $this->setStringIntoTag(implode('', $aryFieldSet), 'fieldset', ['style' => 'float: left;']);
     }
 
-    private function setFormInputElements($ymValues)
+    private function setFormInputElements($ymValues, $crtMinWage)
     {
         $sReturn   = [];
         $sReturn[] = '<thead><tr><th>' . $this->tApp->gettext('i18n_Form_Label_InputElements')
             . '</th><th>' . $this->tApp->gettext('i18n_Form_Label_InputValues') . '</th></tr></thead><tbody>';
         $sReturn[] = $this->setFormRow($this->setLabel('ym'), $this->setFormInputSelectYM($ymValues), 1);
+        $sReturn[] = $this->setFormRow($this->setLabel('sm'), $this->setFormInputText('sm', 10, 'RON', $crtMinWage), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('sn'), $this->setFormInputText('sn', 10, 'RON'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('sc'), $this->setFormInputText('sc', 7, '%'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('pb'), $this->setFormInputText('pb', 10, 'RON'), 1);
@@ -173,7 +182,7 @@ class Salariu
         return $sReturn;
     }
 
-    private function setFormInputText($inName, $inSize, $inAfterLabel)
+    private function setFormInputText($inName, $inSize, $inAfterLabel, $crtMinWage = 0)
     {
         $inputParameters = [
             'type'      => 'text',
@@ -182,13 +191,18 @@ class Salariu
             'size'      => $inSize,
             'maxlength' => $inSize,
         ];
+        if ($inName == 'sm') {
+            $inputParameters['readonly'] = 'readonly';
+            $inputParameters['value']    = $crtMinWage;
+            $this->tCmnSuperGlobals->request->set('sm', $crtMinWage);
+        }
         return $this->setStringIntoShortTag('input', $inputParameters) . ' ' . $inAfterLabel;
     }
 
-    private function setFormOutput($configPath, $shLabels)
+    private function setFormOutput($aryStngs, $inElements)
     {
-        $aryStngs    = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
         $sReturn     = [];
+        $this->setExchangeRateValues($inElements['Application'], $inElements['Relevant Currencies']);
         $sReturn[]   = $this->setFormOutputHeader();
         $ovTimeVal   = $this->getOvertimes($aryStngs['Monthly Average Working Hours']);
         $additions   = $this->tCmnSuperGlobals->request->get('pb') + $ovTimeVal['os175'] + $ovTimeVal['os200'];
@@ -206,7 +220,7 @@ class Salariu
         $brut        = ($bComponents['sn'] * (1 + $bComponents['sc'] / 100) + $additions) * pow(10, 4) - $amntLAA;
         $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('sb'), '&nbsp;', $brut);
         $brut2       = $brut + $this->tCmnSuperGlobals->request->get('afet') * pow(10, 4);
-        $amnt        = $this->getValues($brut2, $aryStngs, $shLabels);
+        $amnt        = $this->getValues($brut2, $aryStngs, $inElements['Short Labels']);
         $sReturn[]   = $this->setFormOutputTaxations($brut2, $amnt);
         $pnValue     = $this->tCmnSuperGlobals->request->get('pn') * pow(10, 4);
         $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('pn'), '&nbsp;', $pnValue);
@@ -228,10 +242,9 @@ class Salariu
         $total       = ($net + $amnt['ba'] + $amnt['gbns'] - $this->tCmnSuperGlobals->request->get('szamnt') * 10000);
         $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('total'), '&nbsp;', $total);
         $sReturn[]   = '</tbody>';
-        setlocale(LC_TIME, explode('_', $this->tCmnSession->get('lang'))[0]);
-        $crtMonth    = strftime('%B', $this->tCmnSuperGlobals->request->get('ym'));
+        $tDate       = \DateTime::createFromFormat('Ymd', $this->tCmnSuperGlobals->request->get('ym'));
         $legentText  = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
-            . '', $crtMonth, date('Y', $this->tCmnSuperGlobals->request->get('ym')));
+            . '', strftime('%B', mktime(0, 0, 0, $tDate->format('n'), 1, $tDate->format('Y'))), $tDate->format('Y'));
         $fieldsetC   = $this->setStringIntoTag($legentText, 'legend')
             . $this->setStringIntoTag(implode('', $sReturn), 'table');
         return $this->setStringIntoTag($fieldsetC, 'fieldset', [
@@ -242,6 +255,8 @@ class Salariu
     private function setFormOutputBonuses($snValue, $wkDays, $amntLAA, $ovTimeVal)
     {
         $sRt      = [];
+        $sMin     = $this->tCmnSuperGlobals->request->get('sm') * pow(10, 4);
+        $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('sm'), '&nbsp;', $sMin);
         $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('sn'), '&nbsp;', $snValue);
         $scValue  = $this->tCmnSuperGlobals->request->get('sc');
         $prima    = $this->tCmnSuperGlobals->request->get('sn') * $scValue * 100;
