@@ -51,14 +51,9 @@ class Salariu
         echo $this->setHeaderHtml();
         $this->establishLocalizationToDisplay();
         $dtR            = $this->dateRangesInScope();
-        $ymVals         = $this->buildYMvalues($dtR);
+        $ymValues       = $this->buildYMvalues($dtR);
         $arySts         = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
-        $this->applyYMvalidations($this->tCmnSuperGlobals, $ymVals, $dtR);
-        $minWage        = $this->determineCrtMinWage($this->tCmnSuperGlobals, [
-            'EMW'      => $arySts['Minimum Wage'],
-            'YM range' => $dtR
-        ]);
-        echo $this->setFormInput($dtR, $ymVals, $minWage, $inElmnts['Values Filter Rules']);
+        echo $this->setFormInput($dtR, $ymValues, $arySts['Minimum Wage'], $inElmnts['Values Filter Rules']);
         echo $this->setFormOutput($dtR, $arySts, $inElmnts);
         echo $this->setFooterHtml($inElmnts['Application']);
     }
@@ -136,25 +131,26 @@ class Salariu
         $this->tCmnSuperGlobals->request->set('nDays', max($vDays, 0));
     }
 
-    private function setFormInput($dtR, $ymValues, $minWage, $inVFR)
+    private function setFormInput($dtR, $ymValues, $inMW, $inVFR)
     {
+        $this->applyYMvalidations($this->tCmnSuperGlobals, $ymValues, $dtR);
+        $minWage   = $this->determineCrtMinWage($this->tCmnSuperGlobals, [
+            'EMW'      => $inMW,
+            'YM range' => $dtR
+        ]);
         $this->processFormInputDefaults($this->tCmnSuperGlobals, [
             'VFR'               => $inVFR,
             'Year Month Values' => $ymValues,
             'MW'                => $minWage,
             'YM range'          => $dtR,
         ]);
-        $sReturn     = $this->setFormInputElements($ymValues, $minWage);
-        $sReturn[]   = $this->setFormInputBottom();
-        $frm         = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
+        $sReturn   = $this->setFormInputElements($ymValues, $minWage);
+        $sReturn[] = $this->setFormInputBottom();
+        $frm       = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
             'method' => 'get',
             'action' => $this->tCmnSuperGlobals->getScriptName()
         ]);
-        $aryFieldSet = [
-            $this->setStringIntoTag($this->tApp->gettext('i18n_FieldsetLabel_Inputs'), 'legend'),
-            $frm
-        ];
-        return $this->setStringIntoTag(implode('', $aryFieldSet), 'fieldset', ['style' => 'float: left;']);
+        return $this->setFormInputIntoFieldSet($frm);
     }
 
     private function setFormInputBottom()
@@ -188,6 +184,15 @@ class Salariu
         $sReturn[] = $this->setFormRow($this->setLabel('gbns'), $this->setFormInputText('gbns', 10, 'RON'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('afet'), $this->setFormInputText('afet', 10, 'RON'), 1);
         return $sReturn;
+    }
+
+    private function setFormInputIntoFieldSet($frm)
+    {
+        $aryFieldSet = [
+            $this->setStringIntoTag($this->tApp->gettext('i18n_FieldsetLabel_Inputs'), 'legend'),
+            $frm
+        ];
+        return $this->setStringIntoTag(implode('', $aryFieldSet), 'fieldset', ['style' => 'float: left;']);
     }
 
     private function setFormInputText($inName, $inSize, $inAfterLabel, $crtMinWage = 0)
