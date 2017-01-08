@@ -40,15 +40,15 @@ trait Bonuses
     /**
      * Tichete de alimente
      * */
-    protected function setFoodTicketsValue($lngDate, $aryStngMealTickets)
+    protected function setFoodTicketsValue($dtR, $lngDate, $aryStngMealTickets)
     {
-        $dtR               = $this->dateRangesInScope();
         $valueMealTicket   = 0;
         $indexArrayValues  = 0;
         $crtUpperLimitDate = (int) $dtR['maximum']->format('Ymd');
         while (($valueMealTicket === 0)) {
             $crtVal            = $aryStngMealTickets[$indexArrayValues];
-            $crtLowerLimitDate = (int) $crtVal['Year'] . ($crtVal['Month'] < 10 ? 0 : '') . $crtVal['Month'] . '01';
+            $crtLLDate         = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'] . '-' . $crtVal['Month'] . '-1');
+            $crtLowerLimitDate = (int) $crtLLDate->format('Ymd');
             if (($lngDate <= $crtUpperLimitDate) && ($lngDate >= $crtLowerLimitDate)) {
                 $valueMealTicket = $crtVal['Value'];
             }

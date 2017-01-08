@@ -79,9 +79,9 @@ trait InputValidation
         ];
     }
 
-    private function determineCrtMinWage($inMny)
+    private function determineCrtMinWage(\Symfony\Component\HttpFoundation\Request $tCSG, $inMny)
     {
-        $lngDate          = $this->tCmnSuperGlobals->request->get('ym');
+        $lngDate          = $tCSG->get('ym');
         $indexArrayValues = 0;
         $intValue         = 0;
         $maxCounter       = count($inMny['EMW']) - 1;
@@ -100,7 +100,11 @@ trait InputValidation
     {
         $validation                      = FILTER_DEFAULT;
         $validOpts                       = [];
-        $validOpts['options']['default'] = (in_array($key, ['sm', 'sn']) ? $inMny['MW'] : $inMny['value']);
+        $validOpts['options']['default'] = $inMny['value'];
+        if (in_array($key, ['sm', 'sn'])) {
+            $validOpts['options']['default']                 = $inMny['MW'];
+            $inMny['VFR']['validation_options']['min_range'] = $inMny['MW'];
+        }
         switch ($inMny['VFR']['validation_filter']) {
             case "int":
                 $inVFR                             = $inMny['VFR']['validation_options'];

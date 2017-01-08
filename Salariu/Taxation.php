@@ -158,8 +158,10 @@ trait Taxation
      * astfel incat acestea sa nu fie mai valoroase sau nu functie
      * de numarul zilelor din luna respectiva
      *
-     * @param date $lngDate
-     * @return number
+     * @param string $lngDate
+     * @param array $stdAvgWrkngHrs
+     * @param boolean $bCEaster
+     * @return int
      */
     protected function setMonthlyAverageWorkingHours($lngDate, $stdAvgWrkngHrs, $bCEaster = false)
     {
