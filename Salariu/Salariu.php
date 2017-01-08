@@ -80,13 +80,14 @@ class Salariu
             $this->tCmnSuperGlobals->request->get('pi'),
         ];
         $aReturn['pd']      = $this->setPersonalDeduction($inDate, $pdV[0], $pdV[1], $aStngs['Personal Deduction']);
-        $aryDeductions      = [
-            $this->txLvl['cas'],
-            $this->txLvl['snt'],
-            $this->txLvl['smj'],
-            $aReturn['pd'],
-        ];
-        $aReturn['impozit'] = $this->getIncomeTaxValue($inDate, $lngBase, $aReturn['ba'], $aryDeductions, $aStngs);
+        $aryDeductions      = [$this->txLvl['cas'], $this->txLvl['snt'], $this->txLvl['smj'], $aReturn['pd']];
+        $aReturn['impozit'] = $this->getIncomeTaxValue($this->tCmnSuperGlobals, [
+            'inDate'             => $inDate,
+            'lngBase'            => $lngBase,
+            'Food Tickets Value' => $aReturn['ba'],
+            'Deductions'         => $aryDeductions,
+            'Income Tax'         => $arySettings['Income Tax'],
+        ]);
         return $aReturn;
     }
 

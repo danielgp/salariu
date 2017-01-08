@@ -38,22 +38,22 @@ trait Taxation
 
     private $txLvl;
 
-    private function getIncomeTaxValue($inDate, $lngBase, $vBA, $aryDeductions, $arySettings)
+    private function getIncomeTaxValue(\Symfony\Component\HttpFoundation\Request $tCSG, $inMny)
     {
-        $rest = $lngBase - array_sum($aryDeductions);
-        if ($inDate >= 20100701) {
-            $rest         += round($vBA, -4); // food tickets are taxable
-            $val          = $this->tCmnSuperGlobals->request->get('gbns');
+        $rest = $inMny['lngBase'] - array_sum($inMny['Deductions']);
+        if ($inMny['inDate'] >= 20100701) {
+            $rest         += round($inMny['Food Tickets Value'], -4);
+            $val          = $tCSG->get('gbns');
             $taxMinAmount = 0;
-            if ($inDate >= 20160101) {
+            if ($inMny['inDate'] >= 20160101) {
                 $taxMinAmount = 150 * ($val || 0);
             }
-            if ($inDate >= 20101001) {
+            if ($inMny['inDate'] >= 20101001) {
                 $rest += round(min($val, $val - $taxMinAmount) * pow(10, 4), -4);
             }
         }
-        $rest += round($this->tCmnSuperGlobals->request->get('afet') * pow(10, 4), -4);
-        return $this->setIncomeTax($inDate, $rest, $arySettings['Income Tax']);
+        $rest += round($tCSG->get('afet') * pow(10, 4), -4);
+        return $this->setIncomeTax($inMny['inDate'], $rest, $inMny['Income Tax']);
     }
 
     /**
