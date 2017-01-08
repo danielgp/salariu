@@ -86,7 +86,7 @@ class Salariu
             'lngBase'            => $lngBase,
             'Food Tickets Value' => $aReturn['ba'],
             'Deductions'         => $aryDeductions,
-            'Income Tax'         => $arySettings['Income Tax'],
+            'Income Tax'         => $aStngs['Income Tax'],
         ]);
         return $aReturn;
     }
