@@ -86,9 +86,6 @@ trait InputValidation
         $maxCounter = count($inMny['EMW']);
         for ($counter = 0; $counter < $maxCounter; $counter++) {
             $crtVal         = $inMny['EMW'][$counter];
-            echo '<hr/>';
-            print_r($inMny['EMW'][$counter]);
-            echo '<hr/>';
             $crtDV          = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'] . '-' . $crtVal['Month'] . '-1');
             $crtDateOfValue = (int) $crtDV->format('Ymd');
             if (($lngDate <= $inMny['YM range']['maximumInt']) && ($lngDate >= $crtDateOfValue)) {
