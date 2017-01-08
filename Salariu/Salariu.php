@@ -58,13 +58,7 @@ class Salariu
             'EMW'      => $arySts['Minimum Wage'],
             'YM range' => $dtR
         ]);
-        $this->processFormInputDefaults($this->tCmnSuperGlobals, [
-            'VFR'               => $inElmnts['Values Filter Rules'],
-            'Year Month Values' => $ymVals,
-            'MW'                => $minWage,
-            'YM range'          => $dtR,
-        ]);
-        echo $this->setFormInput($ymVals, $minWage);
+        echo $this->setFormInput($dtR, $ymVals, $minWage, $inElmnts['Values Filter Rules']);
         echo $this->setFormOutput($dtR, $arySts, $inElmnts);
         echo $this->setFooterHtml($inElmnts['Application']);
     }
@@ -142,15 +136,16 @@ class Salariu
         $this->tCmnSuperGlobals->request->set('nDays', max($vDays, 0));
     }
 
-    private function setFormInput($ymValues, $minWage)
+    private function setFormInput($dtR, $ymValues, $minWage, $inVFR)
     {
-        $sReturn     = $this->setFormInputElements($ymValues, $minWage);
-        $btn         = $this->setStringIntoShortTag('input', [
-            'type'  => 'submit',
-            'id'    => 'submit',
-            'value' => $this->tApp->gettext('i18n_Form_Button_Recalculate')
+        $this->processFormInputDefaults($this->tCmnSuperGlobals, [
+            'VFR'               => $inVFR,
+            'Year Month Values' => $ymValues,
+            'MW'                => $minWage,
+            'YM range'          => $dtR,
         ]);
-        $sReturn[]   = $this->setFormRow($this->setLabel('fd'), $btn, 1) . '</tbody>';
+        $sReturn     = $this->setFormInputElements($ymValues, $minWage);
+        $sReturn[]   = $this->setFormInputBottom();
         $frm         = $this->setStringIntoTag($this->setStringIntoTag(implode('', $sReturn), 'table'), 'form', [
             'method' => 'get',
             'action' => $this->tCmnSuperGlobals->getScriptName()
@@ -160,6 +155,16 @@ class Salariu
             $frm
         ];
         return $this->setStringIntoTag(implode('', $aryFieldSet), 'fieldset', ['style' => 'float: left;']);
+    }
+
+    private function setFormInputBottom()
+    {
+        $btn = $this->setStringIntoShortTag('input', [
+            'type'  => 'submit',
+            'id'    => 'submit',
+            'value' => $this->tApp->gettext('i18n_Form_Button_Recalculate')
+        ]);
+        return $this->setFormRow($this->setLabel('fd'), $btn, 1) . '</tbody>';
     }
 
     private function setFormInputElements($ymValues, $crtMinWage)

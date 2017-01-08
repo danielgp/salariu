@@ -96,15 +96,9 @@ trait InputValidation
         return $intValue;
     }
 
-    private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $inMny)
+    private function establishFilterParameters($inMny, $validOpts)
     {
-        $validation                      = FILTER_DEFAULT;
-        $validOpts                       = [];
-        $validOpts['options']['default'] = $inMny['value'];
-        if (in_array($key, ['sm', 'sn'])) {
-            $validOpts['options']['default']                 = $inMny['MW'];
-            $inMny['VFR']['validation_options']['min_range'] = $inMny['MW'];
-        }
+        $validation = FILTER_DEFAULT;
         switch ($inMny['VFR']['validation_filter']) {
             case "int":
                 $inVFR                             = $inMny['VFR']['validation_options'];
@@ -117,7 +111,22 @@ trait InputValidation
                 $validation                        = FILTER_VALIDATE_FLOAT;
                 break;
         }
-        $validValue = filter_var($tCSG->get($key), $validation, $validOpts);
+        return [
+            'validation'         => $validation,
+            'validation_options' => $validOpts,
+        ];
+    }
+
+    private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $inMny)
+    {
+        $validOpts                       = [];
+        $validOpts['options']['default'] = $inMny['value'];
+        if (in_array($key, ['sm', 'sn'])) {
+            $validOpts['options']['default']                 = $inMny['MW'];
+            $inMny['VFR']['validation_options']['min_range'] = $inMny['MW'];
+        }
+        $vOptions   = $this->establishFilterParameters($inMny, $validOpts);
+        $validValue = filter_var($tCSG->get($key), $vOptions['validation'], $vOptions['validation_options']);
         return $validValue;
     }
 
