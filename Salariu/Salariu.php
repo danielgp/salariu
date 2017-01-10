@@ -108,7 +108,7 @@ class Salariu
             \DateTime::createFromFormat('Ymd', $this->tCmnSuperGlobals->request->get('ym')),
             $this->tCmnSuperGlobals->request->get('pc'),
         ];
-        if ($components === false) {
+        if ($components[0] === false) {
             $components[0] = new \DateTime('first day of this month');
         }
         $this->tCmnSuperGlobals->request->set('wkDays', $this->setWorkingDaysInMonth($components[0], $components[1]));
