@@ -6,6 +6,11 @@
         },
         "Copyright Holder": "Daniel Popiniuc",
         "Default Language": "ro_RO",
+        "Default Currencies To Display": [
+            "EUR",
+            "GBP",
+            "USD"
+        ],
         "Exchange Rate Local": "nbrfxrates.xml",
         "Exchange Rate Source": "http://www.bnr.ro/nbrfxrates.xml"
     },
@@ -119,6 +124,9 @@
         "wkDays": {
             "Label": "i18n_Form_Label_WorkingDays"
         },
+        "xMoney": {
+            "Label": "i18n_Form_Label_AdditionalCurrenciesToDisplayValuesInto"
+        },
         "xrate@Date": {
             "Label": "i18n_Form_Label_ExchangeRateAtDate"
         },
@@ -141,25 +149,60 @@
             "decimals": 2,
             "locale": "ro_RO"
         },
+        "AED": {
+            "country": "ae",
+            "decimals": 2,
+            "locale": "ar_AE"
+        },
+        "BGN": {
+            "country": "bg",
+            "decimals": 2,
+            "locale": "bg_BG"
+        },
+        "CAD": {
+            "country": "ca",
+            "decimals": 2,
+            "locale": "en_CA"
+        },
+        "CHF": {
+            "country": "ch",
+            "decimals": 2,
+            "locale": "de_CH"
+        },
+        "DKK": {
+            "country": "dk",
+            "decimals": 2,
+            "locale": "da_DK"
+        },
         "EUR": {
             "country": "eu",
             "decimals": 2,
             "locale": "de_DE"
-        },
-        "HUF": {
-            "country": "hu",
-            "decimals": 0,
-            "locale": "hu_HU"
         },
         "GBP": {
             "country": "gb",
             "decimals": 2,
             "locale": "en_UK"
         },
-        "CHF": {
-            "country": "ch",
+        "HUF": {
+            "country": "hu",
+            "decimals": 0,
+            "locale": "hu_HU"
+        },
+        "INR": {
+            "country": "in",
             "decimals": 2,
-            "locale": "de_CH"
+            "locale": "hi_IN"
+        },
+        "MDL": {
+            "country": "md",
+            "decimals": 2,
+            "locale": "ro_MD"
+        },
+        "NOK": {
+            "country": "no",
+            "decimals": 2,
+            "locale": "no_NO"
         },
         "USD": {
             "country": "us",

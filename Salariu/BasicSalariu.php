@@ -4,7 +4,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2016 Daniel Popiniuc
+ * Copyright (c) 2017 Daniel Popiniuc
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -70,30 +70,32 @@ trait BasicSalariu
 
     private function setFooterHtml($appSettings)
     {
-        $sReturn[] = $this->setUpperRightBoxLanguages($appSettings['Available Languages'])
-            . '<div class="resetOnly author">&copy; ' . date('Y') . ' '
-            . $appSettings['Copyright Holder'] . '</div>'
-            . '<hr/>'
-            . '<div class="disclaimer">'
-            . $this->tApp->gettext('i18n_Disclaimer')
-            . '</div>';
-        return $this->setFooterCommon($sReturn);
+        return $this->setFooterCommon($this->setUpperRightBoxLanguages($appSettings['Available Languages'])
+                . '<div class="resetOnly author">&copy; ' . date('Y') . ' '
+                . $appSettings['Copyright Holder'] . '</div>'
+                . '<hr/>'
+                . '<div class="disclaimer">'
+                . $this->tApp->gettext('i18n_Disclaimer')
+                . '</div>');
     }
 
     private function setHeaderHtml()
     {
         $headerParameters = [
-            'lang'  => str_replace('_', '-', $this->tCmnSession->get('lang')),
-            'title' => $this->tApp->gettext('i18n_ApplicationName'),
-            'css'   => [
+            'css'        => [
                 'vendor/components/flag-icon-css/css/flag-icon.min.css',
                 'vendor/fortawesome/font-awesome/css/font-awesome.min.css',
                 'Salariu/css/salariu.css',
             ],
+            'javascript' => [
+                'vendor/danielgp/common-lib/js/tabber/tabber-management.min.js',
+                'vendor/danielgp/common-lib/js/tabber/tabber.min.js',
+            ],
+            'lang'       => str_replace('_', '-', $this->tCmnSession->get('lang')),
+            'title'      => $this->tApp->gettext('i18n_ApplicationName'),
         ];
         return $this->setHeaderCommon($headerParameters)
-            . '<h1>' . $this->tApp->gettext('i18n_ApplicationName') . '</h1>'
-            . '<p>&nbsp;</p>';
+            . '<h1>' . $this->tApp->gettext('i18n_ApplicationName') . '</h1>';
     }
 
     private function setLabel($labelId)
@@ -121,5 +123,20 @@ trait BasicSalariu
             $suffix = ':';
         }
         return $text . $suffix;
+    }
+
+    private function setPreliminarySettings($inElmnts)
+    {
+        $this->appFlags = [
+            'DCTD' => $inElmnts['Application']['Default Currencies To Display'],
+            'FI'   => $inElmnts['Form Input'],
+            'TCAS' => $inElmnts['Table Cell Applied Style'],
+            'TCSD' => $inElmnts['Table Cell Style Definitions'],
+            'VFR'  => $inElmnts['Values Filter Rules'],
+        ];
+        $this->initializeSprGlbAndSession();
+        $this->handleLocalizationSalariu($inElmnts['Application']);
+        echo $this->setHeaderHtml();
+        $this->establishLocalizationToDisplay();
     }
 }

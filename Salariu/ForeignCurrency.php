@@ -49,6 +49,18 @@ trait ForeignCurrency
         }
     }
 
+    private function manageCurrencyToDisplay(\Symfony\Component\HttpFoundation\Request $tCSG)
+    {
+        $aCurrencyDetails = [];
+        $xMoneyChosen     = array_merge(['RON'], $tCSG->request->get('xMoney'));
+        foreach ($this->currencyDetails['CX'] as $key2 => $value2) {
+            if (in_array($key2, $xMoneyChosen)) {
+                $aCurrencyDetails[$key2] = $value2;
+            }
+        }
+        return $aCurrencyDetails;
+    }
+
     private function setCurrencyExchangeVariables($aryRelevantCrncy, $kCX)
     {
         $this->currencyDetails = [

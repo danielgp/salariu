@@ -31,6 +31,17 @@ namespace danielgp\salariu;
 trait InputValidation
 {
 
+    private function applyCurrencyValidations(\Symfony\Component\HttpFoundation\Request $tCSG, $defaults, $allAllowed)
+    {
+        $valuesCurrency = $tCSG->get('xMoney'); // 0 or 1 or multiple values
+        if (is_array($valuesCurrency)) {
+            $tCSG->request->set('xMoney', array_intersect($valuesCurrency, $allAllowed));
+        }
+        if (is_null($valuesCurrency)) {
+            $tCSG->request->set('xMoney', $defaults);
+        }
+    }
+
     private function applyYMvalidations(\Symfony\Component\HttpFoundation\Request $tCSG, $ymValues, $dtR)
     {
         $validOpt = [

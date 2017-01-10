@@ -19,8 +19,20 @@ msgstr ""
 msgid "i18n_ApplicationName"
 msgstr "Salary according to Romanian legislation"
 
+msgid "i18n_CountryName_AE"
+msgstr "United Arab Emirates"
+
+msgid "i18n_CountryName_BG"
+msgstr "Bulgaria"
+
+msgid "i18n_CountryName_CA"
+msgstr "Canada"
+
 msgid "i18n_CountryName_CH"
 msgstr "Switzerland"
+
+msgid "i18n_CountryName_DK"
+msgstr "Denmark"
 
 msgid "i18n_CountryName_EU"
 msgstr "Europe Union"
@@ -30,6 +42,15 @@ msgstr "Great Britain"
 
 msgid "i18n_CountryName_HU"
 msgstr "Hungary"
+
+msgid "i18n_CountryName_IN"
+msgstr "India"
+
+msgid "i18n_CountryName_MD"
+msgstr "Moldavia"
+
+msgid "i18n_CountryName_NO"
+msgstr "Norway"
 
 msgid "i18n_CountryName_RO"
 msgstr "Romania"
@@ -55,6 +76,9 @@ msgstr "All the fields required to be filled!"
 msgid "i18n_Form_Label_AdditionalBruttoAmount"
 msgstr "Additional brutto amount"
 
+msgid "i18n_Form_Label_AdditionalCurrenciesToDisplayValuesInto"
+msgstr "Additional currencies to display"
+
 msgid "i18n_Form_Label_AdditionalNettoAmount"
 msgstr "Additional netto amount"
 
@@ -78,6 +102,42 @@ msgstr "Yes"
 
 msgid "i18n_Form_Label_CumulatedAddedValue"
 msgstr "Cummulated increase percentage"
+
+msgid "i18n_Form_Label_CurrencyName_AED"
+msgstr "United Arab Emirates Dirham"
+
+msgid "i18n_Form_Label_CurrencyName_BGN"
+msgstr "Bulgarian levs"
+
+msgid "i18n_Form_Label_CurrencyName_CAD"
+msgstr "Canadian Dollars"
+
+msgid "i18n_Form_Label_CurrencyName_CHF"
+msgstr "Swiss Francs"
+
+msgid "i18n_Form_Label_CurrencyName_DKK"
+msgstr "Denish Krones"
+
+msgid "i18n_Form_Label_CurrencyName_EUR"
+msgstr "Euros"
+
+msgid "i18n_Form_Label_CurrencyName_GBP"
+msgstr "British Pounds"
+
+msgid "i18n_Form_Label_CurrencyName_INR"
+msgstr "Indian Rupees"
+
+msgid "i18n_Form_Label_CurrencyName_MDL"
+msgstr "Moldavian Leu"
+
+msgid "i18n_Form_Label_CurrencyName_NOK"
+msgstr "Norwegian Krones"
+
+msgid "i18n_Form_Label_CurrencyName_HUF"
+msgstr "Hungarian Forints"
+
+msgid "i18n_Form_Label_CurrencyName_USD"
+msgstr "US Dollars"
 
 msgid "i18n_Form_Label_ExchangeRateAtDate"
 msgstr "Currency exchange rate"

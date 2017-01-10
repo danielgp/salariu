@@ -19,14 +19,35 @@ msgstr ""
 msgid "i18n_ApplicationName"
 msgstr "Salariu conform legilor din Romania"
 
+msgid "i18n_CountryName_AE"
+msgstr "Emiratele Arabe Unite"
+
+msgid "i18n_CountryName_BG"
+msgstr "Bulgaria"
+
+msgid "i18n_CountryName_CA"
+msgstr "Canada"
+
 msgid "i18n_CountryName_CH"
 msgstr "Elveția"
+
+msgid "i18n_CountryName_DK"
+msgstr "Danemarca"
 
 msgid "i18n_CountryName_EU"
 msgstr "Uniunea Europeană"
 
 msgid "i18n_CountryName_GB"
 msgstr "Marea Britanie"
+
+msgid "i18n_CountryName_IN"
+msgstr "India"
+
+msgid "i18n_CountryName_MD"
+msgstr "Moldova"
+
+msgid "i18n_CountryName_NO"
+msgstr "Norvegia"
 
 msgid "i18n_CountryName_HU"
 msgstr "Ungaria"
@@ -55,6 +76,9 @@ msgstr "Toate câmpurile trebuiesc completate!"
 msgid "i18n_Form_Label_AdditionalBruttoAmount"
 msgstr "Primă brută"
 
+msgid "i18n_Form_Label_AdditionalCurrenciesToDisplayValuesInto"
+msgstr "Valute adiționale de afișat"
+
 msgid "i18n_Form_Label_AdditionalNettoAmount"
 msgstr "Primă netă"
 
@@ -78,6 +102,42 @@ msgstr "Da"
 
 msgid "i18n_Form_Label_CumulatedAddedValue"
 msgstr "Spor cumulat"
+
+msgid "i18n_Form_Label_CurrencyName_AED"
+msgstr "Dirhamul Emiratelor Arabe"
+
+msgid "i18n_Form_Label_CurrencyName_BGN"
+msgstr "Leve bulgărești"
+
+msgid "i18n_Form_Label_CurrencyName_CAD"
+msgstr "Dolari canadieni"
+
+msgid "i18n_Form_Label_CurrencyName_CHF"
+msgstr "Franci elvețieni"
+
+msgid "i18n_Form_Label_CurrencyName_DKK"
+msgstr "Coroane daneze"
+
+msgid "i18n_Form_Label_CurrencyName_EUR"
+msgstr "Euro"
+
+msgid "i18n_Form_Label_CurrencyName_GBP"
+msgstr "Lire sterline"
+
+msgid "i18n_Form_Label_CurrencyName_INR"
+msgstr "Rupii indiene"
+
+msgid "i18n_Form_Label_CurrencyName_MDL"
+msgstr "Lei moldovenești"
+
+msgid "i18n_Form_Label_CurrencyName_NOK"
+msgstr "Coroane norvegiene"
+
+msgid "i18n_Form_Label_CurrencyName_HUF"
+msgstr "Forinți maghiari"
+
+msgid "i18n_Form_Label_CurrencyName_USD"
+msgstr "Dolari americani"
 
 msgid "i18n_Form_Label_ExchangeRateAtDate"
 msgstr "Rata de schimb valutar la data"
@@ -119,7 +179,7 @@ msgid "i18n_Form_Label_LeaveOfAbsenceDays"
 msgstr "Zile fără salariu"
 
 msgid "i18n_Form_Label_LeaveOfAbsenceAmount"
-msgstr "Suma aferentă zilelor fără salariu"
+msgstr "Valoarea zilelor fără salariu"
 
 msgid "i18n_Form_Label_MinimumWage"
 msgstr "Salariu minim pe economie"
@@ -134,7 +194,7 @@ msgid "i18n_Form_Label_NettoSalaryCash"
 msgstr "Salariu net cash"
 
 msgid "i18n_Form_Label_OvertimeAmount"
-msgstr "Suma aferentă orelor suplimentare %s"
+msgstr "Valoarea orelor suplimentare %s"
 
 msgid "i18n_Form_Label_OvertimeChoice1"
 msgstr "normale"
@@ -161,7 +221,7 @@ msgid "i18n_Form_Label_ResultedElements"
 msgstr "Elemente rezultate"
 
 msgid "i18n_Form_Label_SeisureAmout"
-msgstr "Suma popriri"
+msgstr "Valoare popriri"
 
 msgid "i18n_Form_Label_Total"
 msgstr "Total"
