@@ -42,6 +42,7 @@ class Salariu
         $configPath = 'Salariu' . DIRECTORY_SEPARATOR . 'config';
         $inElmnts   = $this->readTypeFromJsonFileUniversal($configPath, 'interfaceElements');
         $this->setPreliminarySettings($inElmnts);
+        $this->establishLocalizationToDisplay();
         $this->setExchangeRateValues($inElmnts['Application'], $inElmnts['Relevant Currencies']);
         $dtR        = $this->dateRangesInScope();
         $ymValues   = $this->buildYMvalues($dtR);
@@ -107,8 +108,11 @@ class Salariu
             \DateTime::createFromFormat('Ymd', $this->tCmnSuperGlobals->request->get('ym')),
             $this->tCmnSuperGlobals->request->get('pc'),
         ];
+        if ($components === false) {
+            $components[0] = new \DateTime('first day of this month');
+        }
         $this->tCmnSuperGlobals->request->set('wkDays', $this->setWorkingDaysInMonth($components[0], $components[1]));
-        $vDays      = $this->tCmnSuperGlobals->request->get('wkDays') - $this->tCmnSuperGlobals->request->get('zfb');
+        $vDays = $this->tCmnSuperGlobals->request->get('wkDays') - $this->tCmnSuperGlobals->request->get('zfb');
         $this->tCmnSuperGlobals->request->set('nDays', max($vDays, 0));
     }
 

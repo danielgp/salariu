@@ -137,6 +137,5 @@ trait BasicSalariu
         $this->initializeSprGlbAndSession();
         $this->handleLocalizationSalariu($inElmnts['Application']);
         echo $this->setHeaderHtml();
-        $this->establishLocalizationToDisplay();
     }
 }
