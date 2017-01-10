@@ -70,7 +70,7 @@ trait BasicSalariu
 
     private function setFooterHtml($appSettings)
     {
-        $sReturn = $this->setUpperRightBoxLanguages($appSettings['Available Languages'])
+        $sReturn[] = $this->setUpperRightBoxLanguages($appSettings['Available Languages'])
             . '<div class="resetOnly author">&copy; ' . date('Y') . ' '
             . $appSettings['Copyright Holder'] . '</div>'
             . '<hr/>'

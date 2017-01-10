@@ -22,6 +22,9 @@
         "cas_base": {
             "Label": "i18n_Form_Label_PensionFundBase"
         },
+        "fb": {
+            "Label": "i18n_Form_Label_FoodBonusesUnitValue"
+        },
         "fd": {
             "Label": "i18n_Form_Disclaimer"
         },
@@ -218,6 +221,15 @@
             "validation_filter": "int",
             "validation_options": {
                 "min_range": "default",
+                "max_range": 999999
+            }
+        },
+        "fb": {
+            "default": 0,
+            "validation_filter": "float",
+            "validation_options": {
+                "decimals": 2,
+                "min_range": 0,
                 "max_range": 999999
             }
         },

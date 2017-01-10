@@ -97,6 +97,9 @@ msgstr "nr."
 msgid "i18n_Form_Label_FoodBonusesChoiceValue"
 msgstr "Valoare"
 
+msgid "i18n_Form_Label_FoodBonusesUnitValue"
+msgstr "Valoarea unui bon de alimente"
+
 msgid "i18n_Form_Label_FoodBonusesValue"
 msgstr "Valoare bonuri cadou"
 

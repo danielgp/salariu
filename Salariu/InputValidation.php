@@ -102,9 +102,9 @@ trait InputValidation
         switch ($inMny['VFR']['validation_filter']) {
             case "int":
                 $inVFR                             = $inMny['VFR']['validation_options'];
+                $validation                        = FILTER_VALIDATE_INT;
                 $validOpts['options']['max_range'] = $this->getValidOption($inMny['value'], $inVFR, 'max_range');
                 $validOpts['options']['min_range'] = $this->getValidOption($inMny['value'], $inVFR, 'min_range');
-                $validation                        = FILTER_VALIDATE_INT;
                 break;
             case "float":
                 $validOpts['options']['decimal']   = $inMny['VFR']['validation_options']['decimals'];
@@ -121,6 +121,9 @@ trait InputValidation
     {
         $validOpts                       = [];
         $validOpts['options']['default'] = $inMny['value'];
+        if ($key === 'fb') {
+            $validOpts['options']['default'] = $inMny['fb'];
+        }
         if (in_array($key, ['sm', 'sn'])) {
             $validOpts['options']['default']                 = $inMny['MW'];
             $inMny['VFR']['validation_options']['min_range'] = $inMny['MW'];
@@ -149,6 +152,7 @@ trait InputValidation
                     'MW'       => $aMultiple['MW'],
                     'VFR'      => $aMultiple['VFR'][$key],
                     'YM range' => $aMultiple['YM range'],
+                    'fb'       => $aMultiple['fb'],
                 ]);
             }
             $tCSG->request->set($key, $validValue);

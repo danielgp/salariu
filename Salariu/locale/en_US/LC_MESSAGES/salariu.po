@@ -97,6 +97,9 @@ msgstr "no."
 msgid "i18n_Form_Label_FoodBonusesChoiceValue"
 msgstr "Value"
 
+msgid "i18n_Form_Label_FoodBonusesUnitValue"
+msgstr "Unit value of meal ticket"
+
 msgid "i18n_Form_Label_FoodBonusesValue"
 msgstr "Food bonuses value"
 
