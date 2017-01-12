@@ -1,13 +1,12 @@
 # Romanian translations for Salariu package.
-# Copyright (C) 2015 Daniel Popiniuc
+# Copyright (C) 2015-2017 Daniel Popiniuc
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Salariu\n"
 "POT-Creation-Date: 2015-01-01 17:09-0800\n"
-"PO-Revision-Date: 2015-01-01 17:09+0100\n"
+"PO-Revision-Date: 2017-01-12 17:09+0100\n"
 "Last-Translator: Daniel Popiniuc <danielpopiniuc@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,8 +21,14 @@ msgstr "Salariu conform legilor din Romania"
 msgid "i18n_CountryName_AE"
 msgstr "Emiratele Arabe Unite"
 
+msgid "i18n_CountryName_AU"
+msgstr "Australia"
+
 msgid "i18n_CountryName_BG"
 msgstr "Bulgaria"
+
+msgid "i18n_CountryName_BR"
+msgstr "Brazilia"
 
 msgid "i18n_CountryName_CA"
 msgstr "Canada"
@@ -31,8 +36,17 @@ msgstr "Canada"
 msgid "i18n_CountryName_CH"
 msgstr "Elveția"
 
+msgid "i18n_CountryName_CN"
+msgstr "China"
+
+msgid "i18n_CountryName_CZ"
+msgstr "Cehia"
+
 msgid "i18n_CountryName_DK"
 msgstr "Danemarca"
+
+msgid "i18n_CountryName_EG"
+msgstr "Egipt"
 
 msgid "i18n_CountryName_EU"
 msgstr "Uniunea Europeană"
@@ -40,23 +54,59 @@ msgstr "Uniunea Europeană"
 msgid "i18n_CountryName_GB"
 msgstr "Marea Britanie"
 
+msgid "i18n_CountryName_HU"
+msgstr "Ungaria"
+
+msgid "i18n_CountryName_HR"
+msgstr "Croația"
+
 msgid "i18n_CountryName_IN"
 msgstr "India"
+
+msgid "i18n_CountryName_JP"
+msgstr "Japonia"
+
+msgid "i18n_CountryName_KR"
+msgstr "Republica Coreeană (de Sud)"
 
 msgid "i18n_CountryName_MD"
 msgstr "Moldova"
 
+msgid "i18n_CountryName_MX"
+msgstr "Mexic"
+
 msgid "i18n_CountryName_NO"
 msgstr "Norvegia"
 
-msgid "i18n_CountryName_HU"
-msgstr "Ungaria"
+msgid "i18n_CountryName_NZ"
+msgstr "Noua Zeelandă"
+
+msgid "i18n_CountryName_PL"
+msgstr "Polonia"
 
 msgid "i18n_CountryName_RO"
 msgstr "România"
 
+msgid "i18n_CountryName_RS"
+msgstr "Serbia"
+
+msgid "i18n_CountryName_RU"
+msgstr "Federația Rusia"
+
+msgid "i18n_CountryName_SE"
+msgstr "Suedia"
+
+msgid "i18n_CountryName_TR"
+msgstr "Turcia"
+
+msgid "i18n_CountryName_UA"
+msgstr "Ucraina"
+
 msgid "i18n_CountryName_US"
 msgstr "Statele Unite ale Americii"
+
+msgid "i18n_CountryName_ZA"
+msgstr "Sud Africa"
 
 msgid "i18n_Disclaimer"
 msgstr "Programatorul nu își asumă nici un fel de răspundere privitoare atât la datele introduse cat nici la rezultatele calculate, inclusiv implicațiile acestora (oriunde și oricare ar putea fi acestea)!"
@@ -106,8 +156,14 @@ msgstr "Spor cumulat"
 msgid "i18n_Form_Label_CurrencyName_AED"
 msgstr "Dirhamul Emiratelor Arabe"
 
+msgid "i18n_Form_Label_CurrencyName_AUD"
+msgstr "Dolari australieni"
+
 msgid "i18n_Form_Label_CurrencyName_BGN"
 msgstr "Leve bulgărești"
+
+msgid "i18n_Form_Label_CurrencyName_BRL"
+msgstr "Reali brazilieni"
 
 msgid "i18n_Form_Label_CurrencyName_CAD"
 msgstr "Dolari canadieni"
@@ -115,8 +171,17 @@ msgstr "Dolari canadieni"
 msgid "i18n_Form_Label_CurrencyName_CHF"
 msgstr "Franci elvețieni"
 
+msgid "i18n_Form_Label_CurrencyName_CNY"
+msgstr "Yuan Renminbi-uri chinezești"
+
+msgid "i18n_Form_Label_CurrencyName_CZK"
+msgstr "Coroane cehești"
+
 msgid "i18n_Form_Label_CurrencyName_DKK"
 msgstr "Coroane daneze"
+
+msgid "i18n_Form_Label_CurrencyName_EGP"
+msgstr "Lire egiptene"
 
 msgid "i18n_Form_Label_CurrencyName_EUR"
 msgstr "Euro"
@@ -124,20 +189,59 @@ msgstr "Euro"
 msgid "i18n_Form_Label_CurrencyName_GBP"
 msgstr "Lire sterline"
 
+msgid "i18n_Form_Label_CurrencyName_HUF"
+msgstr "Forinți maghiari"
+
+msgid "i18n_Form_Label_CurrencyName_HRK"
+msgstr "Kune croate"
+
 msgid "i18n_Form_Label_CurrencyName_INR"
 msgstr "Rupii indiene"
+
+msgid "i18n_Form_Label_CurrencyName_JPY"
+msgstr "Yeni japonezi"
+
+msgid "i18n_Form_Label_CurrencyName_KRW"
+msgstr "Woni sud-coreeni"
 
 msgid "i18n_Form_Label_CurrencyName_MDL"
 msgstr "Lei moldovenești"
 
+msgid "i18n_Form_Label_CurrencyName_MXN"
+msgstr "Peso-uri mexicane"
+
 msgid "i18n_Form_Label_CurrencyName_NOK"
 msgstr "Coroane norvegiene"
 
-msgid "i18n_Form_Label_CurrencyName_HUF"
-msgstr "Forinți maghiari"
+msgid "i18n_Form_Label_CurrencyName_NZD"
+msgstr "Dolari neo-zeelandezi"
+
+msgid "i18n_Form_Label_CurrencyName_PLN"
+msgstr "Zloți polonezi"
+
+msgid "i18n_Form_Label_CurrencyName_RON"
+msgstr "Lei românești"
+
+msgid "i18n_Form_Label_CurrencyName_RSD"
+msgstr "Dinari sârbești"
+
+msgid "i18n_Form_Label_CurrencyName_RUB"
+msgstr "Ruble rusești"
+
+msgid "i18n_Form_Label_CurrencyName_SEK"
+msgstr "Coroane suedeze"
+
+msgid "i18n_Form_Label_CurrencyName_TRY"
+msgstr "Lire turcești"
+
+msgid "i18n_Form_Label_CurrencyName_UAH"
+msgstr "Hryvane ucrainiene"
 
 msgid "i18n_Form_Label_CurrencyName_USD"
 msgstr "Dolari americani"
+
+msgid "i18n_Form_Label_CurrencyName_ZAR"
+msgstr "Ranzi sud-africani"
 
 msgid "i18n_Form_Label_ExchangeRateAtDate"
 msgstr "Rata de schimb valutar la data"
@@ -228,6 +332,9 @@ msgstr "Total"
 
 msgid "i18n_Form_Label_UnemploymentTax"
 msgstr "Reținere Șomaj"
+
+msgid "i18n_Form_Label_XofficialCurrencyUsedFrom"
+msgstr "%s moneda oficială din %s"
 
 msgid "i18n_Form_Label_WorkedDaysWithoutFoodBonuses"
 msgstr "Zile lucrate fara bonuri de alimente (CO, BO)"

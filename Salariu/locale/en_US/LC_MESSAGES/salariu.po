@@ -1,13 +1,12 @@
 # English translations for Salariu package.
-# Copyright (C) 2015 Daniel Popiniuc
+# Copyright (C) 2015-2017 Daniel Popiniuc
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Salariu\n"
 "POT-Creation-Date: 2015-01-01 17:09-0800\n"
-"PO-Revision-Date: 2015-01-01 17:09+0100\n"
+"PO-Revision-Date: 2017-01-12 17:09+0100\n"
 "Last-Translator: Daniel Popiniuc <danielpopiniuc@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,8 +21,14 @@ msgstr "Salary according to Romanian legislation"
 msgid "i18n_CountryName_AE"
 msgstr "United Arab Emirates"
 
+msgid "i18n_CountryName_AU"
+msgstr "Australia"
+
 msgid "i18n_CountryName_BG"
 msgstr "Bulgaria"
+
+msgid "i18n_CountryName_BR"
+msgstr "Brazil"
 
 msgid "i18n_CountryName_CA"
 msgstr "Canada"
@@ -31,8 +36,17 @@ msgstr "Canada"
 msgid "i18n_CountryName_CH"
 msgstr "Switzerland"
 
+msgid "i18n_CountryName_CN"
+msgstr "China"
+
+msgid "i18n_CountryName_CZ"
+msgstr "Czech Republic"
+
 msgid "i18n_CountryName_DK"
 msgstr "Denmark"
+
+msgid "i18n_CountryName_EG"
+msgstr "Egypt"
 
 msgid "i18n_CountryName_EU"
 msgstr "Europe Union"
@@ -43,20 +57,56 @@ msgstr "Great Britain"
 msgid "i18n_CountryName_HU"
 msgstr "Hungary"
 
+msgid "i18n_CountryName_HR"
+msgstr "Croatia"
+
 msgid "i18n_CountryName_IN"
 msgstr "India"
+
+msgid "i18n_CountryName_JP"
+msgstr "Japan"
+
+msgid "i18n_CountryName_KR"
+msgstr "Republic of Korea (South)"
 
 msgid "i18n_CountryName_MD"
 msgstr "Moldavia"
 
+msgid "i18n_CountryName_MX"
+msgstr "Mexico"
+
 msgid "i18n_CountryName_NO"
 msgstr "Norway"
+
+msgid "i18n_CountryName_NZ"
+msgstr "New Zealand"
+
+msgid "i18n_CountryName_PL"
+msgstr "Poland"
 
 msgid "i18n_CountryName_RO"
 msgstr "Romania"
 
+msgid "i18n_CountryName_RS"
+msgstr "Serbia"
+
+msgid "i18n_CountryName_RU"
+msgstr "Russian Federation"
+
+msgid "i18n_CountryName_SE"
+msgstr "Sweden"
+
+msgid "i18n_CountryName_TR"
+msgstr "Turkey"
+
+msgid "i18n_CountryName_UA"
+msgstr "Ukraine"
+
 msgid "i18n_CountryName_US"
 msgstr "United States of America"
+
+msgid "i18n_CountryName_ZA"
+msgstr "South Africa"
 
 msgid "i18n_Disclaimer"
 msgstr "The developer cannot be liable of any data input or results, included but not limited to any implication of these (anywhere and whomever there might be these)!"
@@ -106,8 +156,14 @@ msgstr "Cummulated increase percentage"
 msgid "i18n_Form_Label_CurrencyName_AED"
 msgstr "United Arab Emirates Dirham"
 
+msgid "i18n_Form_Label_CurrencyName_AUD"
+msgstr "Australian Dollars"
+
 msgid "i18n_Form_Label_CurrencyName_BGN"
-msgstr "Bulgarian levs"
+msgstr "Bulgarian Levs"
+
+msgid "i18n_Form_Label_CurrencyName_BRL"
+msgstr "Brazilian Reals"
 
 msgid "i18n_Form_Label_CurrencyName_CAD"
 msgstr "Canadian Dollars"
@@ -115,8 +171,17 @@ msgstr "Canadian Dollars"
 msgid "i18n_Form_Label_CurrencyName_CHF"
 msgstr "Swiss Francs"
 
+msgid "i18n_Form_Label_CurrencyName_CNY"
+msgstr "Chinese Yuan Renminbis"
+
+msgid "i18n_Form_Label_CurrencyName_CZK"
+msgstr "Czech Korunas"
+
 msgid "i18n_Form_Label_CurrencyName_DKK"
 msgstr "Denish Krones"
+
+msgid "i18n_Form_Label_CurrencyName_EGP"
+msgstr "Egyptian Pounds"
 
 msgid "i18n_Form_Label_CurrencyName_EUR"
 msgstr "Euros"
@@ -124,20 +189,59 @@ msgstr "Euros"
 msgid "i18n_Form_Label_CurrencyName_GBP"
 msgstr "British Pounds"
 
+msgid "i18n_Form_Label_CurrencyName_HUF"
+msgstr "Hungarian Forints"
+
+msgid "i18n_Form_Label_CurrencyName_HRK"
+msgstr "Croatian kunas"
+
 msgid "i18n_Form_Label_CurrencyName_INR"
 msgstr "Indian Rupees"
+
+msgid "i18n_Form_Label_CurrencyName_JPY"
+msgstr "Japanese Yens"
+
+msgid "i18n_Form_Label_CurrencyName_KRW"
+msgstr "South-Coreean Wons"
 
 msgid "i18n_Form_Label_CurrencyName_MDL"
 msgstr "Moldavian Leu"
 
+msgid "i18n_Form_Label_CurrencyName_MXN"
+msgstr "Mexican Pesos"
+
 msgid "i18n_Form_Label_CurrencyName_NOK"
 msgstr "Norwegian Krones"
 
-msgid "i18n_Form_Label_CurrencyName_HUF"
-msgstr "Hungarian Forints"
+msgid "i18n_Form_Label_CurrencyName_NZD"
+msgstr "New Zealand Dollars"
+
+msgid "i18n_Form_Label_CurrencyName_PLN"
+msgstr "Polish Zlots"
+
+msgid "i18n_Form_Label_CurrencyName_RON"
+msgstr "Romanian Lei"
+
+msgid "i18n_Form_Label_CurrencyName_RSD"
+msgstr "Serbian Dinars"
+
+msgid "i18n_Form_Label_CurrencyName_RUB"
+msgstr "Russian Rubles"
+
+msgid "i18n_Form_Label_CurrencyName_SEK"
+msgstr "Swedish Krones"
+
+msgid "i18n_Form_Label_CurrencyName_TRY"
+msgstr "Turkish Lira"
+
+msgid "i18n_Form_Label_CurrencyName_UAH"
+msgstr "Ukranian Hryvnias"
 
 msgid "i18n_Form_Label_CurrencyName_USD"
 msgstr "US Dollars"
+
+msgid "i18n_Form_Label_CurrencyName_ZAR"
+msgstr "South African Rands"
 
 msgid "i18n_Form_Label_ExchangeRateAtDate"
 msgstr "Currency exchange rate"
@@ -228,6 +332,9 @@ msgstr "Total"
 
 msgid "i18n_Form_Label_UnemploymentTax"
 msgstr "Unemployment tax"
+
+msgid "i18n_Form_Label_XofficialCurrencyUsedFrom"
+msgstr "%s official currency from %s"
 
 msgid "i18n_Form_Label_WorkedDaysWithoutFoodBonuses"
 msgstr "Worked days w/o food bonuses (holiday, sick leave)"

@@ -221,7 +221,7 @@ class Salariu
             'zile' => $this->tCmnSuperGlobals->request->get('wkDays'),
         ];
         $xDate       = '<span style="font-size:smaller;">' . date('d.m.Y', $this->currencyDetails['CXD']) . '</span>';
-        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('xrate@Date'), $xDate, pow(10, 7));
+        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('xrate@Date'), $xDate, pow(10, 4));
         $snValue     = $this->tCmnSuperGlobals->request->get('sn') * pow(10, 4);
         $amntLAA     = round(($this->tCmnSuperGlobals->request->get('zfs') / $bComponents['zile']) * $snValue, -4);
         $sReturn[]   = $this->setFormOutputBonuses($snValue, $bComponents['zile'], $amntLAA, $ovTimeVal);
@@ -287,10 +287,15 @@ class Salariu
         $sReturn[]             = '<thead><tr><th>' . $this->tApp->gettext('i18n_Form_Label_ResultedElements') . '</th>';
         $sReturn[]             = '<th><i class="fa fa-map-signs floatRight" style="font-size:2em;">&nbsp;</i></th>';
         $this->appFlags['CTD'] = $this->manageCurrencyToDisplay($this->tCmnSuperGlobals);
-        foreach ($this->appFlags['CTD'] as $value) {
+        foreach ($this->appFlags['CTD'] as $key => $value) {
+            $crtPcs    = [
+                $this->tApp->gettext('i18n_Form_Label_XofficialCurrencyUsedFrom'),
+                $this->tApp->gettext('i18n_Form_Label_CurrencyName_' . $key),
+                $this->tApp->gettext('i18n_CountryName_' . strtoupper($value['country'])),
+            ];
             $sReturn[] = '<th style="text-align:center;"><span class="flag-icon flag-icon-' . $value['country']
-                . '" style="font-size:2em;" title="'
-                . $this->tApp->gettext('i18n_CountryName_' . strtoupper($value['country'])) . '">&nbsp;</span></th>';
+                . '" style="font-size:2em;" title="' . sprintf($crtPcs[0], $crtPcs[1], $crtPcs[2])
+                . '">&nbsp;</span></th>';
         }
         return implode('', $sReturn) . '</tr></thead></tbody>';
     }

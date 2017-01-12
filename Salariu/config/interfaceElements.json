@@ -154,10 +154,20 @@
             "decimals": 2,
             "locale": "ar_AE"
         },
+        "AUD": {
+            "country": "au",
+            "decimals": 2,
+            "locale": "en_AU"
+        },
         "BGN": {
             "country": "bg",
             "decimals": 2,
             "locale": "bg_BG"
+        },
+        "BRL": {
+            "country": "br",
+            "decimals": 2,
+            "locale": "pt_BR"
         },
         "CAD": {
             "country": "ca",
@@ -169,10 +179,25 @@
             "decimals": 2,
             "locale": "de_CH"
         },
+        "CNY": {
+            "country": "cn",
+            "decimals": 2,
+            "locale": "zh_CN"
+        },
+        "CZK": {
+            "country": "cz",
+            "decimals": 2,
+            "locale": "cs_CZ"
+        },
         "DKK": {
             "country": "dk",
             "decimals": 2,
             "locale": "da_DK"
+        },
+        "EGP": {
+            "country": "eg",
+            "decimals": 2,
+            "locale": "ar_DG"
         },
         "EUR": {
             "country": "eu",
@@ -184,6 +209,11 @@
             "decimals": 2,
             "locale": "en_UK"
         },
+        "HRK": {
+            "country": "hr",
+            "decimals": 2,
+            "locale": "hr_HR"
+        },
         "HUF": {
             "country": "hu",
             "decimals": 0,
@@ -194,20 +224,75 @@
             "decimals": 2,
             "locale": "hi_IN"
         },
+        "JPY": {
+            "country": "jp",
+            "decimals": 0,
+            "locale": "ja_JP"
+        },
+        "KRW": {
+            "country": "kr",
+            "decimals": 0,
+            "locale": "ja_KR"
+        },
         "MDL": {
             "country": "md",
             "decimals": 2,
             "locale": "ro_MD"
+        },
+        "MXN": {
+            "country": "mx",
+            "decimals": 2,
+            "locale": "es_MX"
         },
         "NOK": {
             "country": "no",
             "decimals": 2,
             "locale": "no_NO"
         },
+        "NZD": {
+            "country": "nz",
+            "decimals": 2,
+            "locale": "en_NZ"
+        },
+        "PLN": {
+            "country": "pl",
+            "decimals": 2,
+            "locale": "pl_PL"
+        },
+        "RSD": {
+            "country": "rs",
+            "decimals": 2,
+            "locale": "sr_RS"
+        },
+        "RUB": {
+            "country": "ru",
+            "decimals": 2,
+            "locale": "ru_RU"
+        },
+        "SEK": {
+            "country": "se",
+            "decimals": 2,
+            "locale": "sv_SE"
+        },
+        "TRY": {
+            "country": "tr",
+            "decimals": 2,
+            "locale": "tr_TR"
+        },
+        "UAH": {
+            "country": "ua",
+            "decimals": 2,
+            "locale": "uk_UA"
+        },
         "USD": {
             "country": "us",
             "decimals": 2,
             "locale": "en_US"
+        },
+        "ZAR": {
+            "country": "za",
+            "decimals": 2,
+            "locale": "af_ZA"
         }
     },
     "Short Labels": {
