@@ -13,3 +13,11 @@ Code quality analysis
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/danielgp/salariu/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/danielgp/salariu/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/danielgp/salariu/badges/build.png?b=master)](https://scrutinizer-ci.com/g/danielgp/salariu/build-status/master)
 
+## Used references
+
+Reference name | URL
+-------------- | ---
+HTML ISO Country Codes Reference | http://www.w3schools.com/tags/ref_country_codes.asp
+HTML ISO Language Codes Reference | http://www.w3schools.com/TagS/ref_language_codes.asp
+National Bank of Romania Homepage | http://www.bnr.ro/Home.aspx
+National Bank of Romania Daily Currency Exchange Rates | http://www.bnr.ro/nbrfxrates.xml
