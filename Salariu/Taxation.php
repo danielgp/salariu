@@ -87,7 +87,7 @@ trait Taxation
     {
         $crtValues = $nValues[substr($lngDate, 0, 4)];
         $base      = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary']);
-        if ($lngDate >= 20170401) {
+        if ($lngDate >= 20170201) {
             $base = $lngBrutto;
         }
         if (array_key_exists('Month Secondary Value', $crtValues)) {
