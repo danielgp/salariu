@@ -33,6 +33,20 @@ trait ForeignCurrency
 
     private $currencyDetails;
 
+    private function establishIfNewCurrencyExchangeRatesFileIsNeeded($appSettings)
+    {
+        $needNewFX = false;
+        if (file_exists($appSettings['Exchange Rate Local'])) {
+            $daysAllowed = $appSettings['Exchange Rate File Aging Allowed'] * 24 * 60 * 60;
+            if ((filemtime($appSettings['Exchange Rate Local']) + $daysAllowed) < time()) {
+                $needNewFX = true;
+            }
+        } else {
+            $needNewFX = true;
+        }
+        return $needNewFX;
+    }
+
     private function getCurrencyExchangeRates(\XMLReader $xml)
     {
         switch ($xml->localName) {
@@ -72,7 +86,7 @@ trait ForeignCurrency
         }
     }
 
-    private function setExchangeRateValues($appSettings, $aryRelevantCrncy)
+    protected function setExchangeRateValues($appSettings, $aryRelevantCrncy)
     {
         $kCX = array_keys($aryRelevantCrncy);
         $this->setCurrencyExchangeVariables($aryRelevantCrncy, $kCX);
@@ -90,7 +104,7 @@ trait ForeignCurrency
 
     private function updateCurrencyExchangeRatesFile($appSettings)
     {
-        if ((filemtime($appSettings['Exchange Rate Local']) + 90 * 24 * 60 * 60) < time()) {
+        if ($this->establishIfNewCurrencyExchangeRatesFileIsNeeded($appSettings)) {
             $fCntnt = file_get_contents($appSettings['Exchange Rate Source']);
             if ($fCntnt !== false) {
                 file_put_contents($appSettings['Exchange Rate Local'], $fCntnt);

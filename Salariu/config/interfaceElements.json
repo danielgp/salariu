@@ -12,7 +12,8 @@
             "USD"
         ],
         "Exchange Rate Local": "nbrfxrates.xml",
-        "Exchange Rate Source": "http://www.bnr.ro/nbrfxrates.xml"
+        "Exchange Rate Source": "http://www.bnr.ro/nbrfxrates.xml",
+        "Exchange Rate File Aging Allowed": 90
     },
     "Form Input": {
         "afet": {
