@@ -129,6 +129,10 @@
         "2017": {
             "Multiplier": 5,
             "Monthly Average Salary": 26810000
+        },
+        "2018": {
+            "Multiplier": 5,
+            "Monthly Average Salary": 41320000
         }
     },
     "Health Tax Percentage": {
