@@ -321,6 +321,9 @@ msgstr "Deducere personală"
 msgid "i18n_Form_Label_PersonsSupported"
 msgstr "Persoane aflate în întreținere"
 
+msgid "i18n_Form_Label_Rest"
+msgstr "Rest"
+
 msgid "i18n_Form_Label_ResultedElements"
 msgstr "Elemente rezultate"
 

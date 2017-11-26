@@ -54,6 +54,9 @@
         },
         "2017": {
             "Value": 10.5
+        },
+        "2018": {
+            "Value": 25
         }
     },
     "Health Fund Upper Limit": {
@@ -181,6 +184,9 @@
         },
         "2017": {
             "Value": 5.5
+        },
+        "2018": {
+            "Value": 10
         }
     },
     "Income Tax": {
@@ -375,7 +381,49 @@
                 "Base Deduction Value": 13000000,
                 "Base Deducted Percentage": 40
             }
-        ]
+        ],
+        "2005": {
+            "Percentage": 16
+        },
+        "2006": {
+            "Percentage": 16
+        },
+        "2007": {
+            "Percentage": 16
+        },
+        "2008": {
+            "Percentage": 16
+        },
+        "2009": {
+            "Percentage": 16
+        },
+        "2010": {
+            "Percentage": 16
+        },
+        "2011": {
+            "Percentage": 16
+        },
+        "2012": {
+            "Percentage": 16
+        },
+        "2013": {
+            "Percentage": 16
+        },
+        "2014": {
+            "Percentage": 16
+        },
+        "2015": {
+            "Percentage": 16
+        },
+        "2016": {
+            "Percentage": 16
+        },
+        "2017": {
+            "Percentage": 16
+        },
+        "2018": {
+            "Percentage": 10
+        }
     },
     "Meal Ticket Value": [
         {
@@ -490,6 +538,11 @@
         }
     ],
     "Minimum Wage": [
+        {
+            "Month": 1,
+            "Year": 2018,
+            "Value": 1900
+        },
         {
             "Month": 2,
             "Year": 2017,
@@ -613,13 +666,22 @@
         "2014": 168,
         "2015": 168.66,
         "2016": 169.33,
-        "2017": 166.66
+        "2017": 166.66,
+        "2018": 166
     },
     "Personal Deduction": {
+        "2018": {
+            "Limit persons": 3,
+            "Limit basic amount": 5100000,
+            "Limit maximum amount": 13100000,
+            "Limit /person amount": 1600000,
+            "Limit zero deduction": 36000000,
+            "Reduced deduction": 19510000
+        },
         "2016": {
             "Limit persons": 3,
-            "Limit basic amount": 3500000,
-            "Limit maximum amount": 8000000,
+            "Limit basic amount": 3000000,
+            "Limit maximum amount": 7000000,
             "Limit /person amount": 1000000,
             "Limit zero deduction": 30000000,
             "Reduced deduction": 15000000
@@ -632,5 +694,22 @@
             "Limit zero deduction": 30000000,
             "Reduced deduction": 10000000
         }
-    }
+    },
+    "Unemployment Tax": [
+        {
+            "Month": 1,
+            "Year": 2018,
+            "Percentage": 0
+        },
+        {
+            "Month": 1,
+            "Year": 2007,
+            "Percentage": 0.5
+        },
+        {
+            "Month": 1,
+            "Year": 2001,
+            "Percentage": 1
+        }
+    ]
 }

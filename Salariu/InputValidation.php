@@ -31,8 +31,7 @@ namespace danielgp\salariu;
 trait InputValidation
 {
 
-    private function applyCurrencyValidations(\Symfony\Component\HttpFoundation\Request $tCSG, $defaults, $allAllowed)
-    {
+    private function applyCurrencyValidations(\Symfony\Component\HttpFoundation\Request $tCSG, $defaults, $allAllowed) {
         $valuesCurrency = $tCSG->get('xMoney'); // 0 or 1 or multiple values
         if (is_array($valuesCurrency)) {
             $tCSG->request->set('xMoney', array_intersect($valuesCurrency, $allAllowed));
@@ -42,8 +41,7 @@ trait InputValidation
         }
     }
 
-    private function applyYMvalidations(\Symfony\Component\HttpFoundation\Request $tCSG, $ymValues, $dtR)
-    {
+    private function applyYMvalidations(\Symfony\Component\HttpFoundation\Request $tCSG, $ymValues, $dtR) {
         $validOpt = [
             'options' => [
                 'default'   => $dtR['default']->format('Ymd'),
@@ -58,24 +56,24 @@ trait InputValidation
         $tCSG->request->set('ym', $validYM);
     }
 
-    private function buildYMvalues($dtR)
-    {
+    private function buildYMvalues($dtR) {
         $startDate = $dtR['minimum'];
         $endDate   = $dtR['maximumYM'];
         $temp      = [];
         while ($endDate >= $startDate) {
             $temp[$endDate->format('Ymd')] = $endDate->format('Y, m (')
-                . strftime('%B', mktime(0, 0, 0, $endDate->format('n'), 1, $endDate->format('Y'))) . ')';
+                    .strftime('%B', mktime(0, 0, 0, $endDate->format('n'), 1, $endDate->format('Y'))).')';
             $endDate->sub(new \DateInterval('P1M'));
         }
         return $temp;
     }
 
-    private function dateRangesInScope()
-    {
+    private function dateRangesInScope() {
         $defaultDate = new \DateTime('first day of this month');
         $maxDate     = new \DateTime('first day of next month');
         $maxDateYM   = new \DateTime('first day of next month');
+        $maxDate->add(new \DateInterval('P1M'));
+        $maxDateYM->add(new \DateInterval('P1M'));
         if (date('d') <= 15) {
             $defaultDate->sub(new \DateInterval('P1M'));
             $maxDate->sub(new \DateInterval('P1M'));
@@ -90,14 +88,13 @@ trait InputValidation
         ];
     }
 
-    private function determineCrtMinWage(\Symfony\Component\HttpFoundation\Request $tCSG, $inMny)
-    {
+    private function determineCrtMinWage(\Symfony\Component\HttpFoundation\Request $tCSG, $inMny) {
         $lngDate    = $tCSG->get('ym');
         $intValue   = 0;
         $maxCounter = count($inMny['EMW']);
         for ($counter = 0; $counter < $maxCounter; $counter++) {
             $crtVal         = $inMny['EMW'][$counter];
-            $crtDV          = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'] . '-' . $crtVal['Month'] . '-1');
+            $crtDV          = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'].'-'.$crtVal['Month'].'-1');
             $crtDateOfValue = (int) $crtDV->format('Ymd');
             if (($lngDate <= $inMny['YM range']['maximumInt']) && ($lngDate >= $crtDateOfValue)) {
                 $intValue = $crtVal['Value'];
@@ -107,8 +104,7 @@ trait InputValidation
         return $intValue;
     }
 
-    private function establishFilterParameters($inMny, $validOpts)
-    {
+    private function establishFilterParameters($inMny, $validOpts) {
         $validation = FILTER_DEFAULT;
         switch ($inMny['VFR']['validation_filter']) {
             case "int":
@@ -128,8 +124,7 @@ trait InputValidation
         ];
     }
 
-    private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $inMny)
-    {
+    private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $inMny) {
         $validOpts                       = [];
         $validOpts['options']['default'] = $inMny['value'];
         if ($key === 'fb') {
@@ -144,8 +139,7 @@ trait InputValidation
         return $validValue;
     }
 
-    private function getValidOption($value, $inValuesFilterRules, $optionLabel)
-    {
+    private function getValidOption($value, $inValuesFilterRules, $optionLabel) {
         $valReturn = $inValuesFilterRules[$optionLabel];
         if ($valReturn == 'default') {
             $valReturn = $value;
@@ -153,8 +147,7 @@ trait InputValidation
         return $valReturn;
     }
 
-    protected function processFormInputDefaults(\Symfony\Component\HttpFoundation\Request $tCSG, $aMultiple)
-    {
+    protected function processFormInputDefaults(\Symfony\Component\HttpFoundation\Request $tCSG, $aMultiple) {
         foreach ($aMultiple['VFR'] as $key => $value) {
             $validValue = trim($tCSG->get($key));
             if (array_key_exists('validation_options', $value)) {
@@ -169,4 +162,5 @@ trait InputValidation
             $tCSG->request->set($key, $validValue);
         }
     }
+
 }

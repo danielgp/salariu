@@ -321,6 +321,9 @@ msgstr "Personal deduction"
 msgid "i18n_Form_Label_PersonsSupported"
 msgstr "Persons under-care"
 
+msgid "i18n_Form_Label_Rest"
+msgstr "Rest"
+
 msgid "i18n_Form_Label_ResultedElements"
 msgstr "Resulted elements"
 

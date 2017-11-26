@@ -7,6 +7,7 @@
         "Copyright Holder": "Daniel Popiniuc",
         "Default Language": "ro_RO",
         "Default Currencies To Display": [
+            "CHF",
             "EUR",
             "GBP",
             "USD"
@@ -94,6 +95,9 @@
         },
         "pn": {
             "Label": "i18n_Form_Label_AdditionalNettoAmount"
+        },
+        "rst": {
+            "Label": "i18n_Form_Label_Rest"
         },
         "sanatate": {
             "Label": "i18n_Form_Label_HealthTax"
@@ -316,6 +320,7 @@
         "i18n_Form_Label_PensionFund": "Sred",
         "i18n_Form_Label_PensionFundBase": "Sgrey",
         "i18n_Form_Label_PersonalDeduction": "Sgrey",
+        "i18n_Form_Label_Rest": "Sgrey",
         "i18n_Form_Label_SeisureAmout": "Sred",
         "i18n_Form_Label_Total": "S3",
         "i18n_Form_Label_UnemploymentTax": "Sred"
@@ -416,6 +421,13 @@
             "validation_options": {
                 "min_range": "default",
                 "max_range": 44
+            }
+        },
+        "rst": {
+            "default": 0,
+            "validation_filter": "float",
+            "validation_options": {
+                "decimals": 2
             }
         },
         "sc": {
