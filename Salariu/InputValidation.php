@@ -62,7 +62,7 @@ trait InputValidation
         $temp      = [];
         while ($endDate >= $startDate) {
             $temp[$endDate->format('Ymd')] = $endDate->format('Y, m (')
-                    .strftime('%B', mktime(0, 0, 0, $endDate->format('n'), 1, $endDate->format('Y'))).')';
+                    . strftime('%B', mktime(0, 0, 0, $endDate->format('n'), 1, $endDate->format('Y'))) . ')';
             $endDate->sub(new \DateInterval('P1M'));
         }
         return $temp;
@@ -94,7 +94,7 @@ trait InputValidation
         $maxCounter = count($inMny['EMW']);
         for ($counter = 0; $counter < $maxCounter; $counter++) {
             $crtVal         = $inMny['EMW'][$counter];
-            $crtDV          = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'].'-'.$crtVal['Month'].'-1');
+            $crtDV          = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'] . '-' . $crtVal['Month'] . '-1');
             $crtDateOfValue = (int) $crtDV->format('Ymd');
             if (($lngDate <= $inMny['YM range']['maximumInt']) && ($lngDate >= $crtDateOfValue)) {
                 $intValue = $crtVal['Value'];
@@ -107,13 +107,13 @@ trait InputValidation
     private function establishFilterParameters($inMny, $validOpts) {
         $validation = FILTER_DEFAULT;
         switch ($inMny['VFR']['validation_filter']) {
-            case "int":
+            case 'int':
                 $inVFR                             = $inMny['VFR']['validation_options'];
                 $validation                        = FILTER_VALIDATE_INT;
                 $validOpts['options']['max_range'] = $this->getValidOption($inMny['value'], $inVFR, 'max_range');
                 $validOpts['options']['min_range'] = $this->getValidOption($inMny['value'], $inVFR, 'min_range');
                 break;
-            case "float":
+            case 'float':
                 $validOpts['options']['decimal']   = $inMny['VFR']['validation_options']['decimals'];
                 $validation                        = FILTER_VALIDATE_FLOAT;
                 break;
@@ -127,8 +127,8 @@ trait InputValidation
     private function establishValidValue(\Symfony\Component\HttpFoundation\Request $tCSG, $key, $inMny) {
         $validOpts                       = [];
         $validOpts['options']['default'] = $inMny['value'];
-        if ($key === 'fb') {
-            $validOpts['options']['default'] = $inMny['fb'];
+        if (in_array($key, ['fb', 'fc'])) {
+            $validOpts['options']['default'] = $inMny[$key];
         }
         if (in_array($key, ['sm', 'sn'])) {
             $validOpts['options']['default']                 = $inMny['MW'];
@@ -157,6 +157,7 @@ trait InputValidation
                     'VFR'      => $aMultiple['VFR'][$key],
                     'YM range' => $aMultiple['YM range'],
                     'fb'       => $aMultiple['fb'],
+                    'fc'       => $aMultiple['fc'],
                 ]);
             }
             $tCSG->request->set($key, $validValue);

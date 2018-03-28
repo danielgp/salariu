@@ -38,7 +38,7 @@ class Salariu
         \danielgp\salariu\Taxation;
 
     public function __construct() {
-        $configPath = 'Salariu'.DIRECTORY_SEPARATOR.'config';
+        $configPath = 'Salariu' . DIRECTORY_SEPARATOR . 'config';
         $inElmnts   = $this->readTypeFromJsonFileUniversal($configPath, 'interfaceElements');
         $this->setPreliminarySettings($inElmnts);
         $this->establishLocalizationToDisplay();
@@ -47,9 +47,9 @@ class Salariu
         $ymValues   = $this->buildYMvalues($dtR);
         $arySts     = $this->readTypeFromJsonFileUniversal($configPath, 'valuesToCompute');
         echo '<div class="tabber" id="Salary">'
-        .$this->setFormInput($dtR, $ymValues, $arySts)
-        .$this->setFormOutput($arySts, $inElmnts['Short Labels'], $dtR)
-        .'</div>';
+        . $this->setFormInput($dtR, $ymValues, $arySts)
+        . $this->setFormOutput($arySts, $inElmnts['Short Labels'], $dtR)
+        . '</div>';
         echo $this->setFooterHtml($inElmnts['Application']);
     }
 
@@ -95,9 +95,19 @@ class Salariu
             $unemploymentBase = $this->tCmnSuperGlobals->request->get('sn');
         }
         $this->setUnemploymentTax($inDate, $unemploymentBase, $yearMonth, $aStngs['Unemployment Tax'], $dtR);
+        switch ($this->tCmnSuperGlobals->get('given_food_type')[0]) {
+            case 'fb':
+                $bac       = 0;
+                break;
+            case 'fc':
+                $nMealDays = 0;
+                $bac       = $this->tCmnSuperGlobals->request->get('fc');
+                break;
+        }
         return [
             'b1'   => $this->tCmnSuperGlobals->request->get('fb') * pow(10, 4),
             'ba'   => $this->tCmnSuperGlobals->request->get('fb') * pow(10, 4) * $nMealDays,
+            'bac'  => $bac * pow(10, 4),
             'gbns' => $this->tCmnSuperGlobals->request->get('gbns') * pow(10, 4),
         ];
     }
@@ -123,14 +133,16 @@ class Salariu
         ]);
         $lngDate = $this->tCmnSuperGlobals->request->get('ym');
         $fbValue = $this->setFoodTicketsValue($dtR, $lngDate, $arySts['Meal Ticket Value']) / pow(10, 4);
+        $fcValue = $this->setFoodTicketsValue($dtR, $lngDate, $arySts['Food Compensation Rule']);
         $this->processFormInputDefaults($this->tCmnSuperGlobals, [
             'VFR'               => $this->appFlags['VFR'],
             'Year Month Values' => $ymValues,
             'MW'                => $minWage,
             'YM range'          => $dtR,
             'fb'                => $fbValue,
+            'fc'                => round(($minWage * $fcValue), 0),
         ]);
-        $sReturn = $this->setFormInputElements($ymValues, $minWage).$this->setFormInputBottom();
+        $sReturn = $this->setFormInputElements($ymValues, $minWage) . $this->setFormInputBottom();
         $frm     = $this->setStringIntoTag($this->setStringIntoTag($sReturn, 'table'), 'form', [
             'method' => 'get',
             'action' => $this->tCmnSuperGlobals->getScriptName()
@@ -143,7 +155,7 @@ class Salariu
         $xCurrency = array_diff(array_keys($this->currencyDetails['CX']), ['RON']);
         $this->applyCurrencyValidations($this->tCmnSuperGlobals, $this->appFlags['DCTD'], $xCurrency);
         foreach ($xCurrency as $value) {
-            $xChoices[$value] = $value.' ('.$this->tApp->gettext('i18n_Form_Label_CurrencyName_'.$value).')';
+            $xChoices[$value] = $value . ' (' . $this->tApp->gettext('i18n_Form_Label_CurrencyName_' . $value) . ')';
         }
         $xSelect = $this->setArrayToSelect($xChoices, $this->tCmnSuperGlobals->request->get('xMoney'), 'xMoney[]', [
             'size' => 100,
@@ -155,15 +167,25 @@ class Salariu
             'id'    => 'submit',
             'value' => $this->tApp->gettext('i18n_Form_Button_Recalculate')
         ]);
-        return $this->setFormRow('&nbsp;', $btn, 1).$sRow.'</tbody>';
+        return $this->setFormRow('&nbsp;', $btn, 1) . $sRow . '</tbody>';
     }
 
     private function setFormInputElements($ymValues, $crtMinWage) {
         $sReturn   = [];
-        $sReturn[] = '<thead><tr><th>'.$this->tApp->gettext('i18n_Form_Label_InputElements')
-                .'</th><th>'.$this->tApp->gettext('i18n_Form_Label_InputValues').'</th></tr></thead><tbody>';
+        $sReturn[] = '<thead><tr><th>' . $this->tApp->gettext('i18n_Form_Label_InputElements')
+                . '</th><th>' . $this->tApp->gettext('i18n_Form_Label_InputValues') . '</th></tr></thead><tbody>';
         $sReturn[] = $this->setFormRow($this->setLabel('ym'), $this->setFormInputSelectYM($ymValues), 1);
-        $sReturn[] = $this->setFormRow($this->setLabel('fb'), $this->setFormInputText('fb', 5, 'RON'), 1);
+        if (is_null($this->tCmnSuperGlobals->get('given_food_type'))) {
+            $this->tCmnSuperGlobals->request->set('given_food_type', 'fb');
+        }
+        $sReturn[] = $this->setFormRow('<input type="radio" name="given_food_type[]" value="fb" id="gft_fb"'
+                . ($this->tCmnSuperGlobals->get('given_food_type')[0] === 'fb' ? ' checked' : '') . ' />'
+                . '<label for="gft_fb">' . $this->setLabel('fb')
+                . '</label>', $this->setFormInputText('fb', 5, 'RON'), 1);
+        $sReturn[] = $this->setFormRow('<input type="radio" name="given_food_type[]" value="fc" id="gft_fc"'
+                . ($this->tCmnSuperGlobals->get('given_food_type')[0] === 'fc' ? ' checked' : '') . ' />'
+                . '<label for="gft_fc">' . $this->setLabel('fc')
+                . '</label>', $this->setFormInputText('fc', 10, 'RON'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('sm'), $this->setFormInputText('sm', 10, 'RON', $crtMinWage), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('sn'), $this->setFormInputText('sn', 10, 'RON'), 1);
         $sReturn[] = $this->setFormRow($this->setLabel('sc'), $this->setFormInputText('sc', 7, '%'), 1);
@@ -182,8 +204,8 @@ class Salariu
     }
 
     private function setFormInputIntoFieldSet($frm) {
-        return '<div class="tabbertab" id="Input" title="'.$this->tApp->gettext('i18n_FieldsetLabel_Inputs').'">'
-                .$frm.'</div>';
+        return '<div class="tabbertab" id="Input" title="' . $this->tApp->gettext('i18n_FieldsetLabel_Inputs') . '">'
+                . $frm . '</div>';
     }
 
     private function setFormInputText($inName, $inSize, $inAfterLabel, $crtMinWage = 0) {
@@ -194,12 +216,14 @@ class Salariu
             'size'      => $inSize,
             'maxlength' => $inSize,
         ];
-        if ($inName == 'sm') {
+        if (in_array($inName, ['fc', 'sm'])) {
             $inputParameters['readonly'] = 'readonly';
-            $inputParameters['value']    = $crtMinWage;
-            $this->tCmnSuperGlobals->request->set('sm', $crtMinWage);
         }
-        return $this->setStringIntoShortTag('input', $inputParameters).' '.$inAfterLabel;
+        if (in_array($inName, ['sm'])) {
+            $inputParameters['value'] = $crtMinWage;
+            $this->tCmnSuperGlobals->request->set($inName, $crtMinWage);
+        }
+        return $this->setStringIntoShortTag('input', $inputParameters) . ' ' . $inAfterLabel;
     }
 
     private function setFormOutput($aryStngs, $inElements, $dtR) {
@@ -213,7 +237,7 @@ class Salariu
             'sn'   => $this->tCmnSuperGlobals->request->get('sn'),
             'zile' => $this->tCmnSuperGlobals->request->get('wkDays'),
         ];
-        $xDate       = '<span style="font-size:smaller;">'.date('d.m.Y', $this->currencyDetails['CXD']).'</span>';
+        $xDate       = '<span style="font-size:smaller;">' . date('d.m.Y', $this->currencyDetails['CXD']) . '</span>';
         $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('xrate@Date'), $xDate, pow(10, 4));
         $snValue     = $this->tCmnSuperGlobals->request->get('sn') * pow(10, 4);
         $amntLAA     = round(($this->tCmnSuperGlobals->request->get('zfs') / $bComponents['zile']) * $snValue, -4);
@@ -235,19 +259,31 @@ class Salariu
         $fBonus      = [
             'main'   => $this->setLabel('gb'),
             'value'  => $this->tApp->gettext('i18n_Form_Label_FoodBonusesChoiceValue'),
-            'mtDays' => $this->tCmnSuperGlobals->request->get('nDays').'&nbsp;/&nbsp;'.$bComponents['zile']
+            'mtDays' => $this->tCmnSuperGlobals->request->get('nDays') . '&nbsp;/&nbsp;' . $bComponents['zile']
         ];
-        $fBonusTxt   = sprintf($fBonus['main'], $fBonus['value']);
-        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('fb'), '1', $amnt['b1']);
-        $sReturn[]   = $this->setFrmRowTwoLbls($fBonusTxt, $fBonus['mtDays'], $amnt['ba']);
-        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('gbns'), '&nbsp;', $amnt['gbns']);
-        $total       = ($net + $amnt['ba'] + $amnt['gbns'] - $this->tCmnSuperGlobals->request->get('szamnt') * 10000);
-        $sReturn[]   = $this->setFrmRowTwoLbls($this->setLabel('total'), '&nbsp;', $total);
-        $tDate       = \DateTime::createFromFormat('Ymd', $this->tCmnSuperGlobals->request->get('ym'));
-        $legentText  = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
-                .'', strftime('%B', mktime(0, 0, 0, $tDate->format('n'), 1, $tDate->format('Y'))), $tDate->format('Y'));
-        return '<div class="tabbertab tabbertabdefault" id="Output" title="'.$legentText.'">'
-                .$this->setStringIntoTag(implode('', $sReturn), 'table').'</tbody>'.'</div>';
+        switch ($this->tCmnSuperGlobals->get('given_food_type')[0]) {
+            case 'fc':
+                $fBonus['mtDays'] = '0&nbsp;/&nbsp;' . $bComponents['zile'];
+                break;
+        }
+        $fBonusTxt  = sprintf($fBonus['main'], $fBonus['value']);
+        $sReturn[]  = $this->setFrmRowTwoLbls($this->setLabel('fb'), '1', $amnt['b1']);
+        $sReturn[]  = $this->setFrmRowTwoLbls($fBonusTxt, $fBonus['mtDays'], $amnt['ba']);
+        $sReturn[]  = $this->setFrmRowTwoLbls($this->setLabel('fc'), '', $amnt['bac']);
+        $sReturn[]  = $this->setFrmRowTwoLbls($this->setLabel('gbns'), '&nbsp;', $amnt['gbns']);
+        $total      = array_sum([
+            $net,
+            $amnt['ba'],
+            $amnt['bac'],
+            $amnt['gbns'],
+            -$this->tCmnSuperGlobals->request->get('szamnt') * pow(10, 4)
+        ]);
+        $sReturn[]  = $this->setFrmRowTwoLbls($this->setLabel('total'), '&nbsp;', $total);
+        $tDate      = \DateTime::createFromFormat('Ymd', $this->tCmnSuperGlobals->request->get('ym'));
+        $legentText = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
+                . '', strftime('%B', mktime(0, 0, 0, $tDate->format('n'), 1, $tDate->format('Y'))), $tDate->format('Y'));
+        return '<div class="tabbertab tabbertabdefault" id="Output" title="' . $legentText . '">'
+                . $this->setStringIntoTag(implode('', $sReturn), 'table') . '</tbody>' . '</div>';
     }
 
     private function setFormOutputBonuses($snValue, $wkDays, $amntLAA, $ovTimeVal) {
@@ -257,7 +293,7 @@ class Salariu
         $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('sn'), '&nbsp;', $snValue);
         $scValue  = $this->tCmnSuperGlobals->request->get('sc');
         $prima    = $this->tCmnSuperGlobals->request->get('sn') * $scValue * 100;
-        $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('sc'), $scValue.'%', $prima);
+        $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('sc'), $scValue . '%', $prima);
         $pbValue  = $this->tCmnSuperGlobals->request->get('pb') * pow(10, 4);
         $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('pb'), '&nbsp;', $pbValue);
         $ovTime   = [
@@ -265,30 +301,30 @@ class Salariu
             'o2' => $this->tCmnSuperGlobals->request->get('os200'),
         ];
         $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('ovAmount1'), '<span style="font-size:smaller;">'
-                .$ovTime['o1'].'h&nbsp;x&nbsp;175%</span>', $ovTimeVal['os175'] * pow(10, 4));
+                . $ovTime['o1'] . 'h&nbsp;x&nbsp;175%</span>', $ovTimeVal['os175'] * pow(10, 4));
         $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('ovAmount2'), '<span style="font-size:smaller;">'
-                .$ovTime['o2'].'h&nbsp;x&nbsp;200%</span>', $ovTimeVal['os200'] * pow(10, 4));
-        $fLeaveAA = $this->tCmnSuperGlobals->request->get('zfs').'&nbsp;/&nbsp;'.$wkDays;
+                . $ovTime['o2'] . 'h&nbsp;x&nbsp;200%</span>', $ovTimeVal['os200'] * pow(10, 4));
+        $fLeaveAA = $this->tCmnSuperGlobals->request->get('zfs') . '&nbsp;/&nbsp;' . $wkDays;
         $sRt[]    = $this->setFrmRowTwoLbls($this->setLabel('zfsa'), $fLeaveAA, $amntLAA);
         return implode('', $sRt);
     }
 
     private function setFormOutputHeader() {
         $sReturn               = [];
-        $sReturn[]             = '<thead><tr><th>'.$this->tApp->gettext('i18n_Form_Label_ResultedElements').'</th>';
+        $sReturn[]             = '<thead><tr><th>' . $this->tApp->gettext('i18n_Form_Label_ResultedElements') . '</th>';
         $sReturn[]             = '<th><i class="fa fa-map-signs floatRight" style="font-size:2em;">&nbsp;</i></th>';
         $this->appFlags['CTD'] = $this->manageCurrencyToDisplay($this->tCmnSuperGlobals);
         foreach ($this->appFlags['CTD'] as $key => $value) {
             $crtPcs    = [
                 $this->tApp->gettext('i18n_Form_Label_XofficialCurrencyUsedFrom'),
-                $this->tApp->gettext('i18n_Form_Label_CurrencyName_'.$key),
-                $this->tApp->gettext('i18n_CountryName_'.strtoupper($value['country'])),
+                $this->tApp->gettext('i18n_Form_Label_CurrencyName_' . $key),
+                $this->tApp->gettext('i18n_CountryName_' . strtoupper($value['country'])),
             ];
-            $sReturn[] = '<th style="text-align:center;"><span class="flag-icon flag-icon-'.$value['country']
-                    .'" style="font-size:2em;" title="'.sprintf($crtPcs[0], $crtPcs[1], $crtPcs[2])
-                    .'">&nbsp;</span></th>';
+            $sReturn[] = '<th style="text-align:center;"><span class="flag-icon flag-icon-' . $value['country']
+                    . '" style="font-size:2em;" title="' . sprintf($crtPcs[0], $crtPcs[1], $crtPcs[2])
+                    . '">&nbsp;</span></th>';
         }
-        return implode('', $sReturn).'</tr></thead></tbody>';
+        return implode('', $sReturn) . '</tr></thead></tbody>';
     }
 
     private function setFormOutputTaxations($brut, $amnt) {
@@ -298,17 +334,17 @@ class Salariu
             $limitDisplayBase = true;
             $sRn[]            = $this->setFrmRowTwoLbls($this->setLabel('cas_base'), '', $this->txLvl['casP_base']);
         }
-        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('cas'), $this->txLvl['casP'].'%', $this->txLvl['cas']);
-        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('somaj'), $this->txLvl['smjP'].'%', $this->txLvl['smj']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('cas'), $this->txLvl['casP'] . '%', $this->txLvl['cas']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('somaj'), $this->txLvl['smjP'] . '%', $this->txLvl['smj']);
         if ($limitDisplayBase && array_key_exists('sntP_base', $this->txLvl)) {
             $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('sntP_base'), '&nbsp;', $this->txLvl['sntP_base']);
         }
-        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('sanatate'), $this->txLvl['sntP'].'%', $this->txLvl['snt']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('sanatate'), $this->txLvl['sntP'] . '%', $this->txLvl['snt']);
         $rst   = $brut - ($this->txLvl['cas'] + $this->txLvl['snt'] + $this->txLvl['smj']);
         $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('rst'), '&nbsp;', $rst);
         $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('pd'), '&nbsp;', $amnt['pd']);
         $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('impozit_base'), '&nbsp;', $this->txLvl['inTaxP_base']);
-        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('impozit'), $this->txLvl['inTaxP'].'%', $amnt['impozit']);
+        $sRn[] = $this->setFrmRowTwoLbls($this->setLabel('impozit'), $this->txLvl['inTaxP'] . '%', $amnt['impozit']);
         return implode('', $sRn);
     }
 
@@ -327,7 +363,7 @@ class Salariu
                 $value2show = $this->setStringIntoTag($value, 'td');
                 break;
         }
-        return $this->setStringIntoTag($this->setStringIntoTag($text, 'td', $defaultCellStyle).$value2show, 'tr');
+        return $this->setStringIntoTag($this->setStringIntoTag($text, 'td', $defaultCellStyle) . $value2show, 'tr');
     }
 
     private function setFormRowAmount($value, $defaultCellStyle) {
@@ -344,7 +380,7 @@ class Salariu
 
     private function setFrmRowTwoLbls($text1, $text2, $value) {
         return str_replace(':</td>', ':</td><td class="labelS" style="text-align:right;">'
-                .$text2.'</td>', $this->setFormRow($text1, $value, 'amount'));
+                . $text2 . '</td>', $this->setFormRow($text1, $value, 'amount'));
     }
 
 }

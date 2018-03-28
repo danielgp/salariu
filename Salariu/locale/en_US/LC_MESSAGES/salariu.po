@@ -267,6 +267,9 @@ msgstr "Unit value of meal ticket"
 msgid "i18n_Form_Label_FoodBonusesValue"
 msgstr "Food bonuses value"
 
+msgid "i18n_Form_Label_FoodCompensationValue"
+msgstr "Food compensation (monthly)"
+
 msgid "i18n_Form_Label_HealthTax"
 msgstr "Health tax"
 
@@ -350,3 +353,4 @@ msgstr "Calculation parameters"
 
 msgid "i18n_FieldsetLabel_Results"
 msgstr "Results for the month %s %d"
+

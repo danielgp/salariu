@@ -1,4 +1,12 @@
 {
+    "Food Compensation Rule": [
+        {
+            "Month": 1,
+            "Year": 2018,
+            "Multiplier": 2,
+            "Denominator": 12
+        }
+    ],
     "Health Fund Percentage": {
         "2001": {
             "Value": 5,
@@ -431,6 +439,11 @@
     },
     "Meal Ticket Value": [
         {
+            "Month": 1,
+            "Year": 2018,
+            "Value": 120000
+        },
+        {
             "Month": 6,
             "Year": 2016,
             "Value": 95700
@@ -717,3 +730,4 @@
         }
     ]
 }
+

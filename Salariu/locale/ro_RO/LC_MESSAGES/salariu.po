@@ -267,6 +267,9 @@ msgstr "Valoarea unui bon de alimente"
 msgid "i18n_Form_Label_FoodBonusesValue"
 msgstr "Valoare bonuri cadou"
 
+msgid "i18n_Form_Label_FoodCompensationValue"
+msgstr "Indemnizația de hrană (lunară)"
+
 msgid "i18n_Form_Label_HealthTax"
 msgstr "Reținere sănătate"
 
@@ -350,3 +353,5 @@ msgstr "Parametrii de calcul"
 
 msgid "i18n_FieldsetLabel_Results"
 msgstr "Rezultate pentru luna %s %d"
+
+
