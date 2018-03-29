@@ -97,11 +97,11 @@ trait Taxation
      * */
     private function setIncomeTax2001($lngDate, $lngTaxBase, $nValues) {
         $mnth    = substr($lngDate, 4, 2);
-        $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-12"]); // for > 9
+        $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-12"], 2001); // for > 9
         if ($mnth <= 6) {
-            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-06"]);
+            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-06"], 2001);
         } elseif ($mnth <= 9) {
-            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-09"]);
+            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-09"], 2001);
         }
         return $nReturn;
     }
@@ -157,5 +157,4 @@ trait Taxation
         }
         return $nReturn;
     }
-
 }
