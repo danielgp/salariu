@@ -11,13 +11,13 @@
         }
     ],
     "require": {
-        "php": "^5.6 || ^7.0",
-        "components/flag-icon-css": ">=2.6.0",
-        "danielgp/bank-holidays": ">=1.4.5",
-        "danielgp/common-lib": ">=3.0.2",
-        "danielgp/common-styles": ">=1.1.5",
-        "fortawesome/font-awesome": ">=4.6.3",
-        "gettext/gettext": ">=4.1.0"
+        "php": "^7.1 || ^7.2",
+        "components/flag-icon-css": "^3",
+        "danielgp/bank-holidays": "^1",
+        "danielgp/common-lib": "^3",
+        "danielgp/common-styles": "^1",
+        "fortawesome/font-awesome": "^4",
+        "gettext/gettext": "^4"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
@@ -58,3 +58,5 @@
         ]
     }
 }
+
+

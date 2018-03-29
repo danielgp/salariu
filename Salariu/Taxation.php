@@ -45,7 +45,7 @@ trait Taxation
         $maxCounter = count($inMny);
         for ($counter = 0; $counter < $maxCounter; $counter++) {
             $crtVal         = $inMny[$counter];
-            $crtDV          = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'].'-'.$crtVal['Month'].'-01');
+            $crtDV          = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'] . '-' . $crtVal['Month'] . '-01');
             $crtDateOfValue = (int) $crtDV->format('Ymd');
             if (($yearMonth <= $dtR['maximumInt']) && ($yearMonth >= $crtDateOfValue)) {
                 $intValue = $crtVal['Percentage'];
@@ -130,11 +130,10 @@ trait Taxation
      * Impozit pe salariu
      * */
     protected function setIncomeTax($lngDate, $lngTaxBase, $nValues) {
-        $yrDate = (int) substr($lngDate, 0, 4);
+        $yrDate  = (int) substr($lngDate, 0, 4);
+        $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues, $yrDate);
         if ($yrDate == 2001) {
             $nReturn = $this->setIncomeTax2001($lngDate, $lngTaxBase, $nValues);
-        } else {
-            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues, $yrDate);
         }
         return (($lngDate >= 20060701) ? round($nReturn, -4) : $nReturn);
     }
@@ -143,14 +142,12 @@ trait Taxation
      * Impozit pe salariu
      * */
     private function setIncomeTax2001($lngDate, $lngTaxBase, $nValues) {
-        $nReturn = 0;
         $mnth    = substr($lngDate, 4, 2);
+        $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-12"]); // for > 9
         if ($mnth <= 6) {
             $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-06"]);
         } elseif ($mnth <= 9) {
             $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-09"]);
-        } elseif ($mnth > 9) {
-            $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-12"]);
         }
         return $nReturn;
     }
@@ -164,6 +161,7 @@ trait Taxation
             $nReturn                    = $lngTaxBase * $this->txLvl['inTaxP'] / 100;
         } else {
             for ($counter = 0; $counter <= $howMany; $counter++) {
+                $nReturn = $lngTaxBase * $this->txLvl['inTaxP'];
                 if (($lngTaxBase <= $nValues[$counter]['Upper Limit Value'])) {
                     $sLbl                  = [
                         'BDP' => $nValues[$counter]['Base Deducted Percentage'],
@@ -171,10 +169,8 @@ trait Taxation
                         'TFV' => $nValues[$counter]['Tax Free Value'],
                     ];
                     $nReturn               = $sLbl['TFV'] + ($lngTaxBase - $sLbl['BDV']) * $sLbl['BDP'] / 100;
-                    $this->txLvl['inTaxP'] = 'fx+'.$sLbl['BDP'];
+                    $this->txLvl['inTaxP'] = 'fx+' . $sLbl['BDP'];
                     $counter               = $howMany;
-                } else {
-                    $nReturn = $lngTaxBase * $this->txLvl['inTaxP'];
                 }
             }
         }

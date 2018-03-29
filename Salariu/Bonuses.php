@@ -46,15 +46,15 @@ trait Bonuses
         $crtUpperLimitDate = (int) $dtR['maximum']->format('Ymd');
         while (($valueMealTicket === 0)) {
             $crtVal            = $aryStngMealTickets[$indexArrayValues];
-            $crtLLDate         = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'].'-'.$crtVal['Month'].'-1');
+            $crtLLDate         = \DateTime::createFromFormat('Y-n-j', $crtVal['Year'] . '-' . $crtVal['Month'] . '-1');
             $crtLowerLimitDate = (int) $crtLLDate->format('Ymd');
-            $valueMealTicket = $this->setDynamicValues($lngDate, $crtVal, $crtLowerLimitDate, $crtUpperLimitDate);
+            $valueMealTicket   = $this->setDynamicValues($lngDate, $crtVal, $crtLowerLimitDate, $crtUpperLimitDate);
             $crtUpperLimitDate = $crtLowerLimitDate;
             $indexArrayValues++;
         }
         return $valueMealTicket;
     }
-    
+
     protected function setDynamicValues($lngDate, $crtVal, $crtLowerLimitDate, $crtUpperLimitDate) {
         if (($lngDate <= $crtUpperLimitDate) && ($lngDate >= $crtLowerLimitDate)) {
             if (array_key_exists('Value', $crtVal)) {
@@ -124,4 +124,3 @@ trait Bonuses
     }
 
 }
-

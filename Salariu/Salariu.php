@@ -95,14 +95,10 @@ class Salariu
             $unemploymentBase = $this->tCmnSuperGlobals->request->get('sn');
         }
         $this->setUnemploymentTax($inDate, $unemploymentBase, $yearMonth, $aStngs['Unemployment Tax'], $dtR);
-        switch ($this->tCmnSuperGlobals->get('given_food_type')[0]) {
-            case 'fb':
-                $bac       = 0;
-                break;
-            case 'fc':
-                $nMealDays = 0;
-                $bac       = $this->tCmnSuperGlobals->request->get('fc');
-                break;
+        $bac = 0;
+        if ($this->tCmnSuperGlobals->get('given_food_type')[0] === 'fc') {
+            $nMealDays = 0;
+            $bac       = $this->tCmnSuperGlobals->request->get('fc');
         }
         return [
             'b1'   => $this->tCmnSuperGlobals->request->get('fb') * pow(10, 4),
@@ -175,8 +171,8 @@ class Salariu
         $sReturn[] = '<thead><tr><th>' . $this->tApp->gettext('i18n_Form_Label_InputElements')
                 . '</th><th>' . $this->tApp->gettext('i18n_Form_Label_InputValues') . '</th></tr></thead><tbody>';
         $sReturn[] = $this->setFormRow($this->setLabel('ym'), $this->setFormInputSelectYM($ymValues), 1);
-        if (is_null($this->tCmnSuperGlobals->get('given_food_type'))) {
-            $this->tCmnSuperGlobals->request->set('given_food_type', 'fb');
+        if (!is_array($this->tCmnSuperGlobals->get('given_food_type'))) {
+            $this->tCmnSuperGlobals->request->set('given_food_type', [0 => 'fb']);
         }
         $sReturn[] = $this->setFormRow('<input type="radio" name="given_food_type[]" value="fb" id="gft_fb"'
                 . ($this->tCmnSuperGlobals->get('given_food_type')[0] === 'fb' ? ' checked' : '') . ' />'
@@ -280,8 +276,8 @@ class Salariu
         ]);
         $sReturn[]  = $this->setFrmRowTwoLbls($this->setLabel('total'), '&nbsp;', $total);
         $tDate      = \DateTime::createFromFormat('Ymd', $this->tCmnSuperGlobals->request->get('ym'));
-        $legentText = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results')
-                . '', strftime('%B', mktime(0, 0, 0, $tDate->format('n'), 1, $tDate->format('Y'))), $tDate->format('Y'));
+        $legentText = sprintf($this->tApp->gettext('i18n_FieldsetLabel_Results'), ''
+                . strftime('%B', mktime(0, 0, 0, $tDate->format('n'), 1, $tDate->format('Y'))), $tDate->format('Y'));
         return '<div class="tabbertab tabbertabdefault" id="Output" title="' . $legentText . '">'
                 . $this->setStringIntoTag(implode('', $sReturn), 'table') . '</tbody>' . '</div>';
     }
