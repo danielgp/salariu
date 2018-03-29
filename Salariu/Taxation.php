@@ -38,7 +38,7 @@ namespace danielgp\salariu;
 trait Taxation
 {
 
-    private $txLvl;
+    use \danielgp\salariu\TaxationHealth;
 
     private function determineUnemploymentTax($yearMonth, $inMny, $dtR) {
         $intValue   = 0;
@@ -154,17 +154,6 @@ trait Taxation
         $nReturn = $stdAvgWrkngHrs[substr($lngDate, 0, 4)];
         if ($bCEaster) {
             $nReturn = ($nReturn * 12 - 8) / 12;
-        }
-        return $nReturn;
-    }
-
-    private function setValuesFromJson($lngDate, $nValues) {
-        $crtValues = $nValues[substr($lngDate, 0, 4)];
-        $nReturn   = $crtValues['Value'];
-        if (array_key_exists('Month Secondary Value', $crtValues)) {
-            if (date('n', $lngDate) >= $crtValues['Month Secondary Value']) {
-                $nReturn = $crtValues['Secondary Value'];
-            }
         }
         return $nReturn;
     }

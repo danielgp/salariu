@@ -34,6 +34,8 @@ namespace danielgp\salariu;
 trait TaxationHealth
 {
 
+    protected $txLvl;
+
     /**
      * CAS
      *
@@ -78,6 +80,17 @@ trait TaxationHealth
             $nReturn                  = round($this->txLvl['sntP_base'] * $this->txLvl['sntP'] / 100, 0);
         }
         $this->txLvl['snt'] = (($lngDate > 20060701) ? round($nReturn, -4) : $nReturn);
+    }
+
+    private function setValuesFromJson($lngDate, $nValues) {
+        $crtValues = $nValues[substr($lngDate, 0, 4)];
+        $nReturn   = $crtValues['Value'];
+        if (array_key_exists('Month Secondary Value', $crtValues)) {
+            if (date('n', $lngDate) >= $crtValues['Month Secondary Value']) {
+                $nReturn = $crtValues['Secondary Value'];
+            }
+        }
+        return $nReturn;
     }
 
 }
