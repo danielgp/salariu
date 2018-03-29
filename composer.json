@@ -33,6 +33,7 @@
             "Salariu/Bonuses.php",
             "Salariu/ForeignCurrency.php",
             "Salariu/Taxation.php",
+            "Salariu/TaxationHealth.php",
             "Salariu/InputValidation.php",
             "Salariu/BasicSalariu.php",
             "Salariu/FormattingSalariu.php",

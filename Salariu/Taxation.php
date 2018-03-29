@@ -81,52 +81,6 @@ trait Taxation
     }
 
     /**
-     * CAS
-     *
-     * */
-    private function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues) {
-        $this->txLvl['casP']      = $this->setValuesFromJson($lngDate, $nPercentages);
-        $this->txLvl['casP_base'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
-        $nReturn                  = $this->txLvl['casP_base'] * $this->txLvl['casP'] / 100;
-        if ($lngDate > 20060701) {
-            $nReturn = ceil($nReturn / pow(10, 4)) * pow(10, 4);
-        }
-        $this->txLvl['cas'] = round($nReturn, 0);
-    }
-
-    /**
-     * baza CAS
-     *
-     * http://www.lapensie.com/forum/salariul-mediu-brut.php
-     * */
-    private function setHealthFndTxBs($lngDate, $lngBrutto, $nValues) {
-        $crtValues = $nValues[substr($lngDate, 0, 4)];
-        $base      = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary']);
-        if ($lngDate >= 20170201) {
-            $base = $lngBrutto;
-        }
-        if (array_key_exists('Month Secondary Value', $crtValues)) {
-            if (substr($lngDate, 4, 2) >= $crtValues['Month Secondary Value']) {
-                $base = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary Secondary']);
-            }
-        }
-        return $base;
-    }
-
-    /**
-     * Sanatate
-     * */
-    protected function setHealthTax($lngDate, $lngBrutto, $nPercentages, $nValues) {
-        $this->txLvl['sntP'] = $this->setValuesFromJson($lngDate, $nPercentages);
-        $nReturn             = round($lngBrutto * $this->txLvl['sntP'] / 100, 0);
-        if ($lngDate >= 20170101) {
-            $this->txLvl['sntP_base'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
-            $nReturn                  = round($this->txLvl['sntP_base'] * $this->txLvl['sntP'] / 100, 0);
-        }
-        $this->txLvl['snt'] = (($lngDate > 20060701) ? round($nReturn, -4) : $nReturn);
-    }
-
-    /**
      * Impozit pe salariu
      * */
     protected function setIncomeTax($lngDate, $lngTaxBase, $nValues) {

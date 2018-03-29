@@ -35,7 +35,8 @@ class Salariu
         \danielgp\salariu\FormattingSalariu,
         \danielgp\salariu\Bonuses,
         \danielgp\salariu\ForeignCurrency,
-        \danielgp\salariu\Taxation;
+        \danielgp\salariu\Taxation,
+        \danielgp\salariu\TaxationHealth;
 
     public function __construct() {
         $configPath = 'Salariu' . DIRECTORY_SEPARATOR . 'config';
