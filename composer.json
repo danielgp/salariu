@@ -19,11 +19,6 @@
         "fortawesome/font-awesome": "^4",
         "gettext/gettext": "^4"
     },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "*",
-        "dealerdirect/phpcodesniffer-composer-installer": "*",
-        "frenck/php-compatibility": "*"
-    },
     "autoload": {
         "psr-4": {
             "danielgp\\bank_holidays\\": "vendor/danielgp/bank-holidays/",
@@ -54,6 +49,7 @@
             "/nbproject",
             "/Salariu/scss",
             "/sourceforge.net",
+            "/results",
             "/vendor",
             "/tests"
         ]
