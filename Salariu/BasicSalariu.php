@@ -40,8 +40,8 @@ trait BasicSalariu
     {
         $this->handleLocalizationSalariuInputsIntoSession($appSettings);
         $this->handleLocalizationSalariuSafe($appSettings);
-        $localizationFile = 'Salariu/locale/' . $this->tCmnSession->get('lang') . '/LC_MESSAGES/salariu.mo';
-        $translations     = new \Gettext\Translations;
+        $localizationFile = 'static/locale/' . $this->tCmnSession->get('lang') . '/LC_MESSAGES/salariu.mo';
+        $translations     = new \Gettext\Translations();
         $translations->addFromMoFile($localizationFile);
         $this->tApp       = new \Gettext\Translator();
         $this->tApp->loadTranslations($translations);
@@ -68,12 +68,22 @@ trait BasicSalariu
         }
     }
 
+    private function setAnalyticsToInclude()
+    {
+        if (file_exists('analytics.min.html')) {
+            return file_get_contents('analytics.min.html');
+        }
+        return '';
+    }
+
     private function setFooterHtml($appSettings)
     {
-        return $this->setFooterCommon($this->setUpperRightBoxLanguages($appSettings['Available Languages'])
+        return $this->setFooterCommon(''
+                . $this->setUpperRightBoxLanguages($appSettings['Available Languages'])
                 . '<div class="resetOnly author">&copy; ' . date('Y') . ' '
                 . $appSettings['Copyright Holder'] . '</div>'
                 . '<hr/>'
+                . $this->setAnalyticsToInclude()
                 . '<div class="disclaimer">'
                 . $this->tApp->gettext('i18n_Disclaimer')
                 . '</div>');
@@ -85,7 +95,7 @@ trait BasicSalariu
             'css'        => [
                 'vendor/components/flag-icon-css/css/flag-icon.min.css',
                 'vendor/fortawesome/font-awesome/css/font-awesome.min.css',
-                'Salariu/css/salariu.css',
+                'static/css/salariu.css',
             ],
             'javascript' => [
                 'vendor/danielgp/common-lib/js/tabber/tabber-management.min.js',

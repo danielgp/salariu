@@ -40,7 +40,8 @@ trait TaxationHealth
      * CAS
      *
      * */
-    private function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues) {
+    private function setHealthFundTax($lngDate, $lngBrutto, $nPercentages, $nValues)
+    {
         $this->txLvl['casP']      = $this->setValuesFromJson($lngDate, $nPercentages);
         $this->txLvl['casP_base'] = $this->setHealthFndTxBs($lngDate, $lngBrutto, $nValues);
         $nReturn                  = $this->txLvl['casP_base'] * $this->txLvl['casP'] / 100;
@@ -55,7 +56,8 @@ trait TaxationHealth
      *
      * http://www.lapensie.com/forum/salariul-mediu-brut.php
      * */
-    private function setHealthFndTxBs($lngDate, $lngBrutto, $nValues) {
+    private function setHealthFndTxBs($lngDate, $lngBrutto, $nValues)
+    {
         $crtValues = $nValues[substr($lngDate, 0, 4)];
         $base      = min($lngBrutto, $crtValues['Multiplier'] * $crtValues['Monthly Average Salary']);
         if ($lngDate >= 20170201) {
@@ -72,7 +74,8 @@ trait TaxationHealth
     /**
      * Sanatate
      * */
-    protected function setHealthTax($lngDate, $lngBrutto, $nPercentages, $nValues) {
+    protected function setHealthTax($lngDate, $lngBrutto, $nPercentages, $nValues)
+    {
         $this->txLvl['sntP'] = $this->setValuesFromJson($lngDate, $nPercentages);
         $nReturn             = round($lngBrutto * $this->txLvl['sntP'] / 100, 0);
         if ($lngDate >= 20170101) {
@@ -82,7 +85,8 @@ trait TaxationHealth
         $this->txLvl['snt'] = (($lngDate > 20060701) ? round($nReturn, -4) : $nReturn);
     }
 
-    private function setValuesFromJson($lngDate, $nValues) {
+    private function setValuesFromJson($lngDate, $nValues)
+    {
         $crtValues = $nValues[substr($lngDate, 0, 4)];
         $nReturn   = $crtValues['Value'];
         if (array_key_exists('Month Secondary Value', $crtValues)) {
@@ -92,5 +96,4 @@ trait TaxationHealth
         }
         return $nReturn;
     }
-
 }

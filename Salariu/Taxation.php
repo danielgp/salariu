@@ -40,7 +40,8 @@ trait Taxation
 
     use \danielgp\salariu\TaxationHealth;
 
-    private function determineUnemploymentTax($yearMonth, $inMny, $dtR) {
+    private function determineUnemploymentTax($yearMonth, $inMny, $dtR)
+    {
         $intValue   = 0;
         $maxCounter = count($inMny);
         for ($counter = 0; $counter < $maxCounter; $counter++) {
@@ -55,7 +56,8 @@ trait Taxation
         return $intValue;
     }
 
-    private function getIncomeTaxBaseAdjustments(\Symfony\Component\HttpFoundation\Request $tCSG, $rest, $inMny) {
+    private function getIncomeTaxBaseAdjustments(\Symfony\Component\HttpFoundation\Request $tCSG, $rest, $inMny)
+    {
         $restFinal    = $rest + round($inMny['Food Tickets Value'], -4);
         $val          = $tCSG->get('gbns');
         $taxMinAmount = 0;
@@ -68,7 +70,8 @@ trait Taxation
         return $restFinal;
     }
 
-    private function getIncomeTaxValue(\Symfony\Component\HttpFoundation\Request $tCSG, $inMny) {
+    private function getIncomeTaxValue(\Symfony\Component\HttpFoundation\Request $tCSG, $inMny)
+    {
         $rest   = 0;
         $dinish = array_sum($inMny['Deductions']) + round($tCSG->get('afet') * pow(10, 4), -4);
         if ($inMny['lngBase'] > $dinish) {
@@ -83,7 +86,8 @@ trait Taxation
     /**
      * Impozit pe salariu
      * */
-    protected function setIncomeTax($lngDate, $lngTaxBase, $nValues) {
+    protected function setIncomeTax($lngDate, $lngTaxBase, $nValues)
+    {
         $yrDate  = (int) substr($lngDate, 0, 4);
         $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues, $yrDate);
         if ($yrDate == 2001) {
@@ -95,7 +99,8 @@ trait Taxation
     /**
      * Impozit pe salariu
      * */
-    private function setIncomeTax2001($lngDate, $lngTaxBase, $nValues) {
+    private function setIncomeTax2001($lngDate, $lngTaxBase, $nValues)
+    {
         $mnth    = substr($lngDate, 4, 2);
         $nReturn = $this->setIncomeTaxFromJson($lngTaxBase, $nValues["2001-12"], 2001); // for > 9
         if ($mnth <= 6) {
@@ -106,7 +111,8 @@ trait Taxation
         return $nReturn;
     }
 
-    private function setIncomeTaxFromJson($lngTaxBase, $nValues, $yrDate) {
+    private function setIncomeTaxFromJson($lngTaxBase, $nValues, $yrDate)
+    {
         $nReturn = 0;
         $howMany = count($nValues);
         if (array_key_exists('Percentage', $nValues[$yrDate])) {
@@ -134,7 +140,8 @@ trait Taxation
     /**
      * Somaj
      * */
-    protected function setUnemploymentTax($lngDate, $lngBase, $yearMonth, $aStngs, $dtR) {
+    protected function setUnemploymentTax($lngDate, $lngBase, $yearMonth, $aStngs, $dtR)
+    {
         $this->txLvl['smjP'] = $this->determineUnemploymentTax($yearMonth, $aStngs, $dtR);
         $nReturn             = round($lngBase * $this->txLvl['smjP'] / 100, 0);
         $this->txLvl['smj']  = (($lngDate >= 20060701) ? round($nReturn, -4) : $nReturn);
@@ -150,7 +157,8 @@ trait Taxation
      * @param boolean $bCEaster
      * @return int
      */
-    protected function setMonthlyAverageWorkingHours($lngDate, $stdAvgWrkngHrs, $bCEaster = false) {
+    protected function setMonthlyAverageWorkingHours($lngDate, $stdAvgWrkngHrs, $bCEaster = false)
+    {
         $nReturn = $stdAvgWrkngHrs[substr($lngDate, 0, 4)];
         if ($bCEaster) {
             $nReturn = ($nReturn * 12 - 8) / 12;

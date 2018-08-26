@@ -40,7 +40,8 @@ trait Bonuses
     /**
      * Tichete de alimente
      * */
-    protected function setFoodTicketsValue($dtR, $lngDate, $aryStngMealTickets) {
+    protected function setFoodTicketsValue($dtR, $lngDate, $aryStngMealTickets)
+    {
         $valueMealTicket   = 0;
         $indexArrayValues  = 0;
         $crtUpperLimitDate = (int) $dtR['maximum']->format('Ymd');
@@ -55,7 +56,8 @@ trait Bonuses
         return $valueMealTicket;
     }
 
-    protected function setDynamicValues($lngDate, $crtVal, $crtLowerLimitDate, $crtUpperLimitDate) {
+    protected function setDynamicValues($lngDate, $crtVal, $crtLowerLimitDate, $crtUpperLimitDate)
+    {
         if (($lngDate <= $crtUpperLimitDate) && ($lngDate >= $crtLowerLimitDate)) {
             if (array_key_exists('Value', $crtVal)) {
                 return $crtVal['Value'];
@@ -68,7 +70,8 @@ trait Bonuses
     /**
      * Deducere personala
      * */
-    protected function setPersonalDeduction($lngDate, $lngBrutto, $sPersons, $cValues) {
+    protected function setPersonalDeduction($lngDate, $lngBrutto, $sPersons, $cValues)
+    {
         $yrDate  = substr($lngDate, 0, 4);
         $nReturn = 0;
         if ($yrDate >= 2005) {
@@ -85,7 +88,8 @@ trait Bonuses
         return (($lngDate >= 20060701) ? round($nReturn, -4) : $nReturn);
     }
 
-    private function setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule) {
+    private function setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule)
+    {
         $nDeduction = $inRule['Limit maximum amount'];
         if ($sPersons <= $inRule['Limit persons']) {
             $nDeduction = $inRule['Limit basic amount'] + ($sPersons * $inRule['Limit /person amount']);
@@ -102,7 +106,8 @@ trait Bonuses
         return $nReturn;
     }
 
-    private function setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate, $cValues) {
+    private function setPersonalDeductionComplex2016($sPersons, $lngBrutto, $yrDate, $cValues)
+    {
         $inRule = $cValues[2005];
         if ($yrDate >= 2018) {
             $inRule = $cValues[2018];
@@ -112,7 +117,8 @@ trait Bonuses
         return $this->setPersonalDeductionComplex($sPersons, $lngBrutto, $inRule);
     }
 
-    private function setPersonalDeductionSimple2001($lngDate) {
+    private function setPersonalDeductionSimple2001($lngDate)
+    {
         $nReturn = 1300000;
         $mnDate  = substr($lngDate, 4, 2);
         if ($mnDate <= 6) {
@@ -122,5 +128,4 @@ trait Bonuses
         }
         return $nReturn;
     }
-
 }
