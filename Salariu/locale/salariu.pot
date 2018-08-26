@@ -1,0 +1,355 @@
+# English translations for Salariu package.
+# Copyright (C) 2015-2017 Daniel Popiniuc
+# This file is distributed under the same license as the PACKAGE package.
+#
+#,fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Salariu\n"
+"POT-Creation-Date: 2015-01-01 17:09-0800\n"
+"PO-Revision-Date: 2017-01-12 17:09+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "i18n_ApplicationName"
+msgstr ""
+
+msgid "i18n_CountryName_AE"
+msgstr ""
+
+msgid "i18n_CountryName_AU"
+msgstr ""
+
+msgid "i18n_CountryName_BG"
+msgstr ""
+
+msgid "i18n_CountryName_BR"
+msgstr ""
+
+msgid "i18n_CountryName_CA"
+msgstr ""
+
+msgid "i18n_CountryName_CH"
+msgstr ""
+
+msgid "i18n_CountryName_CN"
+msgstr ""
+
+msgid "i18n_CountryName_CZ"
+msgstr ""
+
+msgid "i18n_CountryName_DK"
+msgstr ""
+
+msgid "i18n_CountryName_EG"
+msgstr ""
+
+msgid "i18n_CountryName_EU"
+msgstr ""
+
+msgid "i18n_CountryName_GB"
+msgstr ""
+
+msgid "i18n_CountryName_HU"
+msgstr ""
+
+msgid "i18n_CountryName_HR"
+msgstr ""
+
+msgid "i18n_CountryName_IN"
+msgstr ""
+
+msgid "i18n_CountryName_JP"
+msgstr ""
+
+msgid "i18n_CountryName_KR"
+msgstr ""
+
+msgid "i18n_CountryName_MD"
+msgstr ""
+
+msgid "i18n_CountryName_MX"
+msgstr ""
+
+msgid "i18n_CountryName_NO"
+msgstr ""
+
+msgid "i18n_CountryName_NZ"
+msgstr ""
+
+msgid "i18n_CountryName_PL"
+msgstr ""
+
+msgid "i18n_CountryName_RO"
+msgstr ""
+
+msgid "i18n_CountryName_RS"
+msgstr ""
+
+msgid "i18n_CountryName_RU"
+msgstr ""
+
+msgid "i18n_CountryName_SE"
+msgstr ""
+
+msgid "i18n_CountryName_TR"
+msgstr ""
+
+msgid "i18n_CountryName_UA"
+msgstr ""
+
+msgid "i18n_CountryName_US"
+msgstr ""
+
+msgid "i18n_CountryName_ZA"
+msgstr ""
+
+msgid "i18n_Disclaimer"
+msgstr ""
+
+msgid "i18n_Form_Button_Calculate"
+msgstr ""
+
+msgid "i18n_Form_Button_Recalculate"
+msgstr ""
+
+msgid "i18n_Form_Button_Reset"
+msgstr ""
+
+msgid "i18n_Form_Disclaimer"
+msgstr ""
+
+msgid "i18n_Form_Label_AdditionalBruttoAmount"
+msgstr ""
+
+msgid "i18n_Form_Label_AdditionalCurrenciesToDisplayValuesInto"
+msgstr ""
+
+msgid "i18n_Form_Label_AdditionalNettoAmount"
+msgstr ""
+
+msgid "i18n_Form_Label_AdvantagesForExciseTax"
+msgstr ""
+
+msgid "i18n_Form_Label_BruttoSalary"
+msgstr ""
+
+msgid "i18n_Form_Label_CalculationMonth"
+msgstr ""
+
+msgid "i18n_Form_Label_CatholicEasterFree"
+msgstr ""
+
+msgid "i18n_Form_Label_CatholicEasterFree_ChoiceNo"
+msgstr ""
+
+msgid "i18n_Form_Label_CatholicEasterFree_ChoiceYes"
+msgstr ""
+
+msgid "i18n_Form_Label_CumulatedAddedValue"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_AED"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_AUD"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_BGN"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_BRL"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_CAD"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_CHF"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_CNY"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_CZK"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_DKK"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_EGP"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_EUR"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_GBP"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_HUF"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_HRK"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_INR"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_JPY"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_KRW"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_MDL"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_MXN"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_NOK"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_NZD"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_PLN"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_RON"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_RSD"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_RUB"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_SEK"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_TRY"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_UAH"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_USD"
+msgstr ""
+
+msgid "i18n_Form_Label_CurrencyName_ZAR"
+msgstr ""
+
+msgid "i18n_Form_Label_ExchangeRateAtDate"
+msgstr ""
+
+msgid "i18n_Form_Label_ExciseTax"
+msgstr ""
+
+msgid "i18n_Form_Label_ExciseTaxBase"
+msgstr ""
+
+msgid "i18n_Form_Label_FoodBonuses"
+msgstr ""
+
+msgid "i18n_Form_Label_FoodBonusesChoiceNo"
+msgstr ""
+
+msgid "i18n_Form_Label_FoodBonusesChoiceValue"
+msgstr ""
+
+msgid "i18n_Form_Label_FoodBonusesUnitValue"
+msgstr ""
+
+msgid "i18n_Form_Label_FoodBonusesValue"
+msgstr ""
+
+msgid "i18n_Form_Label_FoodCompensationValue"
+msgstr ""
+
+msgid "i18n_Form_Label_HealthTax"
+msgstr ""
+
+msgid "i18n_Form_Label_HealthTaxBase"
+msgstr "
+
+msgid "i18n_Form_Label_InputElements"
+msgstr ""
+
+msgid "i18n_Form_Label_InputValues"
+msgstr ""
+
+msgid "i18n_Form_Label_LeaveOfAbsenceDays"
+msgstr ""
+
+msgid "i18n_Form_Label_LeaveOfAbsenceAmount"
+msgstr ""
+
+msgid "i18n_Form_Label_MinimumWage"
+msgstr ""
+
+msgid "i18n_Form_Label_NegotiatedSalary"
+msgstr ""
+
+msgid "i18n_Form_Label_NettoSalary"
+msgstr ""
+
+msgid "i18n_Form_Label_NettoSalaryCash"
+msgstr ""
+
+msgid "i18n_Form_Label_OvertimeAmount"
+msgstr ""
+
+msgid "i18n_Form_Label_OvertimeChoice1"
+msgstr ""
+
+msgid "i18n_Form_Label_OvertimeChoice2"
+msgstr ""
+
+msgid "i18n_Form_Label_OvertimeHours"
+msgstr ""
+
+msgid "i18n_Form_Label_PensionFund"
+msgstr ""
+
+msgid "i18n_Form_Label_PensionFundBase"
+msgstr ""
+
+msgid "i18n_Form_Label_PersonalDeduction"
+msgstr ""
+
+msgid "i18n_Form_Label_PersonsSupported"
+msgstr ""
+
+msgid "i18n_Form_Label_Rest"
+msgstr ""
+
+msgid "i18n_Form_Label_ResultedElements"
+msgstr ""
+
+msgid "i18n_Form_Label_SeisureAmout"
+msgstr ""
+
+msgid "i18n_Form_Label_Total"
+msgstr ""
+
+msgid "i18n_Form_Label_UnemploymentTax"
+msgstr ""
+
+msgid "i18n_Form_Label_XofficialCurrencyUsedFrom"
+msgstr ""
+
+msgid "i18n_Form_Label_WorkedDaysWithoutFoodBonuses"
+msgstr ""
+
+msgid "i18n_Form_Label_WorkingDays"
+msgstr ""
+
+msgid "i18n_FieldsetLabel_Inputs"
+msgstr ""
+
+msgid "i18n_FieldsetLabel_Results"
+msgstr ""
+
